@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -41,30 +42,37 @@ public class SignUp extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirmPassword);
         tvAlreadyUser = findViewById(R.id.tvAlreadyUser);
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String firstNameText = firstName.getText().toString();
-                String lastNameText = lastName.getText().toString();
-                String emailAddressText = emailAddress.getText().toString();
-                String birthDateText = birthDate.getText().toString();
-                String passwordText = password.getText().toString();
-                String confirmPasswordText = confirmPassword.getText().toString();
+        signUpButton.setOnClickListener(v -> {
+            String firstNameText = firstName.getText().toString();
+            String lastNameText = lastName.getText().toString();
+            String emailAddressText = emailAddress.getText().toString();
+            String birthDateText = birthDate.getText().toString();
+            String passwordText = password.getText().toString();
+            String confirmPasswordText = confirmPassword.getText().toString();
 
-                if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailAddressText.isEmpty() || birthDateText.isEmpty() || passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
-                    Toast.makeText(SignUp.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (!passwordText.equals(confirmPasswordText)) {
-                    Toast.makeText(SignUp.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                } else {
-                    auth.createUserWithEmailAndPassword(emailAddressText, passwordText).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(SignUp.this, "User created successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignUp.this, SignIn.class));
-                        } else {
-                            Toast.makeText(SignUp.this, "User creation failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+            if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailAddressText.isEmpty() || birthDateText.isEmpty() || passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
+                Toast.makeText(SignUp.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            } else if (!passwordText.equals(confirmPasswordText)) {
+                Toast.makeText(SignUp.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            } else {
+                auth.createUserWithEmailAndPassword(emailAddressText, passwordText).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String userId = auth.getCurrentUser().getUid();
+                        User newUser = new User(firstNameText, lastNameText, emailAddressText, birthDateText);
+
+                        FirebaseFirestore.getInstance().collection("users").document(userId).set(newUser)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(SignUp.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SignUp.this, SignIn.class));
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(SignUp.this, "Failed to save user data", Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                });
+                    } else {
+                        Toast.makeText(SignUp.this, "User creation failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
