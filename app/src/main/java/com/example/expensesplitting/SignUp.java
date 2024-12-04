@@ -34,7 +34,6 @@ public class SignUp extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         signUpButton = findViewById(R.id.signUpButton);
-        googleSignUpButton = findViewById(R.id.googleSignUpButton);
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
         emailAddress = findViewById(R.id.emailAddress);
