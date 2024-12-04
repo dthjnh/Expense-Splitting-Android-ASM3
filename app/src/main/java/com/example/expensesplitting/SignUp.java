@@ -25,6 +25,7 @@ public class SignUp extends AppCompatActivity {
     private EditText firstName, lastName, emailAddress, birthDate, password, confirmPassword;
     private Button signUpButton, googleSignUpButton;
     private TextView tvAlreadyUser;
+    User user;
 
 
     @Override
