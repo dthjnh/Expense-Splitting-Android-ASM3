@@ -38,4 +38,13 @@
         android:text="Delete Account"
         android:layout_marginTop="16dp"
         android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/logOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF0000"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

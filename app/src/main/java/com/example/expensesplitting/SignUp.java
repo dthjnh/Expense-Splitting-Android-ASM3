@@ -26,6 +26,7 @@ public class SignUp extends AppCompatActivity {
     private Button signUpButton, googleSignUpButton;
     private TextView tvAlreadyUser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

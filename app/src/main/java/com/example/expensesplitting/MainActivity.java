@@ -1,8 +1,10 @@
 package com.example.expensesplitting;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,33 +20,46 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private TextView userNameTextView, userEmailTextView, userBirthdateTextView;
-    private Button deleteAccountButton;
+    private Button deleteAccountButton, logOutButton;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Bind UI components
         userNameTextView = findViewById(R.id.userNameTextView);
         userEmailTextView = findViewById(R.id.userEmailTextView);
         userBirthdateTextView = findViewById(R.id.userBirthdateTextView);
         deleteAccountButton = findViewById(R.id.deleteAccountButton);
+        logOutButton = findViewById(R.id.logOutButton);
 
         // Get current user
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
-            // Load user data
             loadUserData(userId);
 
-            // Set delete account button functionality
-            deleteAccountButton.setOnClickListener(v -> deleteUserAccount(userId, currentUser));
+            deleteAccountButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteUserAccount(userId, currentUser);
+                }
+            });
+
+            logOutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    auth.signOut();
+                    startActivity(new Intent(MainActivity.this, SignIn.class));
+                    finish();
+                }
+            });
+
         } else {
             userNameTextView.setText("No user logged in");
             userEmailTextView.setText("");
@@ -52,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Load user data from Firestore
-     */
     private void loadUserData(String userId) {
         db.collection("users").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
@@ -78,14 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Delete user account and Firestore document
-     */
     private void deleteUserAccount(String userId, FirebaseUser currentUser) {
         // Delete Firestore document
         db.collection("users").document(userId).delete()
                 .addOnSuccessListener(aVoid -> {
-                    // After deleting Firestore document, delete Firebase Authentication account
                     currentUser.delete()
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
@@ -105,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-/**
- * User class to represent user data in Firestore.
- */
 class User {
     private String firstName;
     private String lastName;
@@ -115,7 +120,6 @@ class User {
     private String birthDate;
 
     public User() {
-        // Required empty constructor
     }
 
     public User(String firstName, String lastName, String email, String birthDate) {
@@ -158,3 +162,5 @@ class User {
         this.birthDate = birthDate;
     }
 }
+
+
