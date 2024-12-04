@@ -133,19 +133,6 @@
         android:textStyle="bold" />
 
     <!-- Google Sign Up Button -->
-    <Button
-        android:id="@+id/googleSignUpButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/signUpButton"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#E0E0E0"
-        android:text="Sign Up with Google"
-        android:drawablePadding="10dp"
-        android:textColor="#000000"
-        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvAlreadyUser"
@@ -154,7 +141,7 @@
         android:text="Already have an account? Sign In"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        android:layout_below="@id/googleSignUpButton"
+        android:layout_below="@id/signUpButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
