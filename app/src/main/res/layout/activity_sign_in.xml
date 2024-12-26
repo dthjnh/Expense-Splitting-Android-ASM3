@@ -1,109 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:background="@drawable/background"
-    tools:context=".SignIn">
+    android:background="#F9F9F9"
+    android:padding="24dp">
 
     <TextView
-        android:id="@+id/tvSignIn"
+        android:id="@+id/signInTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign In"
-        android:textSize="28sp"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="20dp"
-        android:textStyle="bold" />
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp" />
 
     <EditText
-        android:id="@+id/etEmailAddress"
+        android:id="@+id/editEmailSignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Email Address"
-        android:background="@drawable/edittext_background"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:padding="12dp"
+        android:layout_marginBottom="16dp"
         android:textColor="#000000"
-        android:textColorHint="#B0B0B0"
-        android:inputType="textEmailAddress" />
+        android:textColorHint="#888888" />
 
-    <EditText
-        android:id="@+id/etPassword"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Password"
-        android:background="@drawable/edittext_background"
-        android:padding="12dp"
-        android:textColor="#000000"
-        android:textColorHint="#B0B0B0"
-        android:inputType="textPassword" />
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="6dp"
-        >
+        <EditText
+            android:id="@+id/editPasswordSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888" />
 
-        <CheckBox
-            android:id="@+id/cbRememberMe"
+        <ImageView
+            android:id="@+id/imageViewTogglePassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remember me"
-            android:textColor="#FFFFFF"
-            android:layout_marginEnd="130dp"/>
-
-        <TextView
-            android:id="@+id/tvForgetPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forget Password?"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:singleLine="true"
-            android:ellipsize="none"/>
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="13dp"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_eye" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:text="Sign In"
-        android:backgroundTint="#5468FF"
         android:textColor="#FFFFFF"
-        android:padding="12dp" />
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="4dp"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvNewUser"
+        android:id="@+id/signUpPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New user? Sign Up"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
+        android:text="Don't have an account? Sign Up"
         android:layout_gravity="center"
-        android:background="?attr/selectableItemBackground"
-        android:padding="8dp"
+        android:textColor="#03A9F4"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:focusable="true" />
-
-    <Button
-        android:id="@+id/btnSignInGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Sign In with Google"
-        android:backgroundTint="#FFFFFF"
-        android:textColor="#000000"
-        android:padding="12dp" />
 </LinearLayout>

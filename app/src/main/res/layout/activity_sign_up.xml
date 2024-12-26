@@ -18,6 +18,7 @@
 
     <!-- First Name and Last Name -->
     <LinearLayout
+        android:id="@+id/firstLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/signUpTitle"
@@ -57,11 +58,45 @@
             android:textColorHint="#B0B0B0" />
     </LinearLayout>
 
+    <!-- Phone Number -->
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/firstLastName"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="Phone Number"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#B0B0B0"
+        android:inputType="phone" />
+
+    <!-- Address -->
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/phoneNumber"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="Address"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#B0B0B0"
+        android:inputType="textPostalAddress" />
+
+    <!-- Email Address -->
     <EditText
         android:id="@+id/emailAddress"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="190dp"
+        android:layout_below="@id/address"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:hint="Email Address"
@@ -72,58 +107,117 @@
         android:inputType="textEmailAddress" />
 
     <!-- Birth Date -->
-    <EditText
-        android:id="@+id/birthDate"
+    <RelativeLayout
+        android:id="@+id/birthDateLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/emailAddress"
         android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Birth Date"
-        android:background="@drawable/edittext_background"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#B0B0B0" />
+        android:layout_marginEnd="30dp">
+
+        <EditText
+            android:id="@+id/birthDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/btnDatePicker"
+            android:hint="Date of birth"
+            android:background="@drawable/edittext_background"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#B0B0B0"
+            android:focusable="false"
+            android:clickable="true" />
+
+        <ImageButton
+            android:id="@+id/btnDatePicker"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Select Date"
+            android:elevation="4dp"
+            android:src="@android:drawable/ic_menu_my_calendar" />
+    </RelativeLayout>
 
     <!-- Password -->
-    <EditText
-        android:id="@+id/password"
+    <RelativeLayout
+        android:id="@+id/passwordLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/birthDate"
+        android:layout_below="@id/birthDateLayout"
         android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Password"
-        android:background="@drawable/edittext_background"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#B0B0B0"
-        android:inputType="textPassword"/>
+        android:layout_marginEnd="30dp">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/passwordToggle"
+            android:hint="Password"
+            android:background="@drawable/edittext_background"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#B0B0B0"
+            android:inputType="textPassword" />
+
+        <ImageView
+            android:id="@+id/passwordToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_eye"
+            android:contentDescription="Toggle Password Visibility" />
+    </RelativeLayout>
 
     <!-- Confirm Password -->
-    <EditText
-        android:id="@+id/confirmPassword"
+    <RelativeLayout
+        android:id="@+id/confirmPasswordLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/password"
         android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:hint="Confirm password"
-        android:background="@drawable/edittext_background"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#B0B0B0"
-        android:inputType="textPassword" />
+        android:layout_below="@+id/passwordLayout">
+
+        <EditText
+            android:id="@+id/confirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/confirmPasswordToggle"
+            android:hint="Confirm password"
+            android:background="@drawable/edittext_background"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#B0B0B0"
+            android:inputType="textPassword" />
+
+        <ImageView
+            android:id="@+id/confirmPasswordToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_eye"
+            android:contentDescription="Toggle Password Visibility" />
+    </RelativeLayout>
+
 
     <!-- Sign Up Button -->
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/confirmPassword"
+        android:layout_below="@+id/confirmPasswordLayout"
         android:layout_marginTop="25dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
@@ -132,8 +226,7 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
-    <!-- Google Sign Up Button -->
-
+    <!-- Already User TextView -->
     <TextView
         android:id="@+id/tvAlreadyUser"
         android:layout_width="wrap_content"
