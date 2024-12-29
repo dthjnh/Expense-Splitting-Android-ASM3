@@ -2,22 +2,19 @@ package com.example.expensesplitting;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,9 +23,13 @@ public class SignIn extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText editEmailSignIn, editPasswordSignIn;
     private Button btnSignIn;
-    private TextView signUpPrompt;
+    private TextView signUpPrompt, forgotPassword;
+    private CheckBox rememberMeCheckBox;
     private ImageView imageViewTogglePassword;
     private boolean isPasswordVisible = false;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,7 +43,33 @@ public class SignIn extends AppCompatActivity {
         editPasswordSignIn = findViewById(R.id.editPasswordSignIn);
         btnSignIn = findViewById(R.id.btnSignIn);
         signUpPrompt = findViewById(R.id.signUpPrompt);
+        forgotPassword = findViewById(R.id.forgotPassword);
+        rememberMeCheckBox = findViewById(R.id.rememberMeCheckBox);
         imageViewTogglePassword = findViewById(R.id.imageViewTogglePassword);
+
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        // Clear input fields when logging out
+        clearInputsOnLogout();
+
+        forgotPassword.setOnClickListener(v -> {
+            startActivity(new Intent(SignIn.this, ForgotPassword.class));
+        });
+
+        // Auto-fill password when email is entered
+        editEmailSignIn.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) { // When the email field loses focus
+                String enteredEmail = editEmailSignIn.getText().toString();
+                if (enteredEmail.equals(sharedPreferences.getString("email", ""))) {
+                    editPasswordSignIn.setText(sharedPreferences.getString("password", ""));
+                } else {
+                    editPasswordSignIn.setText("");
+                }
+            }
+        });
 
         // Toggle password visibility
         imageViewTogglePassword.setOnClickListener(v -> {
@@ -65,6 +92,17 @@ public class SignIn extends AppCompatActivity {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(SignIn.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 return;
+            }
+
+            // Save login details if Remember Me is checked
+            if (rememberMeCheckBox.isChecked()) {
+                editor.putString("email", email);
+                editor.putString("password", password);
+                editor.putBoolean("rememberMe", true);
+                editor.apply();
+            } else {
+                editor.clear(); // Clear saved data if unchecked
+                editor.apply();
             }
 
             auth.signInWithEmailAndPassword(email, password)
@@ -102,6 +140,15 @@ public class SignIn extends AppCompatActivity {
             if (email != null) {
                 navigateBasedOnEmail(email);
             }
+        }
+    }
+
+    private void clearInputsOnLogout() {
+        // Check if user is logged out and clear inputs
+        if (auth.getCurrentUser() == null) {
+            editEmailSignIn.setText("");
+            editPasswordSignIn.setText("");
+            rememberMeCheckBox.setChecked(false);
         }
     }
 }
