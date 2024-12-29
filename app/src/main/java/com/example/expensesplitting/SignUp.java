@@ -137,7 +137,7 @@ public class SignUp extends AppCompatActivity {
             toggleIcon.setImageResource(R.drawable.ic_eye_off);
         } else {
             editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            toggleIcon.setImageResource(R.drawable.ic_eye);
+            toggleIcon.setImageResource(R.drawable.ic_visibility);
         }
         editText.setSelection(editText.length());
     }

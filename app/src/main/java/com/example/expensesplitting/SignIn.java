@@ -48,7 +48,7 @@ public class SignIn extends AppCompatActivity {
         imageViewTogglePassword.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 editPasswordSignIn.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                imageViewTogglePassword.setImageResource(R.drawable.ic_eye);
+                imageViewTogglePassword.setImageResource(R.drawable.ic_visibility);
             } else {
                 editPasswordSignIn.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 imageViewTogglePassword.setImageResource(R.drawable.ic_eye_off);

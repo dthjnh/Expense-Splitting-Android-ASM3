@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Expense Splitting</string>
+    <string name="back">Back</string>
+    <string name="email_icon">Email Icon</string>
+    <string name="password_icon">Password Icon</string>
+    <string name="show_password_icon">Show Password Icon</string>
 </resources>
