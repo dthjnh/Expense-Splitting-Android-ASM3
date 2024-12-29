@@ -1,4 +1,4 @@
-package com.example.expensesplitting;
+package com.example.expensesplitting.Login;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.expensesplitting.Admin;
+import com.example.expensesplitting.R;
+import com.example.expensesplitting.UserActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
