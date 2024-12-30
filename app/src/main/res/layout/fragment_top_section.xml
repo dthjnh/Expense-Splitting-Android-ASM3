@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="320dp"
+    android:orientation="vertical"
+    android:background="#F9A825"
+    android:padding="50dp">
+
+    <!-- Logo and Notification -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logoIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_logo"
+            android:contentDescription="Logo Icon"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SplitWise"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/notificationIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_notification"
+            android:contentDescription="Notification Icon"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <!-- Balance Section -->
+    <TextView
+        android:id="@+id/balanceAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0$"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/balanceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available balance"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:layout_gravity="center"
+        android:textStyle="bold" />
+
+    <!-- Action Buttons with Labels -->
+    <LinearLayout
+        android:id="@+id/actionButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <!-- Send Button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btnSend"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_send"
+                android:contentDescription="Send Button" />
+
+            <TextView
+                android:id="@+id/labelSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Request Button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="16dp">
+
+            <ImageButton
+                android:id="@+id/btnRequest"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_request"
+                android:contentDescription="Request Button" />
+
+            <TextView
+                android:id="@+id/labelRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Request"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Top-Up Button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="16dp">
+
+            <ImageButton
+                android:id="@+id/btnTopUp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_top_up"
+                android:contentDescription="Top Up Button" />
+
+            <TextView
+                android:id="@+id/labelTopUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top-Up"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Withdraw Button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="16dp">
+
+            <ImageButton
+                android:id="@+id/btnWithdraw"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_withdraw"
+                android:contentDescription="Withdraw Button" />
+
+            <TextView
+                android:id="@+id/labelWithdraw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Withdraw"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- History Button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="16dp">
+
+            <ImageButton
+                android:id="@+id/btnHistory"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_history"
+                android:contentDescription="History Button" />
+
+            <TextView
+                android:id="@+id/labelHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="History"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

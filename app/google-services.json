@@ -12,7 +12,20 @@
           "package_name": "com.example.expensesplitting"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1048014459148-k04t79ogi5c7qpreth5l6shbdmgvhhsd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.expensesplitting",
+            "certificate_hash": "0f94fd433ce4bf9055d329a83fb2d2c332909cf8"
+          }
+        },
+        {
+          "client_id": "1048014459148-4pmken23pv99c4866oaskh6nrkpq4sq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDStJVqmbxjfCqg2RzmN6XfJvsMzxKoens"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048014459148-4pmken23pv99c4866oaskh6nrkpq4sq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

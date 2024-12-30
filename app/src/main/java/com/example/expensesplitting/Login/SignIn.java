@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.expensesplitting.Admin;
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.UserActivity;
+import com.example.expensesplitting.WelcomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignIn extends AppCompatActivity {
@@ -153,4 +155,10 @@ public class SignIn extends AppCompatActivity {
             rememberMeCheckBox.setChecked(false);
         }
     }
+
+    public void backToWelcome(View view) {
+        Intent intent = new Intent(SignIn.this, WelcomeActivity.class);
+        startActivity(intent);
+    }
+
 }

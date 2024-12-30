@@ -16,6 +16,7 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_arrow_back"
             android:contentDescription="@string/back"
+            android:onClick="backToWelcome"
             android:layout_marginBottom="16dp" />
 
         <!-- Welcome Text -->
