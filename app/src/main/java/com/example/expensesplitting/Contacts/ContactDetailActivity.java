@@ -1,6 +1,9 @@
 package com.example.expensesplitting.Contacts;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -65,15 +68,52 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         // Delete button
         btnDeleteContact.setOnClickListener(v -> {
-            databaseHelper.deleteContactById(contactId);
-            Toast.makeText(this, "Contact deleted", Toast.LENGTH_SHORT).show();
-            finish();
+            if (contact != null) {
+                showCustomDeleteDialog(contact);
+            } else {
+                Toast.makeText(this, "Contact not found", Toast.LENGTH_SHORT).show();
+            }
         });
+
 
         // Request button
         btnRequest.setOnClickListener(v -> Toast.makeText(this, "Request clicked", Toast.LENGTH_SHORT).show());
 
         // Pay button
         btnPay.setOnClickListener(v -> Toast.makeText(this, "Pay clicked", Toast.LENGTH_SHORT).show());
+
     }
+
+    private void deleteContact(Contact contact) {
+        databaseHelper.deleteContactById(contact.getId());
+        Toast.makeText(this, "Contact deleted", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    private void showCustomDeleteDialog(Contact contact) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customView = getLayoutInflater().inflate(R.layout.custom_dialog_delete, null);
+        builder.setView(customView);
+
+        // Set dialog views
+        TextView dialogMessage = customView.findViewById(R.id.dialogMessage);
+        dialogMessage.setText("Delete \"" + contact.getName() + "\" from your contacts?");
+
+        Button cancelButton = customView.findViewById(R.id.cancelButton);
+        Button confirmDeleteButton = customView.findViewById(R.id.confirmDeleteButton);
+
+        AlertDialog alertDialog = builder.create();
+
+        // Cancel action
+        cancelButton.setOnClickListener(v -> alertDialog.dismiss());
+
+        // Confirm delete action
+        confirmDeleteButton.setOnClickListener(v -> {
+            deleteContact(contact);
+            alertDialog.dismiss();
+        });
+
+        alertDialog.show();
+    }
+
 }
