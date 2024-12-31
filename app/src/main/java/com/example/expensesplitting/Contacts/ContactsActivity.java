@@ -1,4 +1,4 @@
-package com.example.expensesplitting;
+package com.example.expensesplitting.Contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 
 import com.example.expensesplitting.Database.ContactDatabaseHelper;
-import com.example.expensesplitting.Login.SignIn;
+import com.example.expensesplitting.R;
+import com.example.expensesplitting.UserActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
