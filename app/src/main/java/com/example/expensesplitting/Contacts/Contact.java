@@ -1,4 +1,4 @@
-package com.example.expensesplitting;
+package com.example.expensesplitting.Contacts;
 
 public class Contact {
 

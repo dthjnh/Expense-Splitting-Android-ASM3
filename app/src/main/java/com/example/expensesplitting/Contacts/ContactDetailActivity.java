@@ -1,6 +1,5 @@
-package com.example.expensesplitting;
+package com.example.expensesplitting.Contacts;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensesplitting.Database.ContactDatabaseHelper;
+import com.example.expensesplitting.R;
 
 public class ContactDetailActivity extends AppCompatActivity {
 

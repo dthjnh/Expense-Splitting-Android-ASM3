@@ -1,4 +1,4 @@
-package com.example.expensesplitting;
+package com.example.expensesplitting.Contacts;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensesplitting.Database.ContactDatabaseHelper;
+import com.example.expensesplitting.R;
 
 import java.util.List;
 

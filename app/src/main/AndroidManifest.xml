@@ -13,16 +13,16 @@
         android:theme="@style/Theme.ExpenseSplitting"
         tools:targetApi="31">
         <activity
-            android:name=".ContactDetailActivity"
+            android:name=".Contacts.ContactDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".AddContactActivity"
+            android:name=".Contacts.AddContactActivity"
             android:exported="false" />
         <activity
             android:name=".AccountInfo"
             android:exported="false" />
         <activity
-            android:name=".ContactsActivity"
+            android:name=".Contacts.ContactsActivity"
             android:exported="false" />
         <activity
             android:name=".FragmentforUser.BottomNavigationFragment"
