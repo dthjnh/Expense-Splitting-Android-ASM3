@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F4F9F4">
+
+    <!-- Back and Favorite -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back Button"
+            android:background="?attr/selectableItemBackground"
+            android:layout_alignParentStart="true" />
+
+        <ImageButton
+            android:id="@+id/btnFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star_outline"
+            android:contentDescription="Favorite Button"
+            android:background="?attr/selectableItemBackground"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <!-- Avatar -->
+    <ImageView
+        android:id="@+id/contactAvatar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_avatar"
+        android:contentDescription="Contact Avatar"
+        android:layout_marginTop="24dp" />
+
+    <!-- Contact Name -->
+    <TextView
+        android:id="@+id/contactName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Charlotte Hanlin"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000" />
+
+    <!-- Contact Email -->
+    <TextView
+        android:id="@+id/contactEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="charlotte.hanlin@gmail.com"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textColor="#666666" />
+
+    <!-- Splitify Label -->
+    <TextView
+        android:id="@+id/contactLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SplitWise Account"
+        android:textSize="14sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textColor="#999999" />
+
+    <!-- Delete Button -->
+    <Button
+        android:id="@+id/btnDeleteContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Contact"
+        android:background="@drawable/rounded_button_red"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        android:textColor="@color/black" />
+
+    <!-- Request and Pay Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnRequest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Request"
+            android:background="@drawable/rounded_button"
+            android:padding="12dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="#000000"
+            android:backgroundTint="@null"/>
+
+        <Button
+            android:id="@+id/btnPay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pay"
+            android:background="@drawable/rounded_button_yellow"
+            android:padding="12dp"
+            android:textColor="#000000" />
+    </LinearLayout>
+</LinearLayout>

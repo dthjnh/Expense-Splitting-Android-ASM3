@@ -30,6 +30,10 @@ public class UserActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    public void openContacts(View view) {
+        startActivity(new Intent(UserActivity.this, ContactsActivity.class));
+    }
+
     public void logOutUser(View view) {
         // Log out from Firebase
         FirebaseAuth.getInstance().signOut();
