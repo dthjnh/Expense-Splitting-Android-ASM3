@@ -6,12 +6,11 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.expensesplitting.AccountInfo.AccountActivity;
 import com.example.expensesplitting.Contacts.ContactsActivity;
-import com.example.expensesplitting.Login.SignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class UserActivity extends AppCompatActivity {
 
