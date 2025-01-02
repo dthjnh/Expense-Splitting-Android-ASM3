@@ -60,9 +60,6 @@ public class AddContactActivity extends AppCompatActivity {
         buttonCancel.setOnClickListener(v -> finish());
     }
 
-    /**
-     * Check if the contact already exists in the local SQLite database.
-     */
     private boolean isContactInLocalDatabase(String email) {
         for (Contact contact : databaseHelper.getAllContacts()) {
             if (contact.getEmail().equalsIgnoreCase(email)) {
@@ -72,9 +69,6 @@ public class AddContactActivity extends AppCompatActivity {
         return false; // Contact does not exist
     }
 
-    /**
-     * Search for the contact in Firestore.
-     */
     private void searchContactInFirebase(String email) {
         firestore.collection("users")
                 .whereEqualTo("EmailAddress", email)

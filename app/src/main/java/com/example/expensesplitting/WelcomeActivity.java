@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensesplitting.Login.SignIn;
@@ -20,6 +19,10 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -29,19 +32,18 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button btnGoogleSignIn, btnSignUp, btnLogIn;
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onStart() {
         super.onStart();
 
-
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if(user!=null){
-            Intent intent = new Intent(getApplicationContext(),SignIn.class);
+        if (user != null) {
+            Intent intent = new Intent(getApplicationContext(), UserActivity.class);
             startActivity(intent);
+            finish();
         }
-
-
     }
 
     @Override
@@ -49,8 +51,9 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        // Initialize Firebase Auth
+        // Initialize Firebase Auth and Firestore
         firebaseAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         // Configure Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -95,7 +98,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 // Get the Google Sign-In account
                 GoogleSignInAccount account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
+                firebaseAuthWithGoogle(account.getIdToken(), account);
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign-in failed", e);
                 Toast.makeText(this, "Google Sign-In Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -103,7 +106,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
+    private void firebaseAuthWithGoogle(String idToken, GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
@@ -111,6 +114,7 @@ public class WelcomeActivity extends AppCompatActivity {
                         // Sign-in success
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         if (user != null) {
+                            saveUserToFirestore(user, account);
                             Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                             // Navigate to your app's main activity
                             startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
@@ -124,4 +128,18 @@ public class WelcomeActivity extends AppCompatActivity {
                 });
     }
 
+    private void saveUserToFirestore(FirebaseUser firebaseUser, GoogleSignInAccount account) {
+        String userId = firebaseUser.getUid();
+
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("FirstName", account.getGivenName());
+        userData.put("LastName", account.getFamilyName());
+        userData.put("EmailAddress", firebaseUser.getEmail());
+        userData.put("ProfilePicture", account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : "default");
+
+        firestore.collection("users").document(userId)
+                .set(userData)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "User saved successfully in Firestore"))
+                .addOnFailureListener(e -> Log.e(TAG, "Error saving user in Firestore", e));
+    }
 }

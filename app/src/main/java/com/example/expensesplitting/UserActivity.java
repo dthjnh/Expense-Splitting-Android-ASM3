@@ -24,7 +24,7 @@ public class UserActivity extends AppCompatActivity {
 
         // Initialize GoogleSignInClient
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // Ensure you use the correct web client ID
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -35,15 +35,12 @@ public class UserActivity extends AppCompatActivity {
         startActivity(new Intent(UserActivity.this, ContactsActivity.class));
     }
 
-    public void logOutUser(View view) {
-        // Log out from Firebase
-        FirebaseAuth.getInstance().signOut();
-
-        // Log out from Google account
-        googleSignInClient.signOut().addOnCompleteListener(task -> {
-            // Redirect to Sign In activity after successful logout
-            startActivity(new Intent(UserActivity.this, SignIn.class));
-            finish();
-        });
+    public void openInfo(View view) {
+        startActivity(new Intent(UserActivity.this, AccountActivity.class));
     }
+
+    public void openHome(View view) {
+        startActivity(new Intent(this, UserActivity.class));
+    }
+
 }
