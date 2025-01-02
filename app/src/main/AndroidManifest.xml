@@ -13,7 +13,19 @@
         android:theme="@style/Theme.ExpenseSplitting"
         tools:targetApi="31">
         <activity
-            android:name=".AccountActivity"
+            android:name=".AccountInfo.UpgradePlanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountInfo.DeviceManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountInfo.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountInfo.AccountSecurityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountInfo.AccountActivity"
             android:exported="false" />
         <activity
             android:name=".Contacts.ContactDetailActivity"
@@ -22,7 +34,7 @@
             android:name=".Contacts.AddContactActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo"
+            android:name=".AccountInfo.PersonalInfoActivity"
             android:exported="false" />
         <activity
             android:name=".Contacts.ContactsActivity"

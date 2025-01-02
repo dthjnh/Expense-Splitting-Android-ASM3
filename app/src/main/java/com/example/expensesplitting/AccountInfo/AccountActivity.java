@@ -1,8 +1,9 @@
-package com.example.expensesplitting;
+package com.example.expensesplitting.AccountInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,12 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensesplitting.Contacts.ContactsActivity;
 import com.example.expensesplitting.Login.SignIn;
+import com.example.expensesplitting.R;
+import com.example.expensesplitting.UserActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AccountActivity extends AppCompatActivity {
@@ -88,10 +90,8 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void logOutUser(android.view.View view) {
-        // Log out from Firebase
         FirebaseAuth.getInstance().signOut();
 
-        // Log out from Google account
         googleSignInClient.signOut().addOnCompleteListener(task -> {
             // Redirect to Sign In activity after successful logout
             startActivity(new Intent(this, SignIn.class));
@@ -99,15 +99,27 @@ public class AccountActivity extends AppCompatActivity {
         });
     }
 
-    public void openContacts(android.view.View view) {
+    public void openContacts(View view) {
         startActivity(new Intent(this, ContactsActivity.class));
     }
 
-    public void openInfo(android.view.View view) {
+    public void openInfo(View view) {
         startActivity(new Intent(this, AccountActivity.class));
     }
 
-    public void openHome(android.view.View view) {
+    public void openHome(View view) {
         startActivity(new Intent(this, UserActivity.class));
+    }
+
+    public void personalInfo(View view) {
+        startActivity(new Intent(this, PersonalInfoActivity.class));
+    }
+
+    public void accountSecurity(View view) {
+        startActivity(new Intent(this, AccountSecurityActivity.class));
+    }
+
+    public void upgradePlan(View view) {
+        startActivity(new Intent(this, UpgradePlanActivity.class));
     }
 }

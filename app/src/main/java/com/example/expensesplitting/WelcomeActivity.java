@@ -21,7 +21,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -114,6 +117,8 @@ public class WelcomeActivity extends AppCompatActivity {
                         // Sign-in success
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         if (user != null) {
+                            addCurrentDeviceToFirestore();
+
                             saveUserToFirestore(user, account);
                             Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                             // Navigate to your app's main activity
@@ -125,6 +130,26 @@ public class WelcomeActivity extends AppCompatActivity {
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
                         Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                     }
+                });
+    }
+
+    private void addCurrentDeviceToFirestore() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String deviceName = android.os.Build.MODEL;
+        String lastLogin = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(new Date());
+
+        Map<String, Object> deviceData = new HashMap<>();
+        deviceData.put("name", deviceName);
+        deviceData.put("lastLogin", lastLogin);
+        deviceData.put("userId", userId);
+
+        FirebaseFirestore.getInstance().collection("devices")
+                .add(deviceData)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("DeviceManagement", "Device added successfully.");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("DeviceManagement", "Failed to add device: " + e.getMessage());
                 });
     }
 

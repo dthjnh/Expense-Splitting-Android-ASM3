@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,6 +22,13 @@ import com.example.expensesplitting.R;
 import com.example.expensesplitting.UserActivity;
 import com.example.expensesplitting.WelcomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class SignIn extends AppCompatActivity {
 
@@ -55,6 +63,10 @@ public class SignIn extends AppCompatActivity {
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        boolean rememberMeState = sharedPreferences.getBoolean("rememberMe", false);
+        rememberMeCheckBox.setChecked(rememberMeState);
+
 
         // Clear input fields when logging out
         clearInputsOnLogout();
@@ -112,6 +124,7 @@ public class SignIn extends AppCompatActivity {
             auth.signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener(authResult -> {
                         Toast.makeText(SignIn.this, "Sign In Successful", Toast.LENGTH_SHORT).show();
+                        addCurrentDeviceToFirestore();
                         navigateBasedOnEmail(email);
                     })
                     .addOnFailureListener(e -> {
@@ -123,6 +136,26 @@ public class SignIn extends AppCompatActivity {
         signUpPrompt.setOnClickListener(v -> {
             startActivity(new Intent(SignIn.this, SignUp.class));
         });
+    }
+
+    private void addCurrentDeviceToFirestore() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String deviceName = android.os.Build.MODEL; // Get the device name
+        String lastLogin = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(new Date());
+
+        Map<String, Object> deviceData = new HashMap<>();
+        deviceData.put("name", deviceName);
+        deviceData.put("lastLogin", lastLogin);
+        deviceData.put("userId", userId);
+
+        FirebaseFirestore.getInstance().collection("devices")
+                .add(deviceData)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("DeviceManagement", "Device added successfully.");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("DeviceManagement", "Failed to add device: " + e.getMessage());
+                });
     }
 
     private void navigateBasedOnEmail(String email) {
