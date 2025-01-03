@@ -13,13 +13,14 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/navHome"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_home"
-            android:onClick="openHome"
-            android:contentDescription="Home Navigation" />
+            android:contentDescription="Home Navigation"
+            android:background="@null"
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/labelHome"
@@ -40,13 +41,14 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/navGroups"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_groups"
-            android:onClick="openGroups"
-            android:contentDescription="Groups Navigation" />
+            android:contentDescription="Groups Navigation"
+            android:background="@null"
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/labelGroups"
@@ -67,13 +69,14 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/navContacts"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_contacts"
-            android:onClick="openContacts"
-            android:contentDescription="Contacts Navigation" />
+            android:contentDescription="Contacts Navigation"
+            android:background="@null"
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/labelContacts"
@@ -94,13 +97,14 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/navAccount"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_account"
-            android:onClick="openInfo"
-            android:contentDescription="Account Navigation" />
+            android:contentDescription="Account Navigation"
+            android:background="@null"
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/labelAccount"
