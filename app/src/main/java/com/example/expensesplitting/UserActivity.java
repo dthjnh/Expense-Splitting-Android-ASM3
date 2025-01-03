@@ -30,16 +30,4 @@ public class UserActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    public void openContacts(View view) {
-        startActivity(new Intent(UserActivity.this, ContactsActivity.class));
-    }
-
-    public void openInfo(View view) {
-        startActivity(new Intent(UserActivity.this, AccountActivity.class));
-    }
-
-    public void openHome(View view) {
-        startActivity(new Intent(this, UserActivity.class));
-    }
-
 }
