@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="320dp"
+    android:layout_height="wrap_content"
+    android:background="#FEBB1B"
     android:orientation="vertical"
-    android:background="#F9A825"
-    android:padding="50dp">
+    android:padding="24px">
 
-    <!-- Logo and Notification -->
+    <!-- Header Section -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="35dp">
 
+        <!-- Logo -->
         <ImageView
-            android:id="@+id/logoIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_logo"
+            android:id="@+id/ic_logo"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:contentDescription="Logo Icon"
-            android:layout_alignParentStart="true" />
+            android:scaleType="fitXY"
+            android:src="@drawable/logo" />
 
+        <!-- App Name -->
         <TextView
             android:id="@+id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SplitWise"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/urbanist_medium"
+            android:text="Splitify"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
+        <!-- Notification Icon -->
         <ImageView
             android:id="@+id/notificationIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_notification"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:contentDescription="Notification Icon"
-            android:layout_alignParentEnd="true" />
+            android:src="@drawable/ic_notification" />
     </RelativeLayout>
 
     <!-- Balance Section -->
@@ -43,55 +54,61 @@
         android:id="@+id/balanceAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0$"
-        android:textColor="#000000"
-        android:textSize="36sp"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="9,567.50$"
+        android:textColor="#000000"
+        android:textSize="48sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/balanceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Available balance"
         android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_gravity="center"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
-    <!-- Action Buttons with Labels -->
+    <!-- Action Buttons Section -->
     <LinearLayout
         android:id="@+id/actionButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:layout_marginTop="30dp">
+        android:orientation="horizontal">
 
-        <!-- Send Button -->
+        <!-- Pay Button -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginEnd="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/btnSend"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_send"
-                android:contentDescription="Send Button" />
+                android:id="@+id/pay_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/pay_button"
+                android:contentDescription="Pay Button" />
 
             <TextView
-                android:id="@+id/labelSend"
+                android:id="@+id/labelPay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send"
-                android:textSize="12sp"
-                android:textColor="#000000"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/urbanist_medium"
                 android:gravity="center"
-                android:layout_marginTop="4dp"
+                android:text="Pay"
+                android:textColor="#000000"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -99,26 +116,29 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginEnd="17dp"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
-            android:layout_marginStart="16dp">
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/btnRequest"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_request"
+                android:id="@+id/request_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/request_button"
                 android:contentDescription="Request Button" />
 
             <TextView
                 android:id="@+id/labelRequest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Request"
-                android:textSize="12sp"
-                android:textColor="#000000"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/urbanist_medium"
                 android:gravity="center"
-                android:layout_marginTop="4dp"
+                android:text="Request"
+                android:textColor="#000000"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -126,26 +146,29 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginEnd="17dp"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
-            android:layout_marginStart="16dp">
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/btnTopUp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_top_up"
-                android:contentDescription="Top Up Button" />
+                android:id="@+id/top_up_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/top_up_button"
+                android:contentDescription="Top-Up Button" />
 
             <TextView
                 android:id="@+id/labelTopUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Top-Up"
-                android:textSize="12sp"
-                android:textColor="#000000"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/urbanist_medium"
                 android:gravity="center"
-                android:layout_marginTop="4dp"
+                android:text="Top Up"
+                android:textColor="#000000"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -153,26 +176,29 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginEnd="17dp"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
-            android:layout_marginStart="16dp">
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/btnWithdraw"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_withdraw"
+                android:id="@+id/withdraw_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/withdraw_button"
                 android:contentDescription="Withdraw Button" />
 
             <TextView
                 android:id="@+id/labelWithdraw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Withdraw"
-                android:textSize="12sp"
-                android:textColor="#000000"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/urbanist_medium"
                 android:gravity="center"
-                android:layout_marginTop="4dp"
+                android:text="Withdraw"
+                android:textColor="#000000"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -180,26 +206,28 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
-            android:layout_marginStart="16dp">
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/btnHistory"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_history"
+                android:id="@+id/history_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/history_button"
                 android:contentDescription="History Button" />
 
             <TextView
                 android:id="@+id/labelHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"
-                android:textSize="12sp"
-                android:textColor="#000000"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/urbanist_medium"
                 android:gravity="center"
-                android:layout_marginTop="4dp"
+                android:text="History"
+                android:textColor="#000000"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

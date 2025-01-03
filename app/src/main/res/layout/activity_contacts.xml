@@ -91,7 +91,7 @@
     <!-- Bottom Navigation Fragment -->
     <fragment
         android:id="@+id/bottomNavigationFragment"
-        android:name="com.example.expensesplitting.FragmentforUser.BottomNavigationFragment"
+        android:name="com.example.expensesplitting.FragmentForUser.BottomNavigationFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
