@@ -1,65 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center_horizontal">
 
     <!-- Activity Header -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp">
 
         <TextView
             android:id="@+id/activityLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_medium"
             android:text="Activity"
             android:textColor="#000000"
-            android:textSize="16sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/viewAll"
+        <LinearLayout
+            android:id="@+id/viewAllContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View All"
-            android:textColor="#F9A825"
-            android:textSize="14sp"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/viewAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_medium"
+                android:text="View All"
+                android:textColor="#757575"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/arrowIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5sp"
+                android:contentDescription="Arrow Icon"
+                app:srcCompat="@drawable/ic_arrow" />
+        </LinearLayout>
     </RelativeLayout>
 
     <!-- No Transactions Section -->
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="16dp">
+        android:layout_marginBottom="16dp"
+        android:contentDescription="No Transactions Image"
+        app:srcCompat="@drawable/no_transactions" />
 
-        <ImageView
-            android:id="@+id/noTransactionsIcon"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/ic_no_transactions"
-            android:contentDescription="No Transactions Icon" />
-
-        <TextView
-            android:id="@+id/noTransactionsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No Transactions"
-            android:textColor="#808080"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/noTransactionsSubText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="You haven't made any transactions."
-            android:textColor="#B0B0B0"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
-    </LinearLayout>
 </LinearLayout>

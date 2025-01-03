@@ -5,4 +5,5 @@
     <string name="password_icon">Password Icon</string>
     <string name="show_password_icon">Show Password Icon</string>
     <string name="default_web_client_id">1048014459148-s7o282r3heh2vktsldb9pe584gu3p0ri.apps.googleusercontent.com</string>
+    <string name="add_pay_button">Add Pay button</string>
 </resources>

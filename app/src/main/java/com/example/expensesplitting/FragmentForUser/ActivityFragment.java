@@ -1,4 +1,4 @@
-package com.example.expensesplitting.FragmentforUser;
+package com.example.expensesplitting.FragmentForUser;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.expensesplitting.R;
 
-public class TopSectionFragment extends Fragment {
+public class ActivityFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_top_section, container, false);
+        return inflater.inflate(R.layout.fragment_activity, container, false);
     }
 }

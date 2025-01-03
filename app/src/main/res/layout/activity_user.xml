@@ -2,23 +2,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:androi="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <fragment
-        android:id="@+id/topSectionFragment"
-        android:name="com.example.expensesplitting.FragmentforUser.TopSectionFragment"
+        android:id="@+id/top_section_fragment"
+        android:name="com.example.expensesplitting.FragmentForUser.TopSectionFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/activityFragment"
-        android:name="com.example.expensesplitting.FragmentforUser.ActivityFragment"
+        android:name="com.example.expensesplitting.FragmentForUser.ActivityFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/bottomNavigationFragment"
-        android:name="com.example.expensesplitting.FragmentforUser.BottomNavigationFragment"
+        androi:name="com.example.expensesplitting.FragmentforUser.BottomNavigationFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
