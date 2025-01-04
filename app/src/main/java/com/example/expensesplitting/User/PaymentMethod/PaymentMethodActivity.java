@@ -83,6 +83,10 @@ public class PaymentMethodActivity extends AppCompatActivity {
                 });
     }
 
+    public void backtoUserProfile(View view) {
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

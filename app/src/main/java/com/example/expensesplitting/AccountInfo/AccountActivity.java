@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.expensesplitting.Contacts.ContactsActivity;
 import com.example.expensesplitting.Login.SignIn;
 import com.example.expensesplitting.R;
+import com.example.expensesplitting.User.PaymentMethod.PaymentMethodActivity;
 import com.example.expensesplitting.UserActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -93,22 +94,9 @@ public class AccountActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
 
         googleSignInClient.signOut().addOnCompleteListener(task -> {
-            // Redirect to Sign In activity after successful logout
             startActivity(new Intent(this, SignIn.class));
             finish();
         });
-    }
-
-    public void openContacts(View view) {
-        startActivity(new Intent(this, ContactsActivity.class));
-    }
-
-    public void openInfo(View view) {
-        startActivity(new Intent(this, AccountActivity.class));
-    }
-
-    public void openHome(View view) {
-        startActivity(new Intent(this, UserActivity.class));
     }
 
     public void personalInfo(View view) {
@@ -121,5 +109,9 @@ public class AccountActivity extends AppCompatActivity {
 
     public void upgradePlan(View view) {
         startActivity(new Intent(this, UpgradePlanActivity.class));
+    }
+
+    public void paymentMethod(View view) {
+        startActivity(new Intent(this, PaymentMethodActivity.class));
     }
 }
