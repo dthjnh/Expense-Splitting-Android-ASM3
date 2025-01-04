@@ -213,33 +213,6 @@
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
 
-        <!-- Deactivate Account -->
-        <LinearLayout
-            android:id="@+id/deactivateAccountLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingVertical="8dp"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:id="@+id/deactivateAccountLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Deactivate Account"
-                android:textSize="16sp"
-                android:textColor="#000000" />
-
-            <ImageView
-                android:id="@+id/deactivateAccountArrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_arrow_right" />
-        </LinearLayout>
-
         <!-- Delete Account -->
         <LinearLayout
             android:id="@+id/deleteAccountLayout"
