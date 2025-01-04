@@ -1,7 +1,7 @@
 package com.example.expensesplitting.Contacts;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -80,7 +80,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         btnRequest.setOnClickListener(v -> Toast.makeText(this, "Request clicked", Toast.LENGTH_SHORT).show());
 
         // Pay button
-        btnPay.setOnClickListener(v -> Toast.makeText(this, "Pay clicked", Toast.LENGTH_SHORT).show());
+       //btnPay.setOnClickListener(v -> startActivity(new Intent(this, AmountToPayActivity.class)));
 
     }
 

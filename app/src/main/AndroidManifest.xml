@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpenseSplitting"
         tools:targetApi="31">
-
+        <activity
+            android:name=".PayActivity.AmountToPayActivity"
+            android:exported="false" />
         <!-- Activities -->
         <activity
             android:name=".AccountInfo.UpgradePlanActivity"
@@ -61,6 +62,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -69,13 +71,10 @@
         <activity android:name=".Admin" />
         <activity android:name=".Login.SignUp" />
         <activity android:name=".Login.ForgotPassword" />
-        <activity android:name=".User.Pay.PayActivity" />
-
-        <!-- Meta-data -->
+        <activity android:name=".User.Pay.PayActivity" /> <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>

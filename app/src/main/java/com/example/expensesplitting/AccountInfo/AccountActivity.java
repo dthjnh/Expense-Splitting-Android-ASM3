@@ -99,18 +99,6 @@ public class AccountActivity extends AppCompatActivity {
         });
     }
 
-    public void openContacts(View view) {
-        startActivity(new Intent(this, ContactsActivity.class));
-    }
-
-    public void openInfo(View view) {
-        startActivity(new Intent(this, AccountActivity.class));
-    }
-
-    public void openHome(View view) {
-        startActivity(new Intent(this, UserActivity.class));
-    }
-
     public void personalInfo(View view) {
         startActivity(new Intent(this, PersonalInfoActivity.class));
     }
