@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:padding="16dp">
 
@@ -36,7 +37,7 @@
             android:id="@+id/subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="With SplitWise, expenses split bills is easier than ever before."
+            android:text="With Splitify, expenses split bills is easier than ever before."
             android:textColor="#808080"
             android:textSize="14sp"
             android:layout_marginTop="8dp"
@@ -47,9 +48,12 @@
         <Button
             android:id="@+id/btnGoogleSignIn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/white_rounded_button"
+            android:backgroundTint="@color/white"
+            app:cornerRadius="100dp"
+            app:strokeColor="@color/light_gray"
+            app:strokeWidth="1dp"
             android:text="Continue with Google"
             android:textColor="#000"
             android:drawableLeft="@drawable/ic_google"
@@ -61,22 +65,28 @@
         <Button
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#F9A825"
+            android:backgroundTint="@color/yellow"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:text="Sign up"
-            android:textColor="#FFF"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <!-- Log In Button -->
         <Button
             android:id="@+id/btnLogIn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/outline_button"
+            android:backgroundTint="@color/white"
             android:text="Log in"
-            android:textColor="#F9A825"
+            android:textColor="@color/black"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:textStyle="bold" />
 
         <!-- Privacy Policy and Terms of Service -->

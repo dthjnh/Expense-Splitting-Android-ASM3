@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF">
 
     <!-- Title -->
@@ -224,11 +225,14 @@
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/confirmPasswordLayout"
         android:layout_marginTop="25dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        app:cornerRadius="100dp"
+        app:strokeColor="#FEBB1B"
+        app:strokeWidth="1dp"
         android:backgroundTint="#F9A825"
         android:text="Sign Up"
         android:textColor="#FFFFFF"

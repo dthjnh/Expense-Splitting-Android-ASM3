@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:background="#F9F9F9">
 
@@ -131,10 +132,13 @@
         <!-- Sign In Button -->
         <Button
             android:id="@+id/btnSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="380dp"
+            android:layout_height="60dp"
             android:backgroundTint="#F9A825"
             android:text="Sign in"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:textColor="#FFF"
             android:textStyle="bold" />
 

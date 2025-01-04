@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#F4F9F4">
+    android:padding="16dp">
 
     <!-- Back and Favorite -->
     <RelativeLayout
@@ -68,7 +68,7 @@
         android:id="@+id/contactLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SplitWise Account"
+        android:text="Splitify Account"
         android:textSize="14sp"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
@@ -80,8 +80,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete Contact"
-        android:background="@drawable/rounded_button_red"
+        android:backgroundTint="@color/white"
         android:layout_gravity="center"
+        app:cornerRadius="100dp"
+        app:strokeColor="@color/red"
+        app:strokeWidth="1dp"
         android:layout_marginTop="24dp"
         android:padding="8dp"
         android:textColor="@color/black" />
@@ -100,11 +103,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Request"
-            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/white"
             android:padding="12dp"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:layout_marginEnd="8dp"
-            android:textColor="#000000"
-            android:backgroundTint="@null"/>
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/btnPay"
@@ -112,7 +117,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Pay"
-            android:background="@drawable/rounded_button_yellow"
+            app:cornerRadius="100dp"
+            app:strokeWidth="1dp"
+            android:backgroundTint="@color/yellow"
             android:padding="12dp"
             android:textColor="#000000" />
     </LinearLayout>

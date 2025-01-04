@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/white">
@@ -72,8 +73,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cancel"
-            android:textColor="#F9A825"
-            android:background="@drawable/rounded_button"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:layout_marginEnd="8dp" />
 
         <!-- Search Contact Button -->
@@ -83,8 +87,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Search Contact"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/rounded_button_yellow" />
+            android:textColor="@color/black"
+            android:backgroundTint="@color/yellow"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"/>
     </LinearLayout>
 
 </LinearLayout>

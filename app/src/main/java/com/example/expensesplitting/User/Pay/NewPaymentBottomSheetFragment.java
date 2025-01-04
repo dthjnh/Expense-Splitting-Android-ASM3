@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.expensesplitting.Contacts.Contact;
+import com.example.expensesplitting.Database.ContactDatabaseHelper;
 import com.example.expensesplitting.Model.Transaction;
 import com.example.expensesplitting.Model.User;
 import com.example.expensesplitting.R;
@@ -86,26 +88,21 @@ public class NewPaymentBottomSheetFragment extends BottomSheetDialogFragment {
             });
         });
 
-        fetchUsers(recipientSpinner);
+        fetchUsersFromSQLite(recipientSpinner);
 
         return view;
     }
 
-    private void fetchUsers(Spinner recipientSpinner) {
-        db.collection("users").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    String firstName = document.getString("FirstName");
-                    String lastName = document.getString("LastName");
-                    String emailAddress = document.getString("EmailAddress");
+    private void fetchUsersFromSQLite(Spinner recipientSpinner) {
+        ContactDatabaseHelper dbHelper = new ContactDatabaseHelper(getContext());
+        List<Contact> contactList = dbHelper.getAllContacts();
 
-                    userList.add(new User(firstName, lastName, emailAddress));
-                }
-                UserAdapter adapter = new UserAdapter(getContext(), userList);
-                recipientSpinner.setAdapter(adapter);
-            } else {
-                Log.e("NewPaymentBottomSheetFragment", "Error fetching users", task.getException());
-            }
-        });
+        List<User> userList = new ArrayList<>();
+        for (Contact contact : contactList) {
+            userList.add(new User(contact.getName(), "", contact.getEmail()));
+        }
+
+        UserAdapter adapter = new UserAdapter(getContext(), userList);
+        recipientSpinner.setAdapter(adapter);
     }
 }

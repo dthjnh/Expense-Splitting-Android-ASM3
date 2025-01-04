@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:background="@color/white">
 
@@ -74,6 +75,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Log Out"
+                    app:cornerRadius="100dp"
+                    app:strokeColor="@color/red"
+                    app:strokeWidth="1dp"
                     android:backgroundTint="@color/red"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -85,8 +89,11 @@
         <Button
             android:id="@+id/logOutAllDevicesButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Log Out from All Devices"
+            app:cornerRadius="100dp"
+            app:strokeColor="@color/red"
+            app:strokeWidth="1dp"
             android:backgroundTint="@color/red"
             android:textColor="@color/white"
             android:textStyle="bold"

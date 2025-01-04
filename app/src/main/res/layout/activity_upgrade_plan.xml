@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
     <LinearLayout
@@ -51,7 +52,7 @@
                 android:gravity="center"
                 android:text="Monthly"
                 android:background="@drawable/tab_selected_background"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:paddingVertical="8dp" />
 
             <TextView
@@ -73,6 +74,7 @@
             android:orientation="vertical"
             android:background="@drawable/rounded_background"
             android:padding="16dp"
+            android:backgroundTint="@color/light_gray"
             android:layout_marginTop="16dp">
 
             <TextView
@@ -113,6 +115,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Continue - $4.99"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:backgroundTint="@color/yellow"
             android:textColor="#000000"
             android:textStyle="bold"

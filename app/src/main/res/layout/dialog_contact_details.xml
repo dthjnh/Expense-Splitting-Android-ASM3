@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -65,7 +66,7 @@
             android:id="@+id/dialogAccountStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SplitWise Account"
+            android:text="Splitify Account"
             android:textSize="14sp"
             android:textColor="@color/gray"
             android:gravity="center"
@@ -95,9 +96,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/white"
             android:text="Cancel"
             android:textColor="@color/black"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:layout_marginEnd="8dp" />
 
         <Button
@@ -105,9 +109,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/rounded_button_yellow"
+            android:backgroundTint="@color/yellow"
             android:text="Add to My Contact"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 </LinearLayout>
