@@ -56,8 +56,8 @@
     <!-- No Transactions Section -->
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="366dp"
+        android:layout_height="368dp"
         android:layout_marginBottom="16dp"
         android:contentDescription="No Transactions Image"
         app:srcCompat="@drawable/no_transactions" />

@@ -1,49 +1,15 @@
 package com.example.expensesplitting.Model;
 
 public class User {
-    private String address;
-    private String confirmPassword;
-    private String dateOfBirth;
-    private String emailAddress;
     private String firstName;
     private String lastName;
-    private String password;
-    private String phone;
+    private String emailAddress;
 
     // Constructor
-    public User(String address, String confirmPassword, String dateOfBirth, String emailAddress, String firstName, String lastName, String password, String phone) {
-        this.address = address;
-        this.confirmPassword = confirmPassword;
-        this.dateOfBirth = dateOfBirth;
-        this.emailAddress = emailAddress;
+    public User(String firstName, String lastName, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        this.emailAddress = emailAddress;
     }
 
     public String getEmailAddress() {
@@ -70,19 +36,4 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 }

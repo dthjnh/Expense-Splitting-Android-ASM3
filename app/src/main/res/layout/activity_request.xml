@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/urbanist_medium"
-            android:text="Pay"
+            android:text="Request"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No payments available"
+        android:text="No requests available"
         android:textColor="#666666"
         android:textSize="16sp"
         android:visibility="gone" />
@@ -71,7 +71,7 @@
             android:layout_height="50dp"
             android:backgroundTint="#FBC02D"
             android:clickable="true"
-            android:contentDescription="@string/add_pay_button"
+            android:contentDescription="Request Button"
             android:focusable="true"
             android:src="@drawable/add_button" />
     </LinearLayout>
