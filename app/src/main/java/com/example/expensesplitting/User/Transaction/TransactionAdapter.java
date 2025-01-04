@@ -1,7 +1,5 @@
 package com.example.expensesplitting.User.Transaction;
 
-import static java.security.AccessController.getContext;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +20,6 @@ import com.example.expensesplitting.R;
 import com.example.expensesplitting.User.Pay.PaymentReceiptActivity;
 import com.example.expensesplitting.User.Request.RequestBottomSheetFragment;
 import com.example.expensesplitting.User.Request.RequestSuccessBottomFragment;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -152,7 +149,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
-            usernameTextView = itemView.findViewById(R.id.usernameTextView);
+            usernameTextView = itemView.findViewById(R.id.item_card_number);
             recipientTextView = itemView.findViewById(R.id.recipientTextView);
             actionTextView = itemView.findViewById(R.id.actionTextView);
             amountTextView = itemView.findViewById(R.id.amountTextView);

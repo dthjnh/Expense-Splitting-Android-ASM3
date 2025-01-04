@@ -74,6 +74,9 @@
         <activity android:name=".User.Pay.PaymentReceiptActivity"/>
 
         <activity android:name=".User.Request.RequestActivity" />
+
+        <activity android:name=".User.PaymentMethod.NewPaymentActivity" />
+        <activity android:name=".User.PaymentMethod.PaymentMethodActivity" />
         <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"
