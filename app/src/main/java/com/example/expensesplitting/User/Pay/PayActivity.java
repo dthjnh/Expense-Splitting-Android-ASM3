@@ -47,7 +47,7 @@ public class PayActivity extends AppCompatActivity implements TransactionAdapter
 
         emptyStateText = findViewById(R.id.empty_state_text);
 
-        ImageView backButton = findViewById(R.id.back_button);
+        ImageView backButton = findViewById(R.id.close_add_payment_button);
         backButton.setOnClickListener(v -> finish());
 
         transactionList = new ArrayList<>();
