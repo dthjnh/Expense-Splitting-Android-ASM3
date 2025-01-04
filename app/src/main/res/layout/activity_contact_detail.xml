@@ -118,6 +118,7 @@
             android:layout_weight="1"
             android:text="Pay"
             app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
             app:strokeWidth="1dp"
             android:backgroundTint="@color/yellow"
             android:padding="12dp"
