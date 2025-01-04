@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.User.Pay.PayActivity;
+import com.example.expensesplitting.User.Request.RequestActivity;
 
 public class TopSectionFragment extends Fragment {
     ImageButton payButton, requestButton, topUpButton, withdrawButton, historyButton;
@@ -33,15 +34,13 @@ public class TopSectionFragment extends Fragment {
         historyButton = view.findViewById(R.id.history_button);
 
         payButton.setOnClickListener(v -> {
-            // Open PayFragment
             Intent intent = new Intent(getActivity(), PayActivity.class);
             startActivity(intent);
-            Toast.makeText(getActivity(), "Pay", Toast.LENGTH_SHORT).show();
         });
 
         requestButton.setOnClickListener(v -> {
-            // Open RequestFragment
-            Toast.makeText(getActivity(), "Request", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), RequestActivity.class);
+            startActivity(intent);
         });
 
         topUpButton.setOnClickListener(v -> {

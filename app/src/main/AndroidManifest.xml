@@ -69,8 +69,11 @@
         <activity android:name=".Admin" />
         <activity android:name=".Login.SignUp" />
         <activity android:name=".Login.ForgotPassword" />
-        <activity android:name=".User.Pay.PayActivity" />
 
+        <activity android:name=".User.Pay.PayActivity" />
+        <activity android:name=".User.Pay.PaymentReceiptActivity"/>
+
+        <activity android:name=".User.Request.RequestActivity" />
         <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"

@@ -1,4 +1,4 @@
-package com.example.expensesplitting.User.Pay;
+package com.example.expensesplitting.User.Request;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.example.expensesplitting.Model.Transaction;
 import com.example.expensesplitting.Model.User;
 import com.example.expensesplitting.R;
+import com.example.expensesplitting.User.Pay.UserAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,25 +28,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class NewPaymentBottomSheetFragment extends BottomSheetDialogFragment {
+public class NewRequestBottomSheetFragment extends BottomSheetDialogFragment {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final List<User> userList = new ArrayList<>();
     private FirebaseUser currentUser;
 
-    private OnNewPaymentListener paymentAddedListener;
+    private OnNewRequestListener requestAddedListener;
 
-    public interface OnNewPaymentListener {
-        void onNewPayment(Transaction transaction, String transactionId);
+    public interface OnNewRequestListener {
+        void onNewRequest(Transaction transaction, String transactionId);
     }
 
-    public void setPaymentAddedListener(OnNewPaymentListener listener) {
-        this.paymentAddedListener = listener;
+    public void setRequestAddedListener(OnNewRequestListener listener) {
+        this.requestAddedListener = listener;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_payment_bottom_sheet, container, false);
+        View view = inflater.inflate(R.layout.fragment_new_request_bottom_sheet, container, false);
 
         EditText amountText = view.findViewById(R.id.amount_text);
         Spinner recipientSpinner = view.findViewById(R.id.recipient_spinner);
@@ -56,33 +57,41 @@ public class NewPaymentBottomSheetFragment extends BottomSheetDialogFragment {
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        Button newPaymentButton = view.findViewById(R.id.new_request_button);
-        newPaymentButton.setOnClickListener(v -> {
+        Button newRequestButton = view.findViewById(R.id.new_request_button);
+        newRequestButton.setOnClickListener(v -> {
             User selectedRecipient = (User) recipientSpinner.getSelectedItem();
-            Transaction newTransaction = new Transaction(
+            double amount = Double.parseDouble(amountText.getText().toString());
+            String note = noteText.getText().toString();
+            Date currentDate = new Date();
+
+            // Create new request transaction
+            Transaction newRequestTransaction = new Transaction(
                     null,
-                    "pay",
-                    currentUser.getDisplayName(),
-                    currentUser.getEmail(),
+                    "request",
                     selectedRecipient.getFirstName() + " " + selectedRecipient.getLastName(),
                     selectedRecipient.getEmailAddress(),
-                    Double.parseDouble(amountText.getText().toString()),
-                    new Date(),
-                    noteText.getText().toString(),
-                    "unpaid"
-                    );
+                    currentUser.getDisplayName(),
+                    currentUser.getEmail(),
+                    amount,
+                    currentDate,
+                    note,
+                    "request"
+            );
 
-            db.collection("transactions").add(newTransaction).addOnSuccessListener(documentReference -> {
-                String transactionId = documentReference.getId();
-                newTransaction.setDocumentId(transactionId);
-                Toast.makeText(getContext(), "Payment created successfully", Toast.LENGTH_SHORT).show();
-                if (paymentAddedListener != null) {
-                    paymentAddedListener.onNewPayment(newTransaction, transactionId);
+            // Add request transaction to Firestore
+            db.collection("transactions").add(newRequestTransaction).addOnSuccessListener(documentReference -> {
+                String requestTransactionId = documentReference.getId();
+                newRequestTransaction.setDocumentId(requestTransactionId);
+
+                Toast.makeText(getContext(), "Request created successfully", Toast.LENGTH_SHORT).show();
+                if (requestAddedListener != null) {
+                    requestAddedListener.onNewRequest(newRequestTransaction, requestTransactionId);
                 }
                 dismiss();
+
             }).addOnFailureListener(e -> {
-                Toast.makeText(getContext(), "Payment creation failed", Toast.LENGTH_SHORT).show();
-                Log.e("NewPaymentBottomSheetFragment", "Error creating payment", e);
+                Toast.makeText(getContext(), "Request creation failed", Toast.LENGTH_SHORT).show();
+                Log.e("NewRequestBottomSheetFragment", "Error creating request", e);
             });
         });
 

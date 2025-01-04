@@ -6,25 +6,44 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Transaction implements Serializable {
+    private String documentId;
     private String type;
     private String username;
+    private String userEmail;
     private String recipient;
-    private String amount;
+    private String recipientEmail;
+    private double amount;
     private Date timestamp;
     private String note;
+    private String status;
 
-    public Transaction(String type, String username, String recipient, double amount, Date timestamp, String note) {
+    public Transaction(String documentId, String type, String username, String userEmail ,String recipient, String recipientEmail, double amount, Date timestamp, String note, String status) {
+        this.documentId = documentId;
         this.type = type;
         this.username = username;
+        this.userEmail = userEmail;
         this.recipient = recipient;
-        this.amount = formatAmount(amount);
+        this.recipientEmail = recipientEmail;
+        this.amount = (amount);
         this.timestamp = timestamp;
         this.note = note;
+        this.status = status;
+    }
+
+    public Transaction() {
     }
 
     private String formatAmount(double amount) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
         return currencyFormat.format(amount);
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
     public String getType() {
@@ -43,6 +62,14 @@ public class Transaction implements Serializable {
         this.username = username;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public String getRecipient() {
         return recipient;
     }
@@ -51,11 +78,19 @@ public class Transaction implements Serializable {
         this.recipient = recipient;
     }
 
-    public CharSequence getAmount() {
+    public String getRecipientEmail() {
+        return recipientEmail;
+    }
+
+    public void setRecipientEmail(String recipientEmail) {
+        this.recipientEmail = recipientEmail;
+    }
+
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -73,5 +108,13 @@ public class Transaction implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

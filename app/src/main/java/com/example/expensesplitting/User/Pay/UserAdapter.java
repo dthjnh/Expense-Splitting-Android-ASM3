@@ -1,7 +1,8 @@
-package com.example.expensesplitting.User.Transaction;
+package com.example.expensesplitting.User.Pay;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +43,10 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
 
         User user = getItem(position);
+        Log.d("UserAdapter", "User: " + user.getFirstName());
         if (user != null) {
-            TextView recipientName = convertView.findViewById(R.id.recipient_name);
-            TextView recipientEmail = convertView.findViewById(R.id.recipient_email);
+            TextView recipientName = convertView.findViewById(R.id.request_username);
+            TextView recipientEmail = convertView.findViewById(R.id.request_user_email);
 
             recipientName.setText(user.getFirstName() + " " + user.getLastName());
             recipientEmail.setText(user.getEmailAddress());
