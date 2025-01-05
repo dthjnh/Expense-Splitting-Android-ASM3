@@ -93,15 +93,6 @@ public class ContactsActivity extends AppCompatActivity {
         });
     }
 
-    public void openContacts(View view) {
-        startActivity(new Intent(this, ContactsActivity.class));
-    }
-
-    public void openHome(View view) {
-        startActivity(new Intent(this, UserActivity.class));
-    }
-
-
     private void loadAllContacts() {
         contactList.clear();
         contactList.addAll(databaseHelper.getAllContacts());

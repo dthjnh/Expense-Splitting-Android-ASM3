@@ -105,10 +105,8 @@ public class AccountSecurityActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
 
-        // Show the dialog first to customize the button colors
         dialog.show();
 
-        // Customize button colors
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.gray));
     }
@@ -117,10 +115,8 @@ public class AccountSecurityActivity extends AppCompatActivity {
         if (auth.getCurrentUser() != null) {
             String userId = auth.getCurrentUser().getUid();
 
-            // Delete user data from Firestore
             firestore.collection("users").document(userId).delete()
                     .addOnSuccessListener(aVoid -> {
-                        // Delete user from Firebase Authentication
                         auth.getCurrentUser().delete()
                                 .addOnSuccessListener(aVoid1 -> {
                                     Toast.makeText(this, "Account deleted successfully", Toast.LENGTH_SHORT).show();

@@ -15,9 +15,15 @@ import java.util.List;
 
 public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder> {
     private final List<PaymentMethod> paymentMethods;
+    private final OnPaymentMethodClickListener listener;
 
-    public PaymentMethodAdapter(List<PaymentMethod> paymentMethods) {
+    public interface OnPaymentMethodClickListener {
+        void onDeletePaymentMethod(PaymentMethod paymentMethod);
+    }
+
+    public PaymentMethodAdapter(List<PaymentMethod> paymentMethods, OnPaymentMethodClickListener listener) {
         this.paymentMethods = paymentMethods;
+        this.listener = listener;
     }
 
 
@@ -32,6 +38,11 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
     public void onBindViewHolder(@NonNull PaymentMethodViewHolder holder, int position) {
         PaymentMethod paymentMethod = paymentMethods.get(position);
         holder.cardNumber.setText(formatCardNumber(paymentMethod.getCardNumber()));
+
+        holder.itemView.setOnLongClickListener(v -> {
+            listener.onDeletePaymentMethod(paymentMethod);
+            return true;
+        });
     }
 
     @Override
