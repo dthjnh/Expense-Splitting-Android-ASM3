@@ -1,5 +1,6 @@
 package com.example.expensesplitting.AccountInfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,16 @@ public class UpgradePlanActivity extends AppCompatActivity {
         planPrice = findViewById(R.id.planPrice);
         continueButton = findViewById(R.id.continueButton);
 
+        continueButton.setOnClickListener(v -> {
+            String selectedPlanPrice = planPrice.getText().toString();
+            String selectedPlanType = monthlyTab.getCurrentTextColor() == getResources().getColor(R.color.white) ? "Monthly" : "Yearly";  // Determine the selected plan type
+
+            Intent intent = new Intent(UpgradePlanActivity.this, SelectPaymentMethodActivity.class);
+            intent.putExtra("SELECTED_PLAN_PRICE", selectedPlanPrice);
+            intent.putExtra("PLAN_TYPE", selectedPlanType);
+            startActivity(intent);
+        });
+
         setupPlan("Monthly", "$4.99 / month");
 
         monthlyTab.setOnClickListener(v -> setupPlan("Monthly", "$4.99 / month"));
@@ -47,6 +58,6 @@ public class UpgradePlanActivity extends AppCompatActivity {
     }
 
     public void backtoUserProfile(View view) {
-        finish();
+        startActivity(new Intent(UpgradePlanActivity.this, AccountActivity.class));
     }
 }
