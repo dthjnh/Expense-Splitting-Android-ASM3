@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F6F6F6"
     tools:context=".AccountInfo.SelectPaymentMethodActivity">>
 
     <!-- Title Section -->
@@ -34,7 +33,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#000000" />
-
 
     </RelativeLayout>
 
@@ -72,11 +70,11 @@
         <Button
             android:id="@+id/continueButton"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="70dp"
             android:backgroundTint="#FEBB1B"
             android:text="Continue"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:fontFamily="@font/urbanist_bold"

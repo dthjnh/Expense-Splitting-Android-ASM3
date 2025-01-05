@@ -12,8 +12,9 @@ import com.example.expensesplitting.R;
 
 public class UpgradePlanActivity extends AppCompatActivity {
 
-    private TextView monthlyTab, yearlyTab, planPrice;
+    private TextView monthlyTab, yearlyTab, planPrice, planDescription;
     private Button continueButton;
+    private String selectedPlanDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,41 +24,62 @@ public class UpgradePlanActivity extends AppCompatActivity {
         monthlyTab = findViewById(R.id.monthlyTab);
         yearlyTab = findViewById(R.id.yearlyTab);
         planPrice = findViewById(R.id.planPrice);
+        planDescription = findViewById(R.id.planDescription);
         continueButton = findViewById(R.id.continueButton);
+
+        setupPlan("Monthly", "$4.99 / month", getMonthlyDescription());
+
+        monthlyTab.setOnClickListener(v -> setupPlan("Monthly", "$4.99 / month", getMonthlyDescription()));
+        yearlyTab.setOnClickListener(v -> setupPlan("Yearly", "$49.99 / year", getYearlyDescription()));
 
         continueButton.setOnClickListener(v -> {
             String selectedPlanPrice = planPrice.getText().toString();
-            String selectedPlanType = monthlyTab.getCurrentTextColor() == getResources().getColor(R.color.white) ? "Monthly" : "Yearly";  // Determine the selected plan type
+            String selectedPlanType = monthlyTab.getCurrentTextColor() == getResources().getColor(R.color.white) ? "Monthly" : "Yearly";
+            String selectedPlanDescription = planDescription.getText().toString();
 
             Intent intent = new Intent(UpgradePlanActivity.this, SelectPaymentMethodActivity.class);
+            intent.putExtra("SELECTED_PLAN_NAME", selectedPlanType);
             intent.putExtra("SELECTED_PLAN_PRICE", selectedPlanPrice);
-            intent.putExtra("PLAN_TYPE", selectedPlanType);
+            intent.putExtra("SELECTED_PLAN_DESCRIPTION", selectedPlanDescription);
             startActivity(intent);
         });
-
-        setupPlan("Monthly", "$4.99 / month");
-
-        monthlyTab.setOnClickListener(v -> setupPlan("Monthly", "$4.99 / month"));
-        yearlyTab.setOnClickListener(v -> setupPlan("Yearly", "$49.99 / year"));
     }
 
-    private void setupPlan(String planType, String price) {
+    private void setupPlan(String planType, String price, String description) {
         if (planType.equals("Monthly")) {
             monthlyTab.setBackgroundResource(R.drawable.tab_selected_background);
-            monthlyTab.setTextColor(getResources().getColor(R.color.white));
+            monthlyTab.setTextColor(getResources().getColor(R.color.black));
             yearlyTab.setBackgroundResource(R.drawable.tab_unselected_background);
             yearlyTab.setTextColor(getResources().getColor(R.color.gray));
         } else {
             yearlyTab.setBackgroundResource(R.drawable.tab_selected_background);
-            yearlyTab.setTextColor(getResources().getColor(R.color.white));
+            yearlyTab.setTextColor(getResources().getColor(R.color.black));
             monthlyTab.setBackgroundResource(R.drawable.tab_unselected_background);
             monthlyTab.setTextColor(getResources().getColor(R.color.gray));
         }
         planPrice.setText(price);
+        planDescription.setText(description);
+        selectedPlanDescription = description;
         continueButton.setText("Continue - " + price);
     }
 
-    public void backtoUserProfile(View view) {
+    private String getMonthlyDescription() {
+        return "✔ All basic benefits, plus:\n" +
+                "✔ Ad-free experience.\n" +
+                "✔ Priority customer support.\n" +
+                "✔ Access to detailed spending insights.\n" +
+                "✔ Unlimited bill-sharing groups.\n" +
+                "✔ Early access to new features.";
+    }
+
+    private String getYearlyDescription() {
+        return "✔ All monthly subscription benefits, plus:\n" +
+                "✔ Exclusive access to beta features.\n" +
+                "✔ Premium customization options (themes, icons).\n" +
+                "✔ Special offers and discounts from partner brands.";
+    }
+
+    public void backToUserProfile(View view) {
         startActivity(new Intent(UpgradePlanActivity.this, AccountActivity.class));
     }
 }
