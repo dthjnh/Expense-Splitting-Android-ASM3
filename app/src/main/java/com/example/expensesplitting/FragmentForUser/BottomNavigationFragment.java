@@ -23,13 +23,11 @@ public class BottomNavigationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottom_navigation, container, false);
 
-        // Initialize ImageButtons
         ImageButton homeButton = view.findViewById(R.id.navHome);
         ImageButton groupsButton = view.findViewById(R.id.navGroups);
         ImageButton contactsButton = view.findViewById(R.id.navContacts);
         ImageButton accountButton = view.findViewById(R.id.navAccount);
 
-        // Set click listeners
         homeButton.setOnClickListener(v -> openHome());
         groupsButton.setOnClickListener(v -> openGroups());
         contactsButton.setOnClickListener(v -> openContacts());
@@ -47,7 +45,6 @@ public class BottomNavigationFragment extends Fragment {
 
     private void openGroups() {
         if (getActivity() != null) {
-            // Replace this with your GroupsActivity if you have one
             Intent intent = new Intent(getActivity(), UserActivity.class);
             startActivity(intent);
         }

@@ -24,7 +24,6 @@ public class UpgradePlanActivity extends AppCompatActivity {
         planPrice = findViewById(R.id.planPrice);
         continueButton = findViewById(R.id.continueButton);
 
-        // Default: Monthly Plan
         setupPlan("Monthly", "$4.99 / month");
 
         monthlyTab.setOnClickListener(v -> setupPlan("Monthly", "$4.99 / month"));

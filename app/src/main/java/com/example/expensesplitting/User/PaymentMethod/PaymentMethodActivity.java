@@ -117,7 +117,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
                                         .update("paymentMethods", updatedMethods)
                                         .addOnSuccessListener(aVoid -> {
                                             Toast.makeText(this, "Payment method deleted successfully", Toast.LENGTH_SHORT).show();
-                                            fetchPaymentMethods();  // Refresh the list after deletion
+                                            fetchPaymentMethods();
                                         })
                                         .addOnFailureListener(e -> {
                                             Toast.makeText(this, "Error deleting payment method: " + e.getMessage(), Toast.LENGTH_SHORT).show();

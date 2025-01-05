@@ -5,7 +5,6 @@ public class Device {
     private String lastLogin;
 
     public Device() {
-        // Default constructor required for calls to DataSnapshot.getValue(Device.class)
     }
 
     public Device(String name, String lastLogin) {

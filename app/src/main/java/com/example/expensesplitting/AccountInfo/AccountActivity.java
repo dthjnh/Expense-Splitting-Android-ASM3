@@ -40,22 +40,18 @@ public class AccountActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_account);
 
-        // Initialize Firebase and Firestore
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        // Initialize views
         userName = findViewById(R.id.userName);
         userEmail = findViewById(R.id.userEmail);
         userAvatar = findViewById(R.id.userAvatar);
 
-        // Initialize GoogleSignInClient
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Fetch user details
         fetchUserDetails();
     }
 
@@ -67,12 +63,10 @@ public class AccountActivity extends AppCompatActivity {
                     .get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
-                            // Fetch name and email from Firestore
                             String firstName = documentSnapshot.getString("FirstName");
                             String lastName = documentSnapshot.getString("LastName");
                             String email = documentSnapshot.getString("EmailAddress");
 
-                            // Set the fetched details to the views
                             userName.setText(firstName + " " + lastName);
                             userEmail.setText(email);
                         } else {

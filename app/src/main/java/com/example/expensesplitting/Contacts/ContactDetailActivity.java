@@ -29,7 +29,6 @@ public class ContactDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
 
-        // Initialize components
         contactAvatar = findViewById(R.id.contactAvatar);
         contactName = findViewById(R.id.contactName);
         contactEmail = findViewById(R.id.contactEmail);
@@ -41,13 +40,11 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         databaseHelper = new ContactDatabaseHelper(this);
 
-        // Get contact ID from intent
         int contactId = getIntent().getIntExtra("CONTACT_ID", -1);
         if (contactId != -1) {
             contact = databaseHelper.getContactById(contactId);
 
             if (contact != null) {
-                // Set contact details
                 contactAvatar.setImageResource(contact.getAvatar());
                 contactName.setText(contact.getName());
                 contactEmail.setText(contact.getEmail());
@@ -55,10 +52,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
         }
 
-        // Back button
         btnBack.setOnClickListener(v -> finish());
 
-        // Favorite toggle
         btnFavorite.setOnClickListener(v -> {
             contact.setFavorite(!contact.isFavorite());
             databaseHelper.updateContactFavoriteStatus(contact);
@@ -66,7 +61,6 @@ public class ContactDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Favorite updated", Toast.LENGTH_SHORT).show();
         });
 
-        // Delete button
         btnDeleteContact.setOnClickListener(v -> {
             if (contact != null) {
                 showCustomDeleteDialog(contact);
@@ -75,11 +69,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
         });
 
-
-        // Request button
         btnRequest.setOnClickListener(v -> Toast.makeText(this, "Request clicked", Toast.LENGTH_SHORT).show());
 
-        // Pay button
         btnPay.setOnClickListener(v -> Toast.makeText(this, "Pay clicked", Toast.LENGTH_SHORT).show());
 
     }
@@ -95,7 +86,6 @@ public class ContactDetailActivity extends AppCompatActivity {
         View customView = getLayoutInflater().inflate(R.layout.custom_dialog_delete, null);
         builder.setView(customView);
 
-        // Set dialog views
         TextView dialogMessage = customView.findViewById(R.id.dialogMessage);
         dialogMessage.setText("Delete \"" + contact.getName() + "\" from your contacts?");
 
@@ -104,10 +94,8 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
 
-        // Cancel action
         cancelButton.setOnClickListener(v -> alertDialog.dismiss());
 
-        // Confirm delete action
         confirmDeleteButton.setOnClickListener(v -> {
             deleteContact(contact);
             alertDialog.dismiss();

@@ -54,11 +54,9 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        // Initialize Firebase Auth and Firestore
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        // Configure Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)) // Add your web client ID from Firebase Console
                 .requestEmail()
@@ -66,21 +64,17 @@ public class WelcomeActivity extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Initialize buttons
         btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnLogIn = findViewById(R.id.btnLogIn);
 
-        // Google Sign-In Button
         btnGoogleSignIn.setOnClickListener(v -> signInWithGoogle());
 
-        // Sign Up Button
         btnSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(WelcomeActivity.this, SignUp.class);
             startActivity(intent);
         });
 
-        // Log In Button
         btnLogIn.setOnClickListener(v -> {
             Intent intent = new Intent(WelcomeActivity.this, SignIn.class);
             startActivity(intent);
@@ -114,19 +108,16 @@ public class WelcomeActivity extends AppCompatActivity {
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Sign-in success
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         if (user != null) {
                             addCurrentDeviceToFirestore();
 
                             saveUserToFirestore(user, account);
                             Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                            // Navigate to your app's main activity
                             startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
                             finish();
                         }
                     } else {
-                        // Sign-in failed
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
                         Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                     }
