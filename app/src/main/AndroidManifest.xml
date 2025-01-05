@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ExpenseSplitting"
         tools:targetApi="31">
         <activity
+            android:name=".AccountInfo.ReviewSummaryActivity"
+            android:exported="false" />
+        <activity
             android:name=".AccountInfo.SelectablePaymentMethodAdapter"
             android:exported="false" />
         <activity

@@ -57,8 +57,13 @@ public class SelectPaymentMethodActivity extends AppCompatActivity {
 
         continueButton.setOnClickListener(v -> {
             if (selectedPaymentMethod != null) {
-                Toast.makeText(this, "Proceeding with: " + selectedPaymentMethod.getCardNumber(), Toast.LENGTH_SHORT).show();
-                // TODO: Handle upgrade logic and payment confirmation here
+                Intent intent = new Intent(this, ReviewSummaryActivity.class);
+                intent.putExtra("PLAN_NAME", getIntent().getStringExtra("SELECTED_PLAN_NAME"));
+                intent.putExtra("PLAN_PRICE", getIntent().getStringExtra("SELECTED_PLAN_PRICE"));
+                intent.putExtra("PLAN_DESCRIPTION", getIntent().getStringExtra("SELECTED_PLAN_DESCRIPTION"));
+                intent.putExtra("CARD_NUMBER", selectedPaymentMethod.getCardNumber());
+                intent.putExtra("CARD_TYPE", selectedPaymentMethod.getCardNumber());
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "Please select a payment method", Toast.LENGTH_SHORT).show();
             }
