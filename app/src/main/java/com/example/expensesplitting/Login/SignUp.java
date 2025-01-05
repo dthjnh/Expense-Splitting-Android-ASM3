@@ -60,14 +60,11 @@ public class SignUp extends AppCompatActivity {
         confirmPasswordToggle = findViewById(R.id.confirmPasswordToggle);
         btnDatePicker = findViewById(R.id.btnDatePicker);
 
-        // Toggle password visibility
         passwordToggle.setOnClickListener(v -> togglePasswordVisibility(password, passwordToggle));
         confirmPasswordToggle.setOnClickListener(v -> togglePasswordVisibility(confirmPassword, confirmPasswordToggle));
 
-        // Date Picker Functionality
         btnDatePicker.setOnClickListener(v -> showDatePicker());
 
-        // Sign Up Button Click Listener
         btnSignUp.setOnClickListener(v -> {
             String fName = firstName.getText().toString();
             String lName = lastName.getText().toString();
@@ -88,7 +85,6 @@ public class SignUp extends AppCompatActivity {
                 return;
             }
 
-            // Create user in Firebase Authentication
             auth.createUserWithEmailAndPassword(email, pwd)
                     .addOnSuccessListener(authResult -> {
                         FirebaseUser user = auth.getCurrentUser();
@@ -96,7 +92,6 @@ public class SignUp extends AppCompatActivity {
                             String userId = user.getUid();
                             saveUserDetails(userId, fName, lName, phone, dob, addr, email, pwd, confirmPwd);
 
-                            // Navigate based on email domain
                             if (email.endsWith("@admin.com")) {
                                 startActivity(new Intent(SignUp.this, Admin.class));
                                 Toast.makeText(SignUp.this, "Logged in as Admin", Toast.LENGTH_SHORT).show();
@@ -113,11 +108,9 @@ public class SignUp extends AppCompatActivity {
                     });
         });
 
-        // Navigate to Sign In Screen
         tvAlreadyUser.setOnClickListener(v -> finish());
     }
 
-    // Method to Show Date Picker Dialog
     private void showDatePicker() {
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -126,13 +119,12 @@ public class SignUp extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(SignUp.this, (view, year1, month1, dayOfMonth) -> {
             String selectedDate = dayOfMonth + "/" + (month1 + 1) + "/" + year1;
-            birthDate.setText(selectedDate); // Set the selected date in EditText
+            birthDate.setText(selectedDate);
         }, year, month, day);
 
         datePickerDialog.show();
     }
 
-    // Toggle Password Visibility
     private void togglePasswordVisibility(EditText editText, ImageView toggleIcon) {
         if (editText.getTransformationMethod() instanceof PasswordTransformationMethod) {
             editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -144,7 +136,6 @@ public class SignUp extends AppCompatActivity {
         editText.setSelection(editText.length());
     }
 
-    // Save user details to Firestore
     private void saveUserDetails(String userId, String firstName, String lastName, String phone, String dateOfBirth, String address, String emaiAddress, String password, String confirmPassword) {
         Map<String, Object> userDetails = new HashMap<>();
         userDetails.put("FirstName", firstName);

@@ -24,15 +24,12 @@ public class ForgotPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        // Initialize FirebaseAuth
         auth = FirebaseAuth.getInstance();
 
-        // Initialize views
         editEmailForgotPassword = findViewById(R.id.editEmailForgotPassword);
         btnSendResetLink = findViewById(R.id.btnSendResetLink);
         tvBackToSignIn = findViewById(R.id.tvBackToSignIn);
 
-        // Send Reset Link Button
         btnSendResetLink.setOnClickListener(v -> {
             String email = editEmailForgotPassword.getText().toString().trim();
 
@@ -41,13 +38,11 @@ public class ForgotPassword extends AppCompatActivity {
                 return;
             }
 
-            // Firebase password reset function
             auth.sendPasswordResetEmail(email)
                     .addOnSuccessListener(aVoid -> Toast.makeText(ForgotPassword.this, "Reset link sent to your email", Toast.LENGTH_SHORT).show())
                     .addOnFailureListener(e -> Toast.makeText(ForgotPassword.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         });
 
-        // Back to Sign In TextView
         tvBackToSignIn.setOnClickListener(v -> {
             Intent intent = new Intent(ForgotPassword.this, SignIn.class);
             startActivity(intent);

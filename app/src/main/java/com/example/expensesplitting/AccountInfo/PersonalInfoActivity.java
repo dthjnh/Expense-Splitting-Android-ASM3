@@ -36,11 +36,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
 
-        // Initialize Firebase
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        // Initialize UI components
         profilePicture = findViewById(R.id.profilePicture);
         fullName = findViewById(R.id.fullName);
         email = findViewById(R.id.email);
@@ -48,13 +46,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
         dateOfBirth = findViewById(R.id.dateOfBirth);
         saveButton = findViewById(R.id.saveButton);
 
-        // Load user data from Firebase
         loadUserData();
 
-        // Date Picker for Date of Birth
         dateOfBirth.setOnClickListener(v -> showDatePicker());
 
-        // Save Button
         saveButton.setOnClickListener(v -> updateUserInfo());
     }
 
@@ -120,7 +115,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     .update(updatedUserData)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this, "User info updated successfully", Toast.LENGTH_SHORT).show();
-                        // Navigate back to AccountActivity
                         Intent intent = new Intent(PersonalInfoActivity.this, AccountActivity.class);
                         startActivity(intent);
                         finish();

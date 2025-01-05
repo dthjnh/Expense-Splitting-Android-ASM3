@@ -2,6 +2,7 @@ package com.example.expensesplitting.Contacts;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensesplitting.Database.ContactDatabaseHelper;
 import com.example.expensesplitting.R;
+import com.example.expensesplitting.User.Pay.PayActivity;
+import com.example.expensesplitting.User.Request.RequestActivity;
 
 public class ContactDetailActivity extends AppCompatActivity {
 
@@ -29,7 +32,6 @@ public class ContactDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
 
-        // Initialize components
         contactAvatar = findViewById(R.id.contactAvatar);
         contactName = findViewById(R.id.contactName);
         contactEmail = findViewById(R.id.contactEmail);
@@ -41,13 +43,11 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         databaseHelper = new ContactDatabaseHelper(this);
 
-        // Get contact ID from intent
         int contactId = getIntent().getIntExtra("CONTACT_ID", -1);
         if (contactId != -1) {
             contact = databaseHelper.getContactById(contactId);
 
             if (contact != null) {
-                // Set contact details
                 contactAvatar.setImageResource(contact.getAvatar());
                 contactName.setText(contact.getName());
                 contactEmail.setText(contact.getEmail());
@@ -55,10 +55,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
         }
 
-        // Back button
         btnBack.setOnClickListener(v -> finish());
 
-        // Favorite toggle
         btnFavorite.setOnClickListener(v -> {
             contact.setFavorite(!contact.isFavorite());
             databaseHelper.updateContactFavoriteStatus(contact);
@@ -66,7 +64,6 @@ public class ContactDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Favorite updated", Toast.LENGTH_SHORT).show();
         });
 
-        // Delete button
         btnDeleteContact.setOnClickListener(v -> {
             if (contact != null) {
                 showCustomDeleteDialog(contact);
@@ -75,12 +72,15 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
         });
 
+       btnRequest.setOnClickListener(v -> {
+            Intent intent = new Intent(ContactDetailActivity.this, RequestActivity.class);
+            startActivity(intent);
+        });
 
-        // Request button
-        btnRequest.setOnClickListener(v -> Toast.makeText(this, "Request clicked", Toast.LENGTH_SHORT).show());
-
-        // Pay button
-        btnPay.setOnClickListener(v -> Toast.makeText(this, "Pay clicked", Toast.LENGTH_SHORT).show());
+       btnPay.setOnClickListener(v -> {
+            Intent intent = new Intent(ContactDetailActivity.this, PayActivity.class);
+            startActivity(intent);
+        });
 
     }
 
@@ -95,7 +95,6 @@ public class ContactDetailActivity extends AppCompatActivity {
         View customView = getLayoutInflater().inflate(R.layout.custom_dialog_delete, null);
         builder.setView(customView);
 
-        // Set dialog views
         TextView dialogMessage = customView.findViewById(R.id.dialogMessage);
         dialogMessage.setText("Delete \"" + contact.getName() + "\" from your contacts?");
 
@@ -104,10 +103,8 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
 
-        // Cancel action
         cancelButton.setOnClickListener(v -> alertDialog.dismiss());
 
-        // Confirm delete action
         confirmDeleteButton.setOnClickListener(v -> {
             deleteContact(contact);
             alertDialog.dismiss();

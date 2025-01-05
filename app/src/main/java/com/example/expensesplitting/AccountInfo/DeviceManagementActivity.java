@@ -49,8 +49,6 @@ public class DeviceManagementActivity extends AppCompatActivity {
         loadDevices();
     }
 
-
-
     private void loadDevices() {
         firestore.collection("devices")
                 .whereEqualTo("userId", auth.getCurrentUser().getUid())
@@ -65,8 +63,6 @@ public class DeviceManagementActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to load devices", Toast.LENGTH_SHORT).show());
     }
-
-
 
     private void addDeviceItem(Device device) {
         View deviceItemView = getLayoutInflater().inflate(R.layout.item_device, deviceListContainer, false);
@@ -98,18 +94,15 @@ public class DeviceManagementActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        // Loop through all devices and delete them
                         for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                             document.getReference().delete()
                                     .addOnSuccessListener(aVoid -> Log.d("DeviceManagement", "Device logged out successfully."))
                                     .addOnFailureListener(e -> Log.e("DeviceManagement", "Failed to log out device: " + e.getMessage()));
                         }
 
-                        // Optionally sign out the user after clearing devices
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(this, "Logged out from all devices", Toast.LENGTH_SHORT).show();
 
-                        // Redirect to WelcomeActivity or SignInActivity
                         startActivity(new Intent(DeviceManagementActivity.this, SignIn.class));
                         finish();
                     } else {

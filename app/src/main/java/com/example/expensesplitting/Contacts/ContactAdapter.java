@@ -40,16 +40,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         holder.email.setText(contact.getEmail());
         holder.avatar.setImageResource(contact.getAvatar());
 
-        // Update favorite icon
         if (contact.isFavorite()) {
             holder.favorite.setImageResource(R.drawable.ic_star_filled); // Filled star for favorite
         } else {
             holder.favorite.setImageResource(R.drawable.ic_star_outline); // Outline for non-favorite
         }
 
-        // Toggle favorite status on click
         holder.favorite.setOnClickListener(v -> {
-            // Toggle favorite status in the database and update UI
             contact.setFavorite(!contact.isFavorite());
             databaseHelper.updateContactFavoriteStatus(contact);
             notifyItemChanged(position);

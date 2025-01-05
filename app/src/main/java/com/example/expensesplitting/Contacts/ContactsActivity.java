@@ -32,25 +32,21 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
-        // Initialize UI components
         recyclerView = findViewById(R.id.recyclerView);
         searchView = findViewById(R.id.searchView);
         FloatingActionButton fabAddContact = findViewById(R.id.fabAddContact);
         btnAllContacts = findViewById(R.id.btnAllContacts);
         btnFavorites = findViewById(R.id.btnFavorites);
 
-        // Initialize database helper and RecyclerView
         databaseHelper = new ContactDatabaseHelper(this);
         contactList = new ArrayList<>();
         contactAdapter = new ContactAdapter(contactList, databaseHelper);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(contactAdapter);
 
-        // Default: Load all contacts and set the button state
         setSelectedButton(btnAllContacts);
         loadAllContacts();
 
-        // Tab button click listeners
         btnAllContacts.setOnClickListener(v -> {
             setSelectedButton(btnAllContacts);
             clearSearchQuery();
@@ -63,12 +59,10 @@ public class ContactsActivity extends AppCompatActivity {
             loadFavoriteContacts();
         });
 
-        // Floating Action Button to add a new contact
         fabAddContact.setOnClickListener(v -> {
             startActivity(new Intent(ContactsActivity.this, AddContactActivity.class));
         });
 
-        // SearchView query listener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -143,7 +137,7 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh contacts when returning to this activity
+
         if (btnAllContacts.isSelected()) {
             loadAllContacts();
         } else {
