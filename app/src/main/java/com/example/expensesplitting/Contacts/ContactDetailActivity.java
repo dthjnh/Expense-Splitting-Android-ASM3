@@ -2,6 +2,7 @@ package com.example.expensesplitting.Contacts;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensesplitting.Database.ContactDatabaseHelper;
 import com.example.expensesplitting.R;
+import com.example.expensesplitting.User.Pay.PayActivity;
+import com.example.expensesplitting.User.Request.RequestActivity;
 
 public class ContactDetailActivity extends AppCompatActivity {
 
@@ -69,9 +72,15 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
         });
 
-        btnRequest.setOnClickListener(v -> Toast.makeText(this, "Request clicked", Toast.LENGTH_SHORT).show());
+       btnRequest.setOnClickListener(v -> {
+            Intent intent = new Intent(ContactDetailActivity.this, RequestActivity.class);
+            startActivity(intent);
+        });
 
-        btnPay.setOnClickListener(v -> Toast.makeText(this, "Pay clicked", Toast.LENGTH_SHORT).show());
+       btnPay.setOnClickListener(v -> {
+            Intent intent = new Intent(ContactDetailActivity.this, PayActivity.class);
+            startActivity(intent);
+        });
 
     }
 
