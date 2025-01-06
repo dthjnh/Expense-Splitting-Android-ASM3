@@ -108,4 +108,8 @@ public class AccountActivity extends AppCompatActivity {
     public void paymentMethod(View view) {
         startActivity(new Intent(this, PaymentMethodActivity.class));
     }
+
+    public void billingSubscriptions(View view) {
+        startActivity(new Intent(this, BillingSubscriptionActivity.class));
+    }
 }

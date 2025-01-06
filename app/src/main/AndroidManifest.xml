@@ -15,6 +15,12 @@
         android:theme="@style/Theme.ExpenseSplitting"
         tools:targetApi="31">
         <activity
+            android:name=".AccountInfo.BillingSubscriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountInfo.PaymentSuccessActivity"
+            android:exported="false" />
+        <activity
             android:name=".Group.SplitByActivity"
             android:exported="false" />
         <activity
@@ -89,6 +95,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -101,10 +108,10 @@
         <activity android:name=".User.Pay.PaymentReceiptActivity" />
         <activity android:name=".User.Request.RequestActivity" />
         <activity android:name=".User.PaymentMethod.NewPaymentActivity" />
-        <activity android:name=".User.PaymentMethod.PaymentMethodActivity" />
-        <!-- Meta-data -->
+        <activity android:name=".User.PaymentMethod.PaymentMethodActivity" /> <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

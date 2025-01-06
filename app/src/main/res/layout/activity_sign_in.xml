@@ -139,7 +139,7 @@
             app:cornerRadius="100dp"
             app:strokeColor="#FEBB1B"
             app:strokeWidth="1dp"
-            android:textColor="#FFF"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <!-- Sign Up -->
