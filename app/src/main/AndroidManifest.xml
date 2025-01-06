@@ -40,7 +40,8 @@
             android:exported="false" />
         <activity
             android:name=".AccountInfo.SelectablePaymentMethodAdapter"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".AccountInfo.SelectPaymentMethodActivity"
             android:exported="false" />
