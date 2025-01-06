@@ -137,6 +137,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
 
     public void backtoUserProfile(View view) {
         startActivity(new Intent(PaymentMethodActivity.this, UserActivity.class));
+        finish();
     }
 
     @Override

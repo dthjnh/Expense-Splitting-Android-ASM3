@@ -222,6 +222,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:onClick="billingSubscriptions"
                     android:padding="16dp"
                     android:gravity="center_vertical">
 

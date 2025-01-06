@@ -10,21 +10,29 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.expensesplitting.Model.PaymentMethod;
 import com.example.expensesplitting.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReviewSummaryActivity extends AppCompatActivity {
 
     private TextView planNameText, planPriceText, planDescriptionText, selectedCardText;
     private ImageView paymentIcon;
     private Button confirmPaymentButton;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_summary);
 
-        // Initialize views
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
         planNameText = findViewById(R.id.plan_name);
         planPriceText = findViewById(R.id.plan_price);
         planDescriptionText = findViewById(R.id.plan_description);
@@ -32,27 +40,53 @@ public class ReviewSummaryActivity extends AppCompatActivity {
         paymentIcon = findViewById(R.id.payment_icon);
         confirmPaymentButton = findViewById(R.id.confirm_payment_button);
 
-        // Retrieve data from Intent
         String selectedPlanName = getIntent().getStringExtra("PLAN_NAME");
         String selectedPlanPrice = getIntent().getStringExtra("PLAN_PRICE");
         String selectedPlanDescription = getIntent().getStringExtra("PLAN_DESCRIPTION");
         String cardNumber = getIntent().getStringExtra("CARD_NUMBER");
         String cardType = getIntent().getStringExtra("CARD_TYPE");
 
-        // Set data to views
         planNameText.setText(selectedPlanName);
         planPriceText.setText(selectedPlanPrice);
         planDescriptionText.setText(selectedPlanDescription);
         selectedCardText.setText("**** **** **** " + cardNumber.substring(cardNumber.length() - 4));
 
-        // Set payment icon based on card type
         setPaymentIcon(cardType);
 
-        // Confirm payment action
         confirmPaymentButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Payment confirmed for " + selectedPlanName, Toast.LENGTH_SHORT).show();
-            finish(); // Close the activity after confirmation
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ReviewSummaryActivity.this);
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_processing_payment, null);
+            builder.setView(dialogView);
+            builder.setCancelable(false);
+            final android.app.AlertDialog processingDialog = builder.create();
+            processingDialog.show();
+
+            new android.os.Handler().postDelayed(() -> {
+                processingDialog.dismiss();
+                saveSubscriptionToFirestore(selectedPlanName, selectedPlanPrice, selectedPlanDescription);
+
+                Intent intent = new Intent(ReviewSummaryActivity.this, PaymentSuccessActivity.class);
+                intent.putExtra("PLAN_NAME", selectedPlanName);
+                intent.putExtra("PLAN_DESCRIPTION", selectedPlanDescription);
+                intent.putExtra("PLAN_PRICE", selectedPlanPrice);
+                startActivity(intent);
+                finish();
+            }, 3000);
         });
+    }
+
+    private void saveSubscriptionToFirestore(String planName, String price, String description) {
+        String userId = auth.getCurrentUser().getUid();
+        Map<String, Object> subscriptionData = new HashMap<>();
+        subscriptionData.put("plan_name", planName);
+        subscriptionData.put("price", price);
+        subscriptionData.put("expiry_date", "Feb 13, 2025");
+        subscriptionData.put("description", description);
+
+        db.collection("users").document(userId)
+                .update("subscription", subscriptionData)
+                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Subscription saved!", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to save subscription: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void setPaymentIcon(String cardType) {
@@ -64,5 +98,4 @@ public class ReviewSummaryActivity extends AppCompatActivity {
             paymentIcon.setImageResource(R.drawable.ic_default_card);
         }
     }
-
 }

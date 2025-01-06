@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@drawable/rounded_background">
+
+    <ImageView
+        android:id="@+id/loading_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_loading" />
+
+    <TextView
+        android:id="@+id/processing_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Processing Payment..."
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:textColor="#333333" />
+</LinearLayout>
