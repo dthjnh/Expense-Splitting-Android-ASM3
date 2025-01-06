@@ -33,33 +33,27 @@ public class AccountSecurityActivity extends AppCompatActivity {
         firestore= FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
 
-        // Initialize Switches
         rememberMeSwitch = findViewById(R.id.rememberMeSwitch);
         biometricIdSwitch = findViewById(R.id.biometricIdSwitch);
         faceIdSwitch = findViewById(R.id.faceIdSwitch);
         smsAuthenticatorSwitch = findViewById(R.id.smsAuthenticatorSwitch);
         googleAuthenticatorSwitch = findViewById(R.id.googleAuthenticatorSwitch);
 
-        // Initialize Clickable Rows
         changePasswordLayout = findViewById(R.id.changePasswordLayout);
         deviceManagementLayout = findViewById(R.id.deviceManagementLayout);
         deleteAccountLayout = findViewById(R.id.deleteAccountLayout);
 
-        // Restore "Remember Me" switch state
         boolean isRememberMeOn = sharedPreferences.getBoolean("rememberMe", false);
         rememberMeSwitch.setChecked(isRememberMeOn);
 
-        // Set Switch Listeners
         rememberMeSwitch.setOnCheckedChangeListener(this::onSwitchChanged);
         biometricIdSwitch.setOnCheckedChangeListener(this::onSwitchChanged);
         faceIdSwitch.setOnCheckedChangeListener(this::onSwitchChanged);
         smsAuthenticatorSwitch.setOnCheckedChangeListener(this::onSwitchChanged);
         googleAuthenticatorSwitch.setOnCheckedChangeListener(this::onSwitchChanged);
 
-        // Set Click Listeners
         changePasswordLayout.setOnClickListener(v -> navigateToChangePassword());
         deviceManagementLayout.setOnClickListener(v -> navigateToDeviceManagement());
         deleteAccountLayout.setOnClickListener(v -> confirmDeleteAccount());
@@ -105,10 +99,8 @@ public class AccountSecurityActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
 
-        // Show the dialog first to customize the button colors
         dialog.show();
 
-        // Customize button colors
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.gray));
     }
@@ -117,10 +109,8 @@ public class AccountSecurityActivity extends AppCompatActivity {
         if (auth.getCurrentUser() != null) {
             String userId = auth.getCurrentUser().getUid();
 
-            // Delete user data from Firestore
             firestore.collection("users").document(userId).delete()
                     .addOnSuccessListener(aVoid -> {
-                        // Delete user from Firebase Authentication
                         auth.getCurrentUser().delete()
                                 .addOnSuccessListener(aVoid1 -> {
                                     Toast.makeText(this, "Account deleted successfully", Toast.LENGTH_SHORT).show();

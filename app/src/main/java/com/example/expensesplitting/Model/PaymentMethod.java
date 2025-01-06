@@ -8,6 +8,7 @@ public class PaymentMethod implements Serializable {
     private String accountHolderName;
     private String expiryDate;
     private String cvv;
+    private boolean selected;
 
     public PaymentMethod() {
         // Default constructor required for calls to DataSnapshot.getValue(PaymentMethod.class)
@@ -19,6 +20,15 @@ public class PaymentMethod implements Serializable {
         this.accountHolderName = accountHolderName;
         this.expiryDate = expiryDate;
         this.cvv = cvv;
+        this.selected = false;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public String getUserId() {

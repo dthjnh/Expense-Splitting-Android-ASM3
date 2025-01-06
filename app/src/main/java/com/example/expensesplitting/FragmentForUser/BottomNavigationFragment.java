@@ -24,12 +24,10 @@ public class BottomNavigationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottom_navigation, container, false);
 
-
         ImageButton homeButton = view.findViewById(R.id.navHome);
         ImageButton groupsButton = view.findViewById(R.id.navGroups);
         ImageButton contactsButton = view.findViewById(R.id.navContacts);
         ImageButton accountButton = view.findViewById(R.id.navAccount);
-
 
         homeButton.setOnClickListener(v -> openHome());
         groupsButton.setOnClickListener(v -> openGroups());

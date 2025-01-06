@@ -59,25 +59,20 @@ public class SignIn extends AppCompatActivity {
         rememberMeCheckBox = findViewById(R.id.rememberMeCheckBox);
         imageViewTogglePassword = findViewById(R.id.imageViewTogglePassword);
 
-
-        // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         boolean rememberMeState = sharedPreferences.getBoolean("rememberMe", false);
         rememberMeCheckBox.setChecked(rememberMeState);
 
-
-        // Clear input fields when logging out
         clearInputsOnLogout();
 
         forgotPassword.setOnClickListener(v -> {
             startActivity(new Intent(SignIn.this, ForgotPassword.class));
         });
 
-        // Auto-fill password when email is entered
         editEmailSignIn.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) { // When the email field loses focus
+            if (!hasFocus) {
                 String enteredEmail = editEmailSignIn.getText().toString();
                 if (enteredEmail.equals(sharedPreferences.getString("email", ""))) {
                     editPasswordSignIn.setText(sharedPreferences.getString("password", ""));
@@ -87,7 +82,6 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
-        // Toggle password visibility
         imageViewTogglePassword.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 editPasswordSignIn.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -100,7 +94,6 @@ public class SignIn extends AppCompatActivity {
             editPasswordSignIn.setSelection(editPasswordSignIn.length());
         });
 
-        // Sign In button functionality
         btnSignIn.setOnClickListener(v -> {
             String email = editEmailSignIn.getText().toString().trim();
             String password = editPasswordSignIn.getText().toString().trim();
@@ -110,14 +103,13 @@ public class SignIn extends AppCompatActivity {
                 return;
             }
 
-            // Save login details if Remember Me is checked
             if (rememberMeCheckBox.isChecked()) {
                 editor.putString("email", email);
                 editor.putString("password", password);
                 editor.putBoolean("rememberMe", true);
                 editor.apply();
             } else {
-                editor.clear(); // Clear saved data if unchecked
+                editor.clear();
                 editor.apply();
             }
 
@@ -132,7 +124,6 @@ public class SignIn extends AppCompatActivity {
                     });
         });
 
-        // Navigate to Sign Up page
         signUpPrompt.setOnClickListener(v -> {
             startActivity(new Intent(SignIn.this, SignUp.class));
         });
@@ -140,7 +131,7 @@ public class SignIn extends AppCompatActivity {
 
     private void addCurrentDeviceToFirestore() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String deviceName = android.os.Build.MODEL; // Get the device name
+        String deviceName = android.os.Build.MODEL;
         String lastLogin = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(new Date());
 
         Map<String, Object> deviceData = new HashMap<>();
@@ -181,7 +172,6 @@ public class SignIn extends AppCompatActivity {
     }
 
     private void clearInputsOnLogout() {
-        // Check if user is logged out and clear inputs
         if (auth.getCurrentUser() == null) {
             editEmailSignIn.setText("");
             editPasswordSignIn.setText("");

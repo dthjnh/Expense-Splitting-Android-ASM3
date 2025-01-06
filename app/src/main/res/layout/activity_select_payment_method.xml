@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AccountInfo.SelectPaymentMethodActivity">>
+
+    <!-- Title Section -->
+    <RelativeLayout
+        android:id="@id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_alignParentTop="true">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:onClick="backToUpgradePlan"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_arrow_left"
+            android:contentDescription="Back" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Select Payment Method"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+    </RelativeLayout>
+
+    <!-- RecyclerView for the list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/titleText"
+        android:layout_above="@id/continueButtonLayout"
+        android:layout_marginTop="8dp"
+        android:padding="16dp" />
+
+    <!-- Empty State Text -->
+    <TextView
+        android:id="@+id/empty_state_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No payment methods available"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <!-- Continue Button -->
+    <LinearLayout
+        android:id="@+id/continueButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:paddingHorizontal="16dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/continueButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:backgroundTint="#FEBB1B"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/urbanist_bold"
+            app:cornerRadius="32dp" />
+    </LinearLayout>
+</RelativeLayout>
