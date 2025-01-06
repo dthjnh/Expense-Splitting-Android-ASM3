@@ -1,0 +1,37 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Participant Name -->
+    <TextView
+        android:id="@+id/participantName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Participant Name"
+        android:textSize="16sp" />
+
+    <!-- Participant Amount Display -->
+    <TextView
+        android:id="@+id/participantAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount"
+        android:visibility="gone"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="16sp" />
+
+    <!-- Participant Input Field -->
+    <EditText
+        android:id="@+id/participantInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Value"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+</LinearLayout>
