@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.expensesplitting.AccountInfo.AccountActivity;
 import com.example.expensesplitting.Contacts.ContactsActivity;
+import com.example.expensesplitting.Group.GroupListActivity;
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.UserActivity;
 
@@ -45,7 +46,7 @@ public class BottomNavigationFragment extends Fragment {
 
     private void openGroups() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), UserActivity.class);
+            Intent intent = new Intent(getActivity(), GroupListActivity.class);
             startActivity(intent);
         }
     }
