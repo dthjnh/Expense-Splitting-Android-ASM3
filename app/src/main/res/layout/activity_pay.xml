@@ -32,7 +32,7 @@
             android:text="Pay"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
