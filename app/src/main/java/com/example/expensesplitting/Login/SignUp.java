@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.expensesplitting.Admin;
+import com.example.expensesplitting.AdminReplyChatActivity;
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.UserActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,14 +66,14 @@ public class SignUp extends AppCompatActivity {
         btnDatePicker.setOnClickListener(v -> showDatePicker());
 
         btnSignUp.setOnClickListener(v -> {
-            String fName = firstName.getText().toString();
-            String lName = lastName.getText().toString();
-            String dob = birthDate.getText().toString();
-            String addr = address.getText().toString();
-            String email = emailAddress.getText().toString();
-            String phone = phoneNumber.getText().toString();
-            String pwd = password.getText().toString();
-            String confirmPwd = confirmPassword.getText().toString();
+            String fName = firstName.getText().toString().trim();
+            String lName = lastName.getText().toString().trim();
+            String dob = birthDate.getText().toString().trim();
+            String addr = address.getText().toString().trim();
+            String email = emailAddress.getText().toString().trim();
+            String phone = phoneNumber.getText().toString().trim();
+            String pwd = password.getText().toString().trim();
+            String confirmPwd = confirmPassword.getText().toString().trim();
 
             if (fName.isEmpty() || lName.isEmpty() || dob.isEmpty() || email.isEmpty() || addr.isEmpty() || phone.isEmpty() || pwd.isEmpty() || confirmPwd.isEmpty()) {
                 Toast.makeText(SignUp.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -90,10 +90,11 @@ public class SignUp extends AppCompatActivity {
                         FirebaseUser user = auth.getCurrentUser();
                         if (user != null) {
                             String userId = user.getUid();
-                            saveUserDetails(userId, fName, lName, phone, dob, addr, email, pwd, confirmPwd);
+                            String role = email.endsWith("@admin.com") ? "admin" : "user";
+                            saveUserDetails(userId, fName, lName, phone, dob, addr, email, pwd, confirmPwd, role);
 
-                            if (email.endsWith("@admin.com")) {
-                                startActivity(new Intent(SignUp.this, Admin.class));
+                            if ("admin".equals(role)) {
+                                startActivity(new Intent(SignUp.this, AdminReplyChatActivity.class));
                                 Toast.makeText(SignUp.this, "Logged in as Admin", Toast.LENGTH_SHORT).show();
                             } else {
                                 startActivity(new Intent(SignUp.this, UserActivity.class));
@@ -103,9 +104,7 @@ public class SignUp extends AppCompatActivity {
                             finish();
                         }
                     })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(SignUp.this, "Failed to sign up: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+                    .addOnFailureListener(e -> Toast.makeText(SignUp.this, "Failed to sign up: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         });
 
         tvAlreadyUser.setOnClickListener(v -> finish());
@@ -136,16 +135,17 @@ public class SignUp extends AppCompatActivity {
         editText.setSelection(editText.length());
     }
 
-    private void saveUserDetails(String userId, String firstName, String lastName, String phone, String dateOfBirth, String address, String emaiAddress, String password, String confirmPassword) {
+    private void saveUserDetails(String userId, String firstName, String lastName, String phone, String dateOfBirth, String address, String emailAddress, String password, String confirmPassword, String role) {
         Map<String, Object> userDetails = new HashMap<>();
         userDetails.put("FirstName", firstName);
         userDetails.put("LastName", lastName);
         userDetails.put("Phone", phone);
         userDetails.put("Address", address);
-        userDetails.put("EmailAddress", emaiAddress);
+        userDetails.put("EmailAddress", emailAddress);
         userDetails.put("DateOfBirth", dateOfBirth);
         userDetails.put("Password", password);
         userDetails.put("ConfirmPassword", confirmPassword);
+        userDetails.put("role", role);
 
         firestore.collection("users").document(userId)
                 .set(userDetails)

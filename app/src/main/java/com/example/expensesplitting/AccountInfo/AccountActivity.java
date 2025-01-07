@@ -112,4 +112,8 @@ public class AccountActivity extends AppCompatActivity {
     public void billingSubscriptions(View view) {
         startActivity(new Intent(this, BillingSubscriptionActivity.class));
     }
+
+    public void helpSupport(View view) {
+        startActivity(new Intent(this, HelpSupportActivity.class));
+    }
 }
