@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.expensesplitting.Admin;
+import com.example.expensesplitting.AdminReplyChatActivity;
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.UserActivity;
 import com.example.expensesplitting.WelcomeActivity;
@@ -67,9 +67,7 @@ public class SignIn extends AppCompatActivity {
 
         clearInputsOnLogout();
 
-        forgotPassword.setOnClickListener(v -> {
-            startActivity(new Intent(SignIn.this, ForgotPassword.class));
-        });
+        forgotPassword.setOnClickListener(v -> startActivity(new Intent(SignIn.this, ForgotPassword.class)));
 
         editEmailSignIn.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -115,18 +113,14 @@ public class SignIn extends AppCompatActivity {
 
             auth.signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener(authResult -> {
-                        Toast.makeText(SignIn.this, "Sign In Successful", Toast.LENGTH_SHORT).show();
+                        Log.d("SignIn", "Sign-in successful for: " + email);
                         addCurrentDeviceToFirestore();
-                        navigateBasedOnEmail(email);
+                        navigateBasedOnRole();
                     })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(SignIn.this, "Failed to sign in: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+                    .addOnFailureListener(e -> Toast.makeText(SignIn.this, "Failed to sign in: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         });
 
-        signUpPrompt.setOnClickListener(v -> {
-            startActivity(new Intent(SignIn.this, SignUp.class));
-        });
+        signUpPrompt.setOnClickListener(v -> startActivity(new Intent(SignIn.this, SignUp.class)));
     }
 
     private void addCurrentDeviceToFirestore() {
@@ -141,33 +135,39 @@ public class SignIn extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("devices")
                 .add(deviceData)
-                .addOnSuccessListener(documentReference -> {
-                    Log.d("DeviceManagement", "Device added successfully.");
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("DeviceManagement", "Failed to add device: " + e.getMessage());
-                });
+                .addOnSuccessListener(documentReference -> Log.d("DeviceManagement", "Device added successfully."))
+                .addOnFailureListener(e -> Log.e("DeviceManagement", "Failed to add device: " + e.getMessage()));
     }
 
-    private void navigateBasedOnEmail(String email) {
-        if (email.endsWith("@admin.com")) {
-            startActivity(new Intent(SignIn.this, Admin.class));
-            Toast.makeText(SignIn.this, "Welcome Admin", Toast.LENGTH_SHORT).show();
-        } else {
-            startActivity(new Intent(SignIn.this, UserActivity.class));
-            Toast.makeText(SignIn.this, "Welcome User", Toast.LENGTH_SHORT).show();
-        }
-        finish();
+   private void navigateBasedOnRole() {
+    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    FirebaseFirestore.getInstance().collection("users").document(userId).get()
+            .addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    String role = documentSnapshot.getString("role");
+                    Log.d("SignIn", "User role: " + role);
+                    if ("admin".equals(role)) {
+                        Log.d("SignIn", "Admin detected");
+                        startActivity(new Intent(SignIn.this, AdminReplyChatActivity.class));
+                        Toast.makeText(SignIn.this, "Welcome Admin", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d("SignIn", "User detected");
+                        startActivity(new Intent(SignIn.this, UserActivity.class));
+                        Toast.makeText(SignIn.this, "Welcome User", Toast.LENGTH_SHORT).show();
+                    }
+                    finish();
+                } else {
+                    Log.e("SignIn", "User document does not exist");
+                }
+            })
+            .addOnFailureListener(e -> Log.e("SignIn", "Error fetching role: " + e.getMessage()));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         if (auth.getCurrentUser() != null) {
-            String email = auth.getCurrentUser().getEmail();
-            if (email != null) {
-                navigateBasedOnEmail(email);
-            }
+            navigateBasedOnRole();
         }
     }
 
@@ -183,5 +183,4 @@ public class SignIn extends AppCompatActivity {
         Intent intent = new Intent(SignIn.this, WelcomeActivity.class);
         startActivity(intent);
     }
-
 }
