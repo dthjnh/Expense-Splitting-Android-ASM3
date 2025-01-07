@@ -11,11 +11,14 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.expensesplitting.Contacts.ContactsActivity;
+import com.example.expensesplitting.AccountInfo.AccountSecurity.AccountSecurityActivity;
+import com.example.expensesplitting.AccountInfo.HelpAndSupport.HelpSupportActivity;
+import com.example.expensesplitting.AccountInfo.PersonalInfo.PersonalInfoActivity;
+import com.example.expensesplitting.AccountInfo.UpgradePlanandBilling.BillingSubscriptionActivity;
+import com.example.expensesplitting.AccountInfo.UpgradePlanandBilling.UpgradePlanActivity;
 import com.example.expensesplitting.Login.SignIn;
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.User.PaymentMethod.PaymentMethodActivity;
-import com.example.expensesplitting.UserActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

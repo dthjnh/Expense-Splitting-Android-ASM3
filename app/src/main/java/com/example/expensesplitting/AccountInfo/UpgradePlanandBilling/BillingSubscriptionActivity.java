@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.UpgradePlanandBilling;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.expensesplitting.AccountInfo.AccountActivity;
 import com.example.expensesplitting.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;

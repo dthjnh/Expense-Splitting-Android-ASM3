@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.Payment;
 
 import android.view.LayoutInflater;
 import android.view.View;

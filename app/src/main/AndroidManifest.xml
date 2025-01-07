@@ -18,19 +18,19 @@
             android:name=".ChatBox.UserChatActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.TermsOfServiceActivity"
+            android:name=".AccountInfo.HelpAndSupport.TermsOfServiceActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.PrivacyPolicyActivity"
+            android:name=".AccountInfo.HelpAndSupport.PrivacyPolicyActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.HelpSupportActivity"
+            android:name=".AccountInfo.HelpAndSupport.HelpSupportActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.BillingSubscriptionActivity"
+            android:name=".AccountInfo.UpgradePlanandBilling.BillingSubscriptionActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.PaymentSuccessActivity"
+            android:name=".AccountInfo.UpgradePlanandBilling.PaymentSuccessActivity"
             android:exported="false" />
         <activity
             android:name=".Group.SplitByActivity"
@@ -54,26 +54,26 @@
             android:name=".Group.GroupListActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.ReviewSummaryActivity"
+            android:name=".AccountInfo.UpgradePlanandBilling.ReviewSummaryActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.SelectablePaymentMethodAdapter"
+            android:name=".AccountInfo.Payment.SelectablePaymentMethodAdapter"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".AccountInfo.SelectPaymentMethodActivity"
+            android:name=".AccountInfo.Payment.SelectPaymentMethodActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.UpgradePlanActivity"
+            android:name=".AccountInfo.UpgradePlanandBilling.UpgradePlanActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.DeviceManagementActivity"
+            android:name=".AccountInfo.AccountSecurity.DeviceManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.ChangePasswordActivity"
+            android:name=".AccountInfo.AccountSecurity.ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.AccountSecurityActivity"
+            android:name=".AccountInfo.AccountSecurity.AccountSecurityActivity"
             android:exported="false" />
         <activity
             android:name=".AccountInfo.AccountActivity"
@@ -85,7 +85,7 @@
             android:name=".Contacts.AddContactActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfo.PersonalInfoActivity"
+            android:name=".AccountInfo.PersonalInfo.PersonalInfoActivity"
             android:exported="false" />
         <activity
             android:name=".Contacts.ContactsActivity"

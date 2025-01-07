@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.UpgradePlanandBilling;
 
 import android.content.Intent;
 import android.os.Bundle;

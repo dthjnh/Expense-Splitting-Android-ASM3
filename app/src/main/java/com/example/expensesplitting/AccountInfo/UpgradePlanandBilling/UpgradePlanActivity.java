@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.UpgradePlanandBilling;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.expensesplitting.AccountInfo.AccountActivity;
+import com.example.expensesplitting.AccountInfo.Payment.SelectPaymentMethodActivity;
 import com.example.expensesplitting.R;
 
 public class UpgradePlanActivity extends AppCompatActivity {

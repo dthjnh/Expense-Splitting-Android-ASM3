@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.PersonalInfo;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -13,10 +13,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.expensesplitting.AccountInfo.AccountActivity;
 import com.example.expensesplitting.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.HelpAndSupport;
 
 import android.content.Intent;
 import android.graphics.Typeface;
