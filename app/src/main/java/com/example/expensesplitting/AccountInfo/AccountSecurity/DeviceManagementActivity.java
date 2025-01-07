@@ -1,8 +1,7 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.AccountSecurity;
 
 
 import android.annotation.SuppressLint;
-import com.example.expensesplitting.AccountInfo.Device;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DeviceManagementActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.AccountSecurity;
 
 import android.os.Bundle;
 import android.text.TextUtils;

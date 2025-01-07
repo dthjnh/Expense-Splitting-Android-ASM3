@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.HelpAndSupport;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,10 +6,8 @@ import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.expensesplitting.AccountInfo.AccountActivity;
 import com.example.expensesplitting.ChatBox.UserChatActivity;
 import com.example.expensesplitting.R;
 

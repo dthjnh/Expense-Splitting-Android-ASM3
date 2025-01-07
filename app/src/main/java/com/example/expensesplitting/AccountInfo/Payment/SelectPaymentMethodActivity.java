@@ -1,4 +1,4 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.Payment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.expensesplitting.AccountInfo.UpgradePlanandBilling.ReviewSummaryActivity;
+import com.example.expensesplitting.AccountInfo.UpgradePlanandBilling.UpgradePlanActivity;
 import com.example.expensesplitting.Model.PaymentMethod;
 import com.example.expensesplitting.Model.Wallet;
 import com.example.expensesplitting.R;
-import com.example.expensesplitting.AccountInfo.SelectablePaymentMethodAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 

@@ -1,9 +1,8 @@
-package com.example.expensesplitting.AccountInfo;
+package com.example.expensesplitting.AccountInfo.AccountSecurity;
 
 import android.content.SharedPreferences;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.expensesplitting.AccountInfo.AccountActivity;
 import com.example.expensesplitting.Login.SignIn;
 import com.example.expensesplitting.R;
 import com.google.firebase.auth.FirebaseAuth;
