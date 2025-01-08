@@ -63,7 +63,7 @@ public class GroupInfoFragment extends Fragment {
 
         participantsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         participants = loadParticipants();
-        participantsAdapter = new ParticipantsAdapter(participants);
+        participantsAdapter = new ParticipantsAdapter(participants, groupId, groupHelper, this);
         participantsRecyclerView.setAdapter(participantsAdapter);
 
         addParticipantButton.setOnClickListener(v -> {
@@ -98,7 +98,7 @@ public class GroupInfoFragment extends Fragment {
         return participantList;
     }
 
-    private void refreshParticipants() {
+    public void refreshParticipants() {
         participants.clear();
         participants.addAll(loadParticipants());
         participantsAdapter.notifyDataSetChanged();

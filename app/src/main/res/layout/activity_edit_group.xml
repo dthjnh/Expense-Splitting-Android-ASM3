@@ -182,7 +182,7 @@
                 app:strokeColor="#FEBB1B"
                 app:strokeWidth="1dp"
                 android:textSize="16sp"
-                android:backgroundTint="@android:color/darker_gray"
+                android:backgroundTint="@android:color/white"
                 android:textColor="@android:color/black" />
 
             <Button

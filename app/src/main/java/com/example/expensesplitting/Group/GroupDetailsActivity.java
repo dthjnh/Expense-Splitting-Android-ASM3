@@ -21,6 +21,7 @@ import com.example.expensesplitting.R;
 public class GroupDetailsActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int EDIT_GROUP_REQUEST = 2;
 
     private long groupId;
     private String groupName;
@@ -103,6 +104,9 @@ public class GroupDetailsActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Failed to update group image.", Toast.LENGTH_SHORT).show();
             }
+        } else if (requestCode == EDIT_GROUP_REQUEST && resultCode == RESULT_OK) {
+            // Refresh the GroupInfoFragment after editing the group
+            loadFragment(GroupInfoFragment.newInstance(groupId));
         }
     }
 
@@ -116,7 +120,7 @@ public class GroupDetailsActivity extends AppCompatActivity {
                         case 0: // Edit Group
                             Intent editIntent = new Intent(GroupDetailsActivity.this, EditGroupActivity.class);
                             editIntent.putExtra("GROUP_ID", groupId);
-                            startActivity(editIntent);
+                            startActivityForResult(editIntent, EDIT_GROUP_REQUEST);
                             break;
 
                         case 1: // Leave Group
@@ -147,7 +151,6 @@ public class GroupDetailsActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
 
-        // Set the button colors when the dialog is shown
         dialog.setOnShowListener(d -> {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.black));
@@ -155,7 +158,6 @@ public class GroupDetailsActivity extends AppCompatActivity {
 
         dialog.show();
     }
-
 
     private void confirmDeleteGroup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -173,16 +175,11 @@ public class GroupDetailsActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
 
-        // Set the button colors when the dialog is shown
         dialog.setOnShowListener(d -> {
-            // Set "Yes" button text color to red
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-
-            // Set "No" button text color to gray
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));
         });
 
         dialog.show();
     }
-
 }

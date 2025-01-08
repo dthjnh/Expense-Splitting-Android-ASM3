@@ -1,7 +1,7 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -17,5 +17,8 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:textColor="#000"
-        android:background="#F9A825" />
+        android:backgroundTint="@color/white"
+        app:cornerRadius="100dp"
+        app:strokeColor="#FEBB1B"
+        app:strokeWidth="1dp"/>
 </LinearLayout>

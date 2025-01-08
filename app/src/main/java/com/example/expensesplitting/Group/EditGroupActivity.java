@@ -133,6 +133,8 @@ public class EditGroupActivity extends AppCompatActivity {
 
         if (success) {
             Toast.makeText(this, "Group updated successfully", Toast.LENGTH_SHORT).show();
+            Intent resultIntent = new Intent();
+            setResult(RESULT_OK, resultIntent); // Notify GroupDetailsActivity of changes
             finish();
         } else {
             Toast.makeText(this, "Failed to update group", Toast.LENGTH_SHORT).show();
