@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Group Title"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:text="Trip to Japan 🇯🇵"
             android:textSize="20sp"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"
             android:paddingStart="8dp"
@@ -36,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"
@@ -47,6 +50,7 @@
             android:id="@+id/groupDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Vacationing with college friends in Japan."
             android:layout_marginBottom="16dp"
             android:paddingStart="8dp"
@@ -58,6 +62,7 @@
             android:layout_height="wrap_content"
             android:text="Currency"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"
             android:paddingStart="8dp"
@@ -69,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="USD"
+            android:textColor="@color/black"
             android:layout_marginBottom="8dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
@@ -78,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"
@@ -90,40 +97,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Trip ✈️"
+            android:textColor="@color/black"
             android:layout_marginBottom="16dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
 
-        <!-- Label for Participants -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Group Members"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:orientation="horizontal"
             android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
             android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            android:paddingEnd="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Group Members"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/addParticipantButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add"
+                android:contentDescription="Add Participant"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
 
         <!-- RecyclerView for Participants -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/participantsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_marginBottom="16dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:scrollbars="vertical" />
 
-        <!-- Add Participant Button -->
-        <ImageView
-            android:id="@+id/addParticipantButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="end"
-            android:src="@drawable/add"
-            android:contentDescription="Add Participant"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_margin="8dp" />
     </LinearLayout>
 </ScrollView>

@@ -1,7 +1,7 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!-- Buttons for split types -->
@@ -16,12 +16,27 @@
             android:id="@+id/btnEqual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Equal" />
+            android:text="Equal"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"/>
+
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/btnUnequal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="Unequal" />
 
     </LinearLayout>
@@ -70,7 +85,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancel" />
+            android:text="Cancel"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/btnOk"
@@ -78,6 +97,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="OK"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
+            android:textColor="@color/black"
             android:backgroundTint="#F9A825"/>
     </LinearLayout>
 </LinearLayout>

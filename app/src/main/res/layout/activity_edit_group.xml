@@ -178,9 +178,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancel"
+                app:cornerRadius="100dp"
+                app:strokeColor="#FEBB1B"
+                app:strokeWidth="1dp"
                 android:textSize="16sp"
                 android:backgroundTint="@android:color/darker_gray"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/black" />
 
             <Button
                 android:id="@+id/continueButton"
@@ -188,9 +191,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Continue"
+                app:cornerRadius="100dp"
+                app:strokeColor="#FEBB1B"
+                app:strokeWidth="1dp"
                 android:textSize="16sp"
                 android:backgroundTint="#F9A825"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:layout_marginStart="16dp" />
         </LinearLayout>
     </LinearLayout>

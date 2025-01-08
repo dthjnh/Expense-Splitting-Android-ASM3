@@ -235,7 +235,7 @@
         app:strokeWidth="1dp"
         android:backgroundTint="#F9A825"
         android:text="Sign Up"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <!-- Already User TextView -->
