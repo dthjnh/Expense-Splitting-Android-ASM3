@@ -87,9 +87,12 @@
             android:layout_weight="1"
             android:text="Cancel"
             app:cornerRadius="100dp"
-            app:strokeColor="#FEBB1B"
+            android:backgroundTint="@color/white"
             app:strokeWidth="1dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            app:strokeColor="#FEBB1B"
+
+            />
 
         <Button
             android:id="@+id/btnOk"
@@ -101,6 +104,7 @@
             app:strokeColor="#FEBB1B"
             app:strokeWidth="1dp"
             android:textColor="@color/black"
-            android:backgroundTint="#F9A825"/>
+            android:backgroundTint="#F9A825"
+            />
     </LinearLayout>
 </LinearLayout>
