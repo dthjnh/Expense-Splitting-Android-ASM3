@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -118,17 +119,25 @@ public class ContactsActivity extends AppCompatActivity {
 
     private void setSelectedButton(Button selectedButton) {
         if (selectedButton == btnAllContacts) {
-            btnAllContacts.setBackgroundResource(R.drawable.rounded_button_yellow);
-            btnAllContacts.setTextColor(getResources().getColor(android.R.color.white));
-            btnFavorites.setBackgroundResource(R.drawable.rounded_button);
-            btnFavorites.setTextColor(getResources().getColor(android.R.color.black));
+            // Set All Contacts button as selected
+            btnAllContacts.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow));
+            btnAllContacts.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+
+            // Set Favorites button as unselected
+            btnFavorites.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+            btnFavorites.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+
             btnAllContacts.setSelected(true);
             btnFavorites.setSelected(false);
         } else {
-            btnFavorites.setBackgroundResource(R.drawable.rounded_button_yellow);
-            btnFavorites.setTextColor(getResources().getColor(android.R.color.white));
-            btnAllContacts.setBackgroundResource(R.drawable.rounded_button);
-            btnAllContacts.setTextColor(getResources().getColor(android.R.color.black));
+            // Set Favorites button as selected
+            btnFavorites.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow));
+            btnFavorites.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+
+            // Set All Contacts button as unselected
+            btnAllContacts.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+            btnAllContacts.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+
             btnFavorites.setSelected(true);
             btnAllContacts.setSelected(false);
         }
