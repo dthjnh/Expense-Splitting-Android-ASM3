@@ -6,7 +6,18 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- Header -->
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Header Title -->
     <TextView
         android:id="@+id/headerTitle"
         android:layout_width="wrap_content"
@@ -14,10 +25,11 @@
         android:text="Groups"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/logo"
+        app:layout_constraintBottom_toBottomOf="@id/logo"
+        app:layout_constraintStart_toEndOf="@id/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.43" />
 
     <!-- Empty State -->
     <LinearLayout
@@ -26,7 +38,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_gravity="center"
         app:layout_constraintTop_toBottomOf="@id/headerTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,57 +104,18 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_margin="16dp"
-        app:layout_constraintBottom_toTopOf="@id/navigationBar"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Navigation Bar -->
-    <LinearLayout
-        android:id="@+id/navigationBar"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:orientation="horizontal"
-        android:background="@android:color/white"
-        android:layout_marginTop="16dp"
+    <!-- Bottom Navigation Fragment -->
+    <fragment
+        android:id="@+id/bottomNavigationFragment"
+        android:name="com.example.expensesplitting.FragmentForUser.BottomNavigationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageButton
-            android:id="@+id/navHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_home"
-            android:contentDescription="Home"
-            android:background="@android:color/transparent" />
-
-        <ImageButton
-            android:id="@+id/navGroups"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_groups"
-            android:contentDescription="Groups"
-            android:background="@android:color/transparent" />
-
-        <ImageButton
-            android:id="@+id/navContacts"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_contacts"
-            android:contentDescription="Contacts"
-            android:background="@android:color/transparent" />
-
-        <ImageButton
-            android:id="@+id/navAccount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_account"
-            android:contentDescription="Account"
-            android:background="@android:color/transparent" />
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,7 +50,7 @@
             android:id="@+id/titleInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title"
+            android:hint="Enter title"
             android:background="@drawable/input_background"
             android:padding="12dp"
             android:textSize="16sp"
@@ -60,7 +60,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Amount"
+            android:text="Amount "
             android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
             android:layout_marginBottom="4dp" />
@@ -69,14 +69,14 @@
             android:id="@+id/amountInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="0"
+            android:hint="Enter amount of money"
             android:background="@drawable/input_background"
             android:padding="12dp"
             android:textSize="16sp"
             android:inputType="numberDecimal"
             android:layout_marginBottom="16dp" />
 
-        <!-- Category Button -->
+        <!-- Category Selection -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,14 +85,32 @@
             android:textColor="@android:color/darker_gray"
             android:layout_marginBottom="4dp" />
 
-        <Button
-            android:id="@+id/categoryButton"
+        <LinearLayout
+            android:id="@+id/categoryButtonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Category"
+            android:orientation="horizontal"
             android:background="@drawable/input_background"
             android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/categoryIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:src="@android:color/transparent"
+                android:contentDescription="Category Icon" />
+
+            <TextView
+                android:id="@+id/categoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Category"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
 
         <!-- Paid By Spinner -->
         <TextView
@@ -111,7 +129,7 @@
             android:padding="12dp"
             android:layout_marginBottom="16dp" />
 
-        <!-- Split By Button -->
+        <!-- Split By Section -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,14 +138,24 @@
             android:textColor="@android:color/darker_gray"
             android:layout_marginBottom="4dp" />
 
-        <Button
-            android:id="@+id/splitByButton"
+        <LinearLayout
+            android:id="@+id/splitByButtonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Split By"
+            android:orientation="horizontal"
             android:background="@drawable/input_background"
             android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/splitByText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Split Method"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
 
         <!-- Notes Input -->
         <TextView
@@ -142,7 +170,7 @@
             android:id="@+id/notesInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Notes"
+            android:hint="Add notes"
             android:background="@drawable/input_background"
             android:padding="12dp"
             android:textSize="16sp"

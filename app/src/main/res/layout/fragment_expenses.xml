@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- RecyclerView for displaying expenses -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expenseList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Floating Action Button for adding expenses -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addExpenseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Add Expense"
+        android:backgroundTint="#F9A825" />
+</RelativeLayout>

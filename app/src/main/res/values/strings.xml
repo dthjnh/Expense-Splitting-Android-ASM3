@@ -6,4 +6,7 @@
     <string name="show_password_icon">Show Password Icon</string>
     <string name="default_web_client_id">1048014459148-s7o282r3heh2vktsldb9pe584gu3p0ri.apps.googleusercontent.com</string>
     <string name="add_pay_button">Add Pay button</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_totals_fragment">Hello blank totals fragment</string>
+    <string name="hello_blank_balance_fragment">Hello blank balance fragment</string>
 </resources>

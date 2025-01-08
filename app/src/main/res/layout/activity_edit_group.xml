@@ -1,0 +1,197 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <!-- Back Button -->
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_back"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="Back Button" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/newGroupTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Group"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <!-- Upload Cover Image -->
+        <ImageView
+            android:id="@+id/coverImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/uploads"
+            android:contentDescription="Upload Cover Image"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Title -->
+        <EditText
+            android:id="@+id/groupTitleInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:background="@drawable/input_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Description -->
+        <EditText
+            android:id="@+id/groupDescriptionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:background="@drawable/input_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Currency -->
+        <EditText
+            android:id="@+id/currencyInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Currency"
+            android:background="@drawable/input_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Category -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:rowCount="2"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/categoryTrip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/input_background"
+                android:text="Trip ✈️"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:id="@+id/categoryFamily"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/input_background"
+                android:text="Family 👨‍👩‍👧"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:id="@+id/categoryCouple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/input_background"
+                android:text="Couple 💑"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:id="@+id/categoryEvent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/input_background"
+                android:text="Event 🗓️"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:id="@+id/categoryProject"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/input_background"
+                android:text="Project 📁"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:id="@+id/categoryOther"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/input_background"
+                android:text="Other 🍀"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_margin="4dp" />
+        </GridLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textSize="16sp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/continueButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Continue"
+                android:textSize="16sp"
+                android:backgroundTint="#F9A825"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

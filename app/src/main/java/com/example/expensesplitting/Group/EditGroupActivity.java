@@ -1,6 +1,7 @@
 package com.example.expensesplitting.Group;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensesplitting.Database.GroupHelper;
@@ -19,13 +18,14 @@ import com.example.expensesplitting.R;
 
 import java.io.IOException;
 
-public class AddGroupActivity extends AppCompatActivity {
+public class EditGroupActivity extends AppCompatActivity {
 
     private EditText titleInput, descriptionInput, currencyInput;
     private ImageView coverImageView, backButton;
     private String selectedCategory;
     private Uri selectedImageUri;
     private GroupHelper dbHelper;
+    private long groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,12 @@ public class AddGroupActivity extends AppCompatActivity {
 
         dbHelper = new GroupHelper(this);
 
+        // Get group ID from Intent
+        groupId = getIntent().getLongExtra("GROUP_ID", -1);
+
+        // Load existing group details
+        loadGroupDetails();
+
         backButton.setOnClickListener(v -> finish());
 
         coverImageView.setOnClickListener(v -> openImagePicker());
@@ -48,6 +54,7 @@ public class AddGroupActivity extends AppCompatActivity {
         setUpCategoryButtons();
 
         Button continueButton = findViewById(R.id.continueButton);
+        continueButton.setText("Save Changes");
         continueButton.setOnClickListener(v -> saveGroup());
 
         Button cancelButton = findViewById(R.id.cancelButton);
@@ -55,35 +62,23 @@ public class AddGroupActivity extends AppCompatActivity {
     }
 
     private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("image/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        imagePickerLauncher.launch(intent);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 1);
     }
 
-    private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    selectedImageUri = result.getData().getData();
-
-                    // Take persistent permissions for the URI
-                    if (selectedImageUri != null) {
-                        getContentResolver().takePersistableUriPermission(
-                                selectedImageUri,
-                                Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        );
-
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                            coverImageView.setImageBitmap(bitmap);
-                        } catch (IOException e) {
-                            Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            selectedImageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                coverImageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
             }
-    );
+        }
+    }
 
     private void setUpCategoryButtons() {
         findViewById(R.id.categoryTrip).setOnClickListener(v -> handleCategorySelection("Trip"));
@@ -99,6 +94,31 @@ public class AddGroupActivity extends AppCompatActivity {
         Toast.makeText(this, "Selected Category: " + category, Toast.LENGTH_SHORT).show();
     }
 
+    private void loadGroupDetails() {
+        Cursor cursor = dbHelper.getGroupById(groupId);
+        if (cursor != null && cursor.moveToFirst()) {
+            titleInput.setText(cursor.getString(cursor.getColumnIndexOrThrow(GroupHelper.COLUMN_NAME)));
+            descriptionInput.setText(cursor.getString(cursor.getColumnIndexOrThrow(GroupHelper.COLUMN_DESCRIPTION)));
+            currencyInput.setText(cursor.getString(cursor.getColumnIndexOrThrow(GroupHelper.COLUMN_CURRENCY)));
+            selectedCategory = cursor.getString(cursor.getColumnIndexOrThrow(GroupHelper.COLUMN_CATEGORY));
+            String imageUri = cursor.getString(cursor.getColumnIndexOrThrow(GroupHelper.COLUMN_IMAGE));
+
+            if (imageUri != null) {
+                selectedImageUri = Uri.parse(imageUri);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                    coverImageView.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+                }
+            }
+            cursor.close();
+        } else {
+            Toast.makeText(this, "Failed to load group details", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
     private void saveGroup() {
         String title = titleInput.getText().toString().trim();
         String description = descriptionInput.getText().toString().trim();
@@ -109,17 +129,13 @@ public class AddGroupActivity extends AppCompatActivity {
             return;
         }
 
-        long groupId = dbHelper.insertGroup(title, description, currency, selectedCategory, selectedImageUri != null ? selectedImageUri.toString() : null);
+        boolean success = dbHelper.updateGroup(groupId, title, description, currency, selectedCategory, selectedImageUri != null ? selectedImageUri.toString() : null);
 
-        if (groupId == -1) {
-            Toast.makeText(this, "Failed to create group", Toast.LENGTH_SHORT).show();
-            return;
+        if (success) {
+            Toast.makeText(this, "Group updated successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Failed to update group", Toast.LENGTH_SHORT).show();
         }
-
-        Intent intent = new Intent(this, SelectParticipantsActivity.class);
-        intent.putExtra("GROUP_ID", groupId);
-        startActivity(intent);
-
-        finish();
     }
 }

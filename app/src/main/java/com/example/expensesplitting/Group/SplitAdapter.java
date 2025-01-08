@@ -1,10 +1,9 @@
 package com.example.expensesplitting.Group;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,51 +14,106 @@ import com.example.expensesplitting.R;
 
 import java.util.List;
 
-public class SplitAdapter extends RecyclerView.Adapter<SplitAdapter.SplitViewHolder> {
+public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    public interface OnAmountChangedListener {
+        void onAmountChanged();
+    }
 
     private List<Participant> participants;
     private double totalAmount;
-
-    public SplitAdapter(List<Participant> participants, double totalAmount) {
-        this.participants = participants;
-        this.totalAmount = totalAmount;
-    }
+    private SplitType splitType;
+    private OnAmountChangedListener amountChangedListener;
 
     public enum SplitType {
         EQUAL,
-        UNEQUAL,
-        PERCENTAGE
+        UNEQUAL
+    }
+
+    public SplitAdapter(List<Participant> participants, double totalAmount, SplitType splitType, OnAmountChangedListener amountChangedListener) {
+        this.participants = participants;
+        this.totalAmount = totalAmount;
+        this.splitType = splitType;
+        this.amountChangedListener = amountChangedListener;
+    }
+
+    public void setSplitType(SplitType splitType) {
+        this.splitType = splitType;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (splitType == SplitType.EQUAL) {
+            return R.layout.item_split_equal;
+        } else {
+            return R.layout.item_split_unequal;
+        }
     }
 
     @NonNull
     @Override
-    public SplitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_split_participant, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return new SplitViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SplitViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Participant participant = participants.get(position);
-        holder.name.setText(participant.getName());
-        holder.input.setText(String.valueOf(participant.getAmount()));
+        SplitViewHolder viewHolder = (SplitViewHolder) holder;
 
-        holder.input.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    participant.setAmount(Double.parseDouble(s.toString()));
-                } catch (NumberFormatException e) {
-                    participant.setAmount(0); // Reset on invalid input
+        viewHolder.name.setText(participant.getName());
+
+        if (splitType == SplitType.EQUAL) {
+            // Handle Equal Split
+            if (viewHolder.checkBox != null && viewHolder.amount != null) {
+                viewHolder.checkBox.setVisibility(View.VISIBLE);
+                viewHolder.amount.setVisibility(View.VISIBLE);
+                if (viewHolder.input != null) {
+                    viewHolder.input.setVisibility(View.GONE);
                 }
+
+                viewHolder.checkBox.setChecked(participant.getAmount() > 0);
+                viewHolder.amount.setText(String.format("$%.2f", participant.getAmount()));
+
+                viewHolder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    int checkedCount = getCheckedCount();
+                    if (isChecked) {
+                        participant.setAmount(totalAmount / checkedCount);
+                    } else {
+                        participant.setAmount(0);
+                    }
+                    recalculateEqualAmounts();
+                    notifyDataSetChanged();
+                    amountChangedListener.onAmountChanged();
+                });
             }
+        } else if (splitType == SplitType.UNEQUAL) {
+            // Handle Unequal Split
+            if (viewHolder.input != null) {
+                if (viewHolder.checkBox != null) {
+                    viewHolder.checkBox.setVisibility(View.GONE);
+                }
+                if (viewHolder.amount != null) {
+                    viewHolder.amount.setVisibility(View.GONE);
+                }
+                viewHolder.input.setVisibility(View.VISIBLE);
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        });
+                viewHolder.input.setText(String.format("%.2f", participant.getAmount()));
+                viewHolder.input.setOnFocusChangeListener((v, hasFocus) -> {
+                    if (!hasFocus) {
+                        try {
+                            double enteredAmount = Double.parseDouble(viewHolder.input.getText().toString());
+                            participant.setAmount(enteredAmount);
+                        } catch (NumberFormatException e) {
+                            participant.setAmount(0);
+                        }
+                        amountChangedListener.onAmountChanged();
+                    }
+                });
+            }
+        }
     }
 
     @Override
@@ -67,57 +121,44 @@ public class SplitAdapter extends RecyclerView.Adapter<SplitAdapter.SplitViewHol
         return participants.size();
     }
 
-    public void applySplit(SplitType splitType) {
-        switch (splitType) {
-            case EQUAL:
-                double equalShare = totalAmount / participants.size();
-                for (Participant participant : participants) {
-                    participant.setAmount(equalShare);
-                }
-                notifyDataSetChanged();
-                break;
-
-            case UNEQUAL:
-                // Logic for unequal split can be custom-entered via the input fields.
-                // No pre-defined calculation here.
-                break;
-
-            case PERCENTAGE:
-                double percentageTotal = 0;
-                for (Participant participant : participants) {
-                    percentageTotal += participant.getAmount();
-                }
-                if (percentageTotal != 100) {
-                    // Validation error for percentages.
-                    throw new IllegalArgumentException("Percentages must sum to 100%");
-                }
-                for (Participant participant : participants) {
-                    participant.setAmount(totalAmount * (participant.getAmount() / 100));
-                }
-                notifyDataSetChanged();
-                break;
-
-            default:
-                throw new UnsupportedOperationException("Unsupported Split Type");
+    private int getCheckedCount() {
+        int count = 0;
+        for (Participant participant : participants) {
+            if (participant.getAmount() > 0) {
+                count++;
+            }
         }
+        return count;
     }
 
-    public boolean validateSplit() {
-        double sum = 0;
-        for (Participant participant : participants) {
-            sum += participant.getAmount();
+    private void recalculateEqualAmounts() {
+        int checkedCount = getCheckedCount();
+        if (checkedCount > 0) {
+            double newAmount = totalAmount / checkedCount;
+            for (Participant participant : participants) {
+                if (participant.getAmount() > 0) {
+                    participant.setAmount(newAmount);
+                }
+            }
         }
-        return sum == totalAmount;
     }
 
     public static class SplitViewHolder extends RecyclerView.ViewHolder {
         TextView name;
+        TextView amount;
         EditText input;
+        CheckBox checkBox;
 
         public SplitViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.participantName);
-            input = itemView.findViewById(R.id.participantInput);
+            try {
+                checkBox = itemView.findViewById(R.id.participantCheckBox);
+                amount = itemView.findViewById(R.id.participantAmount);
+                input = itemView.findViewById(R.id.participantInput);
+            } catch (Exception ignored) {
+                // Ignore missing views based on layout type
+            }
         }
     }
 }

@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -42,6 +41,9 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.com.google.gms.google.services.gradle.plugin)
     implementation(libs.play.services.auth)
+    implementation(libs.recyclerview)
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

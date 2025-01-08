@@ -51,5 +51,11 @@ public class CategorySelectionActivity extends AppCompatActivity {
         categories.add("Groceries");
         categories.add("Dining Out");
         categories.add("Liquor");
+        categories.add("Car");
+        categories.add("Ticket");
+        categories.add("Hotel");
+        categories.add("Shopping");
+        categories.add("Other");
+
     }
 }

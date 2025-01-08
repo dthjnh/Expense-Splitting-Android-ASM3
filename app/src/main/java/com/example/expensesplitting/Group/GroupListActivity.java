@@ -99,7 +99,7 @@ public class GroupListActivity extends AppCompatActivity {
                     String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
                     String currency = cursor.getString(cursor.getColumnIndexOrThrow("currency"));
                     String category = cursor.getString(cursor.getColumnIndexOrThrow("category"));
-                    String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
+                    String image = cursor.getString(cursor.getColumnIndexOrThrow("image")); // Retrieve the group image URI
 
                     // Add group to the list
                     groupList.add(new Group(id, name, description, currency, category, image));
