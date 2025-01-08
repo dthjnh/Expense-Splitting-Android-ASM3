@@ -1,6 +1,8 @@
 package com.example.expensesplitting.Group;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.expensesplitting.R;
 
 import java.util.ArrayList;
@@ -42,33 +45,32 @@ public class GroupAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (convertView == null) {
-            // Inflate the item layout for a single group item
             convertView = LayoutInflater.from(context).inflate(R.layout.item_group, parent, false);
 
-            // Initialize the ViewHolder
             viewHolder = new ViewHolder();
+            viewHolder.groupImage = convertView.findViewById(R.id.groupImage);
             viewHolder.groupName = convertView.findViewById(R.id.groupName);
             viewHolder.groupDescription = convertView.findViewById(R.id.groupDescription);
-            viewHolder.groupImage = convertView.findViewById(R.id.groupImage);
 
             convertView.setTag(viewHolder);
         } else {
-            // Reuse the ViewHolder
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // Get the current group
         Group group = groupList.get(position);
 
-        // Populate the views with data
+        Log.d("GroupAdapter", "Group Name: " + group.getName() + ", Image URI: " + group.getImage());
+
         viewHolder.groupName.setText(group.getName());
         viewHolder.groupDescription.setText(group.getDescription());
 
-        // Placeholder logic for the group image
         if (group.getImage() != null && !group.getImage().isEmpty()) {
-            // Use a library like Glide or Picasso for dynamic image loading
-            // Glide.with(context).load(group.getImage()).into(viewHolder.groupImage);
-            viewHolder.groupImage.setImageResource(R.drawable.ic_placeholder); // Placeholder image
+            Glide.with(context)
+                    .load(Uri.parse(group.getImage())) // Load the image URI
+                    .placeholder(R.drawable.ic_placeholder) // Default placeholder
+                    .error(R.drawable.error) // Error image
+                    .circleCrop() // Apply circular cropping
+                    .into(viewHolder.groupImage);
         } else {
             viewHolder.groupImage.setImageResource(R.drawable.ic_placeholder); // Default placeholder
         }
@@ -76,10 +78,9 @@ public class GroupAdapter extends BaseAdapter {
         return convertView;
     }
 
-    // Static class to hold the views
     private static class ViewHolder {
+        ImageView groupImage;
         TextView groupName;
         TextView groupDescription;
-        ImageView groupImage;
     }
 }

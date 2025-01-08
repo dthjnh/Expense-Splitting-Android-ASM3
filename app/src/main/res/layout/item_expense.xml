@@ -1,40 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:background="@color/white"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/expenseTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Expense Title"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/expenseAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="$0.00"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        <!-- Category Icon -->
+        <ImageView
+            android:id="@+id/categoryIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Category Icon" />
+        <!-- Expense Title -->
+        <TextView
+            android:id="@+id/expenseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/categoryIcon"
+            android:layout_marginStart="16dp"
+            android:text="Expense Title"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_alignParentTop="true"
+            android:ellipsize="end"
+            android:maxLines="1" />
 
-    <TextView
-        android:id="@+id/expensePaidBy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Paid by: Name"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        <!-- Expense Amount -->
+        <TextView
+            android:id="@+id/expenseAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="$0.00"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/expenseDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Today"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
-</LinearLayout>
+        <!-- Paid By -->
+        <TextView
+            android:id="@+id/expensePaidBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/categoryIcon"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/expenseTitle"
+            android:text="Paid by: Someone"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+        <!-- Expense Date -->
+        <TextView
+            android:id="@+id/expenseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/expenseAmount"
+            android:text="Today"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

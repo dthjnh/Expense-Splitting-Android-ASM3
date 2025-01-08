@@ -1,0 +1,129 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Label for Group Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Group Title"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Group Title -->
+        <TextView
+            android:id="@+id/groupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trip to Japan 🇯🇵"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Label for Group Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Group Description -->
+        <TextView
+            android:id="@+id/groupDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vacationing with college friends in Japan."
+            android:layout_marginBottom="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Label for Currency -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Currency"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Group Currency -->
+        <TextView
+            android:id="@+id/groupCurrency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="USD"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Label for Category -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Group Category -->
+        <TextView
+            android:id="@+id/groupCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trip ✈️"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Label for Participants -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Group Members"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- RecyclerView for Participants -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/participantsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:scrollbars="vertical" />
+
+        <!-- Add Participant Button -->
+        <ImageView
+            android:id="@+id/addParticipantButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:src="@drawable/add"
+            android:contentDescription="Add Participant"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_margin="8dp" />
+    </LinearLayout>
+</ScrollView>

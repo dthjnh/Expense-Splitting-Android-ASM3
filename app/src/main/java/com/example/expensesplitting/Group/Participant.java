@@ -4,21 +4,27 @@ import java.io.Serializable;
 
 public class Participant implements Serializable {
     private String name;
-    private double amount; // Amount allocated
-    private double percentage; // Percentage of the split
-    private int shares; // Shares for the participant
+    private double amount; // Amount allocated in the split
+    private double paidAmount; // Amount paid by the participant
+    private boolean selected; // Tracks if the participant is selected
 
     public Participant(String name) {
         this.name = name;
-        this.amount = 0;
-        this.percentage = 0;
-        this.shares = 1; // Default to 1 share
+        this.amount = 0; // Default: no amount allocated
+        this.paidAmount = 0; // Default: no amount paid
+        this.selected = false; // Default: not selected
     }
 
+    // Getter and Setter for name
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Getter and Setter for allocated amount
     public double getAmount() {
         return amount;
     }
@@ -27,19 +33,31 @@ public class Participant implements Serializable {
         this.amount = amount;
     }
 
-    public double getPercentage() {
-        return percentage;
+    // Getter and Setter for paid amount
+    public double getPaidAmount() {
+        return paidAmount;
     }
 
-    public void setPercentage(double percentage) {
-        this.percentage = percentage;
+    public void setPaidAmount(double paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
-    public int getShares() {
-        return shares;
+    // Getter and Setter for selected status
+    public boolean isSelected() {
+        return selected;
     }
 
-    public void setShares(int shares) {
-        this.shares = shares;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "name='" + name + '\'' +
+                ", amount=" + amount +
+                ", paidAmount=" + paidAmount +
+                ", selected=" + selected +
+                '}';
     }
 }

@@ -14,18 +14,18 @@ import java.util.ArrayList;
 
 public class CategoryAdapter extends BaseAdapter {
 
-    private Context context;
-    private ArrayList<String> categories;
-    private OnCategoryClickListener categoryClickListener;
+    private final Context context;
+    private final ArrayList<String> categories;
+    private final CategorySelectionListener listener;
 
-    public interface OnCategoryClickListener {
-        void onCategoryClick(String category);
+    public interface CategorySelectionListener {
+        void onCategorySelected(String selectedCategory);
     }
 
-    public CategoryAdapter(Context context, ArrayList<String> categories, OnCategoryClickListener listener) {
+    public CategoryAdapter(Context context, ArrayList<String> categories, CategorySelectionListener listener) {
         this.context = context;
         this.categories = categories;
-        this.categoryClickListener = listener;
+        this.listener = listener;
     }
 
     @Override
@@ -49,20 +49,55 @@ public class CategoryAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_category, parent, false);
         }
 
+        String category = categories.get(position);
         TextView categoryName = convertView.findViewById(R.id.categoryName);
         ImageView categoryIcon = convertView.findViewById(R.id.categoryIcon);
 
-        String category = categories.get(position);
         categoryName.setText(category);
 
-        // Optionally set icons or colors based on category
-        if (category.equals("Groceries")) {
-            categoryIcon.setImageResource(R.drawable.ic_groceries); // Replace with actual drawable
-        } else if (category.equals("Sports")) {
-            categoryIcon.setImageResource(R.drawable.ic_sports); // Replace with actual drawable
+        // Dynamically set icon based on category name
+        switch (category.toLowerCase()) {
+            case "games":
+                categoryIcon.setImageResource(R.drawable.game);
+                break;
+            case "movies":
+                categoryIcon.setImageResource(R.drawable.movie);
+                break;
+            case "music":
+                categoryIcon.setImageResource(R.drawable.music);
+                break;
+            case "sports":
+                categoryIcon.setImageResource(R.drawable.sport);
+                break;
+            case "groceries":
+                categoryIcon.setImageResource(R.drawable.groceries);
+                break;
+            case "dining out":
+                categoryIcon.setImageResource(R.drawable.dining);
+                break;
+            case "liquor":
+                categoryIcon.setImageResource(R.drawable.liquor);
+                break;
+            case "ticket":
+                categoryIcon.setImageResource(R.drawable.airline);
+                break;
+            case "car":
+                categoryIcon.setImageResource(R.drawable.transport);
+                break;
+            case "shopping":
+                categoryIcon.setImageResource(R.drawable.shopping);
+                break;
+            case "hotel":
+                categoryIcon.setImageResource(R.drawable.hotel);
+                break;
+            case "other":
+                categoryIcon.setImageResource(R.drawable.category);
+                break;
+
         }
 
-        convertView.setOnClickListener(v -> categoryClickListener.onCategoryClick(category));
+        // Handle click events
+        convertView.setOnClickListener(v -> listener.onCategorySelected(category));
 
         return convertView;
     }

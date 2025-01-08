@@ -1,7 +1,7 @@
 package com.example.expensesplitting.Group;
 
 public class Expense {
-    private String groupName;
+    private long groupId;
     private String title;
     private double amount;
     private String category;
@@ -9,8 +9,8 @@ public class Expense {
     private String splitBy;
     private String notes;
 
-    public Expense(String groupName, String title, double amount, String category, String paidBy, String splitBy, String notes) {
-        this.groupName = groupName;
+    public Expense(long groupId, String title, double amount, String category, String paidBy, String splitBy, String notes) {
+        this.groupId = groupId;
         this.title = title;
         this.amount = amount;
         this.category = category;
@@ -19,12 +19,12 @@ public class Expense {
         this.notes = notes;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public long getGroupId() {
+        return groupId;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
     }
 
     public String getTitle() {

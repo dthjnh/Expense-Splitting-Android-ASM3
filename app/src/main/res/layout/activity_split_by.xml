@@ -24,11 +24,6 @@
             android:layout_height="wrap_content"
             android:text="Unequal" />
 
-        <Button
-            android:id="@+id/btnPercentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Percentage" />
     </LinearLayout>
 
     <!-- RecyclerView for participants -->
@@ -37,6 +32,31 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <!-- Total Summary Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/totalAmountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: $120.00"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/amountLeftText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount Left: $14.00"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray" />
+    </LinearLayout>
 
     <!-- Buttons -->
     <LinearLayout

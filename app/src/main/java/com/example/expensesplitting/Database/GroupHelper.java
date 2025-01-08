@@ -6,31 +6,28 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GroupHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "GroupManager.db";
     private static final int DATABASE_VERSION = 2;
 
     // Table names
-    private static final String TABLE_GROUPS = "groups";
-    private static final String TABLE_PARTICIPANTS = "group_participants";
+    public static final String TABLE_GROUPS = "groups";
+    public static final String TABLE_PARTICIPANTS = "group_participants";
 
     // Common columns
-    private static final String COLUMN_ID = "id";
+    public static final String COLUMN_ID = "id";
 
     // Groups table columns
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_DESCRIPTION = "description";
-    private static final String COLUMN_CURRENCY = "currency";
-    private static final String COLUMN_CATEGORY = "category";
-    private static final String COLUMN_IMAGE = "image";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_CURRENCY = "currency";
+    public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_IMAGE = "image";
 
     // Participants table columns
-    private static final String COLUMN_GROUP_ID = "group_id";
-    private static final String COLUMN_PARTICIPANT_NAME = "participant_name";
+    public static final String COLUMN_GROUP_ID = "group_id";
+    public static final String COLUMN_PARTICIPANT_NAME = "participant_name";
 
     public GroupHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -59,58 +56,96 @@ public class GroupHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < DATABASE_VERSION) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTICIPANTS);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUPS);
-            onCreate(db);
-        }
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTICIPANTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUPS);
+        onCreate(db);
     }
 
     /**
-     * Inserts a new group into the database.
-     *
-     * @param name        The name of the group.
-     * @param description The description of the group.
-     * @param currency    The currency of the group.
-     * @param category    The category of the group.
-     * @param image       The image associated with the group.
-     * @return The ID of the newly created group.
+     * Inserts a new group into the database and automatically adds "You" as a participant.
      */
     public long insertGroup(String name, String description, String currency, String category, String image) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long groupId = -1;
+
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_NAME, name);
+            values.put(COLUMN_DESCRIPTION, description);
+            values.put(COLUMN_CURRENCY, currency);
+            values.put(COLUMN_CATEGORY, category);
+            values.put(COLUMN_IMAGE, image);
+
+            groupId = db.insert(TABLE_GROUPS, null, values);
+
+            if (groupId != -1) {
+                addParticipantToGroupInternal(db, groupId, "You"); // Automatically add "You" as a participant
+            }
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+
+        return groupId;
+    }
+
+    /**
+     * Updates an existing group in the database.
+     */
+    public boolean updateGroup(long groupId, String name, String description, String currency, String category, String imageUri) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_CURRENCY, currency);
         values.put(COLUMN_CATEGORY, category);
-        values.put(COLUMN_IMAGE, image);
+        values.put(COLUMN_IMAGE, imageUri);
 
-        long id = db.insert(TABLE_GROUPS, null, values);
+        int rowsUpdated = db.update(TABLE_GROUPS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(groupId)});
         db.close();
-        return id;
+        return rowsUpdated > 0;
+    }
+
+    /**
+     * Updates the group image for a specific group.
+     */
+    public boolean updateGroupImage(long groupId, String imageUri) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IMAGE, imageUri);
+
+        int rowsUpdated = db.update(TABLE_GROUPS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(groupId)});
+        db.close();
+        return rowsUpdated > 0;
     }
 
     /**
      * Adds a participant to a specific group.
-     *
-     * @param groupId         The ID of the group.
-     * @param participantName The name of the participant.
      */
     public void addParticipantToGroup(long groupId, String participantName) {
         SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            addParticipantToGroupInternal(db, groupId, participantName);
+        } finally {
+            db.close();
+        }
+    }
+
+    private void addParticipantToGroupInternal(SQLiteDatabase db, long groupId, String participantName) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_GROUP_ID, groupId);
         values.put(COLUMN_PARTICIPANT_NAME, participantName);
 
         db.insert(TABLE_PARTICIPANTS, null, values);
-        db.close();
     }
 
     /**
      * Fetches all participants for a specific group as a Cursor.
-     *
-     * @param groupId The ID of the group.
-     * @return A Cursor containing the participants of the group.
      */
     public Cursor getParticipantsForGroup(long groupId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -118,13 +153,13 @@ public class GroupHelper extends SQLiteOpenHelper {
                 new String[]{COLUMN_PARTICIPANT_NAME}, // Select only participant names
                 COLUMN_GROUP_ID + " = ?",              // Where clause
                 new String[]{String.valueOf(groupId)}, // Where arguments
-                null, null, null);
+                null,                                  // Group by
+                null,                                  // Having
+                null);                                 // Order by
     }
 
     /**
      * Fetches all groups from the database.
-     *
-     * @return A Cursor containing all groups.
      */
     public Cursor getAllGroups() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -132,10 +167,19 @@ public class GroupHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Fetches a specific group by ID.
+     */
+    public Cursor getGroupById(long groupId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_GROUPS,
+                null, // Select all columns
+                COLUMN_ID + " = ?", // WHERE clause
+                new String[]{String.valueOf(groupId)}, // WHERE arguments
+                null, null, null); // GroupBy, Having, OrderBy
+    }
+
+    /**
      * Deletes a specific group and its participants.
-     *
-     * @param groupId The ID of the group to delete.
-     * @return True if the group was deleted successfully, false otherwise.
      */
     public boolean deleteGroup(long groupId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -146,10 +190,6 @@ public class GroupHelper extends SQLiteOpenHelper {
 
     /**
      * Deletes a specific participant from a group.
-     *
-     * @param groupId         The ID of the group.
-     * @param participantName The name of the participant to delete.
-     * @return True if the participant was deleted successfully, false otherwise.
      */
     public boolean deleteParticipant(long groupId, String participantName) {
         SQLiteDatabase db = this.getWritableDatabase();

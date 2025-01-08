@@ -2,13 +2,13 @@ package com.example.expensesplitting.Group;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.expensesplitting.Database.GroupHelper;
 import com.example.expensesplitting.R;
 
 import java.util.ArrayList;
@@ -17,12 +17,12 @@ import java.util.List;
 public class SplitByActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private Button btnEqual, btnUnequal, btnPercentage, btnCancel, btnOk;
+    private Button btnEqual, btnUnequal, btnCancel, btnOk;
+    private TextView totalAmountText, amountLeftText;
     private List<Participant> participants = new ArrayList<>();
     private SplitAdapter splitAdapter;
     private double totalAmount;
-    private long groupId;
-    private GroupHelper groupHelper;
+    private double amountLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +33,28 @@ public class SplitByActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewSplit);
         btnEqual = findViewById(R.id.btnEqual);
         btnUnequal = findViewById(R.id.btnUnequal);
-        btnPercentage = findViewById(R.id.btnPercentage);
         btnCancel = findViewById(R.id.btnCancel);
         btnOk = findViewById(R.id.btnOk);
+        totalAmountText = findViewById(R.id.totalAmountText);
+        amountLeftText = findViewById(R.id.amountLeftText);
 
         // Retrieve data from intent
         totalAmount = getIntent().getDoubleExtra("TOTAL_AMOUNT", 0);
-        groupId = getIntent().getLongExtra("GROUP_ID", -1);
         participants = (ArrayList<Participant>) getIntent().getSerializableExtra("PARTICIPANTS");
 
-        if (groupId == -1 || participants == null) {
-            Toast.makeText(this, "Invalid Group ID or Participants", Toast.LENGTH_SHORT).show();
+        if (participants == null) {
+            Toast.makeText(this, "No participants available", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
+        // Set the initial total amount and amount left
+        amountLeft = totalAmount;
+        updateAmountTexts();
+
         // Set up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        splitAdapter = new SplitAdapter(participants, totalAmount);
+        splitAdapter = new SplitAdapter(participants, totalAmount, SplitAdapter.SplitType.EQUAL, this::updateAmountTexts);
         recyclerView.setAdapter(splitAdapter);
 
         setupButtonListeners();
@@ -58,29 +62,46 @@ public class SplitByActivity extends AppCompatActivity {
 
     private void setupButtonListeners() {
         btnEqual.setOnClickListener(v -> {
-            splitAdapter.applySplit(SplitAdapter.SplitType.EQUAL);
+            splitAdapter.setSplitType(SplitAdapter.SplitType.EQUAL);
+            updateAmountTexts();
             Toast.makeText(this, "Equal Split Selected", Toast.LENGTH_SHORT).show();
         });
 
         btnUnequal.setOnClickListener(v -> {
-            splitAdapter.applySplit(SplitAdapter.SplitType.UNEQUAL);
+            splitAdapter.setSplitType(SplitAdapter.SplitType.UNEQUAL);
+            updateAmountTexts();
             Toast.makeText(this, "Unequal Split Selected", Toast.LENGTH_SHORT).show();
-        });
-
-        btnPercentage.setOnClickListener(v -> {
-            splitAdapter.applySplit(SplitAdapter.SplitType.PERCENTAGE);
-            Toast.makeText(this, "Percentage Split Selected", Toast.LENGTH_SHORT).show();
         });
 
         btnCancel.setOnClickListener(v -> finish());
 
         btnOk.setOnClickListener(v -> {
-            if (splitAdapter.validateSplit()) {
+            if (amountLeft == 0) {
                 Toast.makeText(this, "Split saved successfully!", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, "Invalid split. Please check inputs.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please allocate the entire amount", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void updateAmountTexts() {
+        // Update total and remaining amounts
+        double allocatedAmount = 0;
+        for (Participant participant : participants) {
+            allocatedAmount += participant.getAmount();
+        }
+        amountLeft = totalAmount - allocatedAmount;
+
+        // Update the TextViews
+        totalAmountText.setText(String.format("Total: $%.2f", totalAmount));
+        amountLeftText.setText(String.format("Amount Left: $%.2f", amountLeft));
+
+        // Show red text if the amount left is negative
+        if (amountLeft < 0) {
+            amountLeftText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        } else {
+            amountLeftText.setTextColor(getResources().getColor(android.R.color.black));
+        }
     }
 }
