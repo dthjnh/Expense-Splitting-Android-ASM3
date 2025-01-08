@@ -1,5 +1,6 @@
 package com.example.expensesplitting.Group;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import java.util.List;
 public class GroupInfoFragment extends Fragment {
 
     private static final String ARG_GROUP_ID = "GROUP_ID";
+    private static final int REQUEST_ADD_PARTICIPANT = 1;
 
     private long groupId;
     private GroupHelper groupHelper;
@@ -32,6 +34,7 @@ public class GroupInfoFragment extends Fragment {
     private TextView groupTitle, groupDescription, groupCurrency, groupCategory;
     private RecyclerView participantsRecyclerView;
     private ParticipantsAdapter participantsAdapter;
+    private ImageView addParticipantButton;
 
     public static GroupInfoFragment newInstance(long groupId) {
         GroupInfoFragment fragment = new GroupInfoFragment();
@@ -47,7 +50,6 @@ public class GroupInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_group_info, container, false);
 
         groupId = getArguments().getLong(ARG_GROUP_ID);
-
         groupHelper = new GroupHelper(requireContext());
 
         groupTitle = view.findViewById(R.id.groupTitle);
@@ -55,7 +57,7 @@ public class GroupInfoFragment extends Fragment {
         groupCurrency = view.findViewById(R.id.groupCurrency);
         groupCategory = view.findViewById(R.id.groupCategory);
         participantsRecyclerView = view.findViewById(R.id.participantsList);
-        ImageView addParticipantButton = view.findViewById(R.id.addParticipantButton);
+        addParticipantButton = view.findViewById(R.id.addParticipantButton);
 
         loadGroupDetails();
 
@@ -67,7 +69,7 @@ public class GroupInfoFragment extends Fragment {
         addParticipantButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SelectParticipantsActivity.class);
             intent.putExtra("GROUP_ID", groupId);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_ADD_PARTICIPANT);
         });
 
         return view;
@@ -94,5 +96,25 @@ public class GroupInfoFragment extends Fragment {
             cursor.close();
         }
         return participantList;
+    }
+
+    private void refreshParticipants() {
+        participants.clear();
+        participants.addAll(loadParticipants());
+        participantsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshParticipants();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ADD_PARTICIPANT && resultCode == Activity.RESULT_OK) {
+            refreshParticipants();
+        }
     }
 }

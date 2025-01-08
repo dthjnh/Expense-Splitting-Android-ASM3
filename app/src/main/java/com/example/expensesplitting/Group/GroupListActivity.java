@@ -67,17 +67,15 @@ public class GroupListActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Add a long-click listener to navigate to SplitByActivity
         listView.setOnItemLongClickListener((parent, view, position, id) -> {
             Group selectedGroup = groupList.get(position);
             Intent intent = new Intent(GroupListActivity.this, SplitByActivity.class);
-            intent.putExtra("GROUP_ID", (long) selectedGroup.getId()); // Explicitly cast to long
+            intent.putExtra("GROUP_ID", (long) selectedGroup.getId());
             intent.putExtra("GROUP_NAME", selectedGroup.getName());
             startActivity(intent);
             return true;
         });
 
-        // Set up bottom navigation
         setupBottomNavigation();
     }
 

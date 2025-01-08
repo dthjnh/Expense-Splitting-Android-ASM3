@@ -24,7 +24,7 @@ public class GroupDetailsActivity extends AppCompatActivity {
 
     private long groupId;
     private String groupName;
-    private String groupImageUri; // To store the group's image URI
+    private String groupImageUri;
     private GroupHelper groupHelper;
     private ImageView groupImage;
 
@@ -144,8 +144,18 @@ public class GroupDetailsActivity extends AppCompatActivity {
                     }
                 })
                 .setNegativeButton("No", null);
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+
+        // Set the button colors when the dialog is shown
+        dialog.setOnShowListener(d -> {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.black));
+        });
+
+        dialog.show();
     }
+
 
     private void confirmDeleteGroup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -160,6 +170,19 @@ public class GroupDetailsActivity extends AppCompatActivity {
                     }
                 })
                 .setNegativeButton("No", null);
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+
+        // Set the button colors when the dialog is shown
+        dialog.setOnShowListener(d -> {
+            // Set "Yes" button text color to red
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+
+            // Set "No" button text color to gray
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));
+        });
+
+        dialog.show();
     }
+
 }

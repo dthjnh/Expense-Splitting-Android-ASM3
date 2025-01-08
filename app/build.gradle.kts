@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.recyclerview)
     implementation(libs.glide)
+    implementation(libs.github.glide)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
