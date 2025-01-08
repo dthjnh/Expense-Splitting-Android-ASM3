@@ -1,6 +1,7 @@
 package com.example.expensesplitting.Group;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,7 +20,10 @@ import java.util.List;
 public class SelectParticipantsActivity extends AppCompatActivity implements ContactAdapter2.OnContactSelectionListener {
 
     private RecyclerView recyclerView;
+    private androidx.appcompat.widget.SearchView searchView;
     private ContactAdapter2 contactAdapter;
+    private List<Contact> contactList;
+    private List<Contact> filteredContacts;
     private List<Contact> selectedContacts = new ArrayList<>();
     private GroupHelper groupDbHelper;
     private long groupId;
@@ -46,10 +50,27 @@ public class SelectParticipantsActivity extends AppCompatActivity implements Con
 
         // Fetch and display contacts
         ContactDatabaseHelper contactDbHelper = new ContactDatabaseHelper(this);
-        List<Contact> contactList = contactDbHelper.getAllContacts();
+        contactList = contactDbHelper.getAllContacts();
+        filteredContacts = new ArrayList<>(contactList);
 
-        contactAdapter = new ContactAdapter2(contactList, this);
+        contactAdapter = new ContactAdapter2(filteredContacts, this);
         recyclerView.setAdapter(contactAdapter);
+
+        // Initialize SearchView
+        searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterContacts(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterContacts(newText);
+                return true;
+            }
+        });
 
         // Set up Save and Cancel buttons
         Button btnSave = findViewById(R.id.btnSave);
@@ -71,6 +92,20 @@ public class SelectParticipantsActivity extends AppCompatActivity implements Con
 
         Toast.makeText(this, "Participants saved successfully!", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private void filterContacts(String query) {
+        filteredContacts.clear();
+        if (TextUtils.isEmpty(query)) {
+            filteredContacts.addAll(contactList);
+        } else {
+            for (Contact contact : contactList) {
+                if (contact.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredContacts.add(contact);
+                }
+            }
+        }
+        contactAdapter.notifyDataSetChanged();
     }
 
     @Override

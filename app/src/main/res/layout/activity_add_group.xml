@@ -144,7 +144,7 @@
 
             <Button
                 android:id="@+id/categoryProject"
-                android:layout_width="0dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:background="@drawable/input_background"

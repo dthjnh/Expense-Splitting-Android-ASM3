@@ -57,18 +57,24 @@ public class SplitByActivity extends AppCompatActivity {
         splitAdapter = new SplitAdapter(participants, totalAmount, SplitAdapter.SplitType.EQUAL, this::updateAmountTexts);
         recyclerView.setAdapter(splitAdapter);
 
+        // Pre-select "Equal" button
+        setSelectedButton(btnEqual, btnUnequal);
+
+        // Set up button listeners
         setupButtonListeners();
     }
 
     private void setupButtonListeners() {
         btnEqual.setOnClickListener(v -> {
             splitAdapter.setSplitType(SplitAdapter.SplitType.EQUAL);
+            setSelectedButton(btnEqual, btnUnequal);
             updateAmountTexts();
             Toast.makeText(this, "Equal Split Selected", Toast.LENGTH_SHORT).show();
         });
 
         btnUnequal.setOnClickListener(v -> {
             splitAdapter.setSplitType(SplitAdapter.SplitType.UNEQUAL);
+            setSelectedButton(btnUnequal, btnEqual);
             updateAmountTexts();
             Toast.makeText(this, "Unequal Split Selected", Toast.LENGTH_SHORT).show();
         });
@@ -83,6 +89,16 @@ public class SplitByActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please allocate the entire amount", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setSelectedButton(Button selectedButton, Button unselectedButton) {
+        // Set selected button background and text color
+        selectedButton.setBackgroundTintList(getResources().getColorStateList(R.color.yellow)); // Replace with your yellow color resource
+        selectedButton.setTextColor(getResources().getColor(android.R.color.black));
+
+        // Set unselected button background and text color
+        unselectedButton.setBackgroundTintList(getResources().getColorStateList(R.color.white)); // Replace with your white color resource
+        unselectedButton.setTextColor(getResources().getColor(android.R.color.black));
     }
 
     private void updateAmountTexts() {

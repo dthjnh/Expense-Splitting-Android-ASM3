@@ -42,16 +42,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
             android:text="Title"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/titleInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter title"
+            android:hint="Title"
             android:background="@drawable/input_background"
             android:padding="12dp"
             android:textSize="16sp"
@@ -62,15 +63,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Amount "
+            android:fontFamily="@font/urbanist_bold"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/amountInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter amount of money"
+            android:hint="$0.00"
             android:background="@drawable/input_background"
             android:padding="12dp"
             android:textSize="16sp"
@@ -82,8 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
+            android:fontFamily="@font/urbanist_bold"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
 
         <LinearLayout
@@ -101,14 +104,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="8dp"
-                android:src="@android:color/transparent"
+                android:src="@drawable/category"
                 android:contentDescription="Category Icon" />
 
             <TextView
                 android:id="@+id/categoryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Category"
+                android:hint="Select Category"
                 android:textSize="16sp"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -117,9 +120,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
             android:text="Paid By"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
 
         <Spinner
@@ -134,9 +138,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
             android:text="Split By"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
 
         <LinearLayout
@@ -153,7 +158,7 @@
                 android:id="@+id/splitByText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Split Method"
+                android:hint="Select Split Method"
                 android:textSize="16sp"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -163,8 +168,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Notes"
+            android:fontFamily="@font/urbanist_bold"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
 
         <EditText

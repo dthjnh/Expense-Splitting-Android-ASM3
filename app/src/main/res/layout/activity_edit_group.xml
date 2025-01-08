@@ -64,7 +64,7 @@
         <EditText
             android:id="@+id/groupDescriptionInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:hint="Description"
             android:background="@drawable/input_background"
             android:padding="12dp"
@@ -144,7 +144,7 @@
 
             <Button
                 android:id="@+id/categoryProject"
-                android:layout_width="0dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:background="@drawable/input_background"
