@@ -7,15 +7,17 @@ public class Expense {
     private String category;
     private String paidBy;
     private String splitBy;
+    private String splitDetails; // New field
     private String notes;
 
-    public Expense(long groupId, String title, double amount, String category, String paidBy, String splitBy, String notes) {
+    public Expense(long groupId, String title, double amount, String category, String paidBy, String splitBy, String splitDetails, String notes) {
         this.groupId = groupId;
         this.title = title;
         this.amount = amount;
         this.category = category;
         this.paidBy = paidBy;
         this.splitBy = splitBy;
+        this.splitDetails = splitDetails; // Initialize splitDetails
         this.notes = notes;
     }
 
@@ -67,11 +69,33 @@ public class Expense {
         this.splitBy = splitBy;
     }
 
+    public String getSplitDetails() {
+        return splitDetails;
+    }
+
+    public void setSplitDetails(String splitDetails) {
+        this.splitDetails = splitDetails;
+    }
+
     public String getNotes() {
         return notes;
     }
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "groupId=" + groupId +
+                ", title='" + title + '\'' +
+                ", amount=" + amount +
+                ", category='" + category + '\'' +
+                ", paidBy='" + paidBy + '\'' +
+                ", splitBy='" + splitBy + '\'' +
+                ", splitDetails='" + splitDetails + '\'' + // Include splitDetails in toString
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }
