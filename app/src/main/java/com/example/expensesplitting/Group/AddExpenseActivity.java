@@ -27,6 +27,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     private TextView categoryText, splitByText;
     private ImageView categoryIcon;
     private String selectedCategory = "General", splitMethod = "Equally";
+    private String splitDetails = null; // Placeholder for split details
     private long groupId;
     private ExpenseHelper expenseHelper;
     private GroupHelper groupHelper;
@@ -133,11 +134,12 @@ public class AddExpenseActivity extends AppCompatActivity {
         String paidBy = paidBySpinner.getSelectedItem().toString();
 
         if (title.isEmpty() || amount <= 0) {
-            Toast.makeText(this, "Please provide valid title and amount.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please provide a valid title and amount.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Expense expense = new Expense(groupId, title, amount, selectedCategory, paidBy, splitMethod, notes);
+        // Create the expense object
+        Expense expense = new Expense(groupId, title, amount, selectedCategory, paidBy, splitMethod, splitDetails, notes);
         boolean success = expenseHelper.addExpense(expense);
 
         if (success) {
@@ -161,6 +163,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             setCategoryIcon(selectedCategory);
         } else if (requestCode == SPLIT_BY_REQUEST_CODE && resultCode == RESULT_OK) {
             splitMethod = data.getStringExtra("SPLIT_METHOD");
+            splitDetails = data.getStringExtra("SPLIT_DETAILS"); // Update split details from returned data
             splitByText.setText(splitMethod);
         }
     }

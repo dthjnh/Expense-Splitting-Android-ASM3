@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ExpenseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ExpenseSplitting.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3; // Incremented database version
 
     private static final String TABLE_EXPENSES = "Expenses";
     private static final String COLUMN_ID = "id";
@@ -24,6 +24,7 @@ public class ExpenseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CATEGORY = "category";
     private static final String COLUMN_PAID_BY = "paid_by";
     private static final String COLUMN_SPLIT_BY = "split_by";
+    private static final String COLUMN_SPLIT_DETAILS = "split_details"; // New column
     private static final String COLUMN_NOTES = "notes";
 
     public ExpenseHelper(Context context) {
@@ -40,6 +41,7 @@ public class ExpenseHelper extends SQLiteOpenHelper {
                 COLUMN_CATEGORY + " TEXT, " +
                 COLUMN_PAID_BY + " TEXT, " +
                 COLUMN_SPLIT_BY + " TEXT, " +
+                COLUMN_SPLIT_DETAILS + " TEXT, " + // New column
                 COLUMN_NOTES + " TEXT)";
         db.execSQL(createTable);
         Log.d("ExpenseHelper", "Database table created: " + TABLE_EXPENSES);
@@ -47,9 +49,10 @@ public class ExpenseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w("ExpenseHelper", "Upgrading database from version " + oldVersion + " to " + newVersion);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXPENSES);
-        onCreate(db);
+        if (oldVersion < 3) { // Add the `split_details` column in version 3
+            db.execSQL("ALTER TABLE " + TABLE_EXPENSES + " ADD COLUMN " + COLUMN_SPLIT_DETAILS + " TEXT");
+            Log.d("ExpenseHelper", "Added column split_details to table " + TABLE_EXPENSES);
+        }
     }
 
     @Override
@@ -74,6 +77,7 @@ public class ExpenseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CATEGORY, expense.getCategory());
         values.put(COLUMN_PAID_BY, expense.getPaidBy());
         values.put(COLUMN_SPLIT_BY, expense.getSplitBy());
+        values.put(COLUMN_SPLIT_DETAILS, expense.getSplitDetails()); // Add split details
         values.put(COLUMN_NOTES, expense.getNotes());
 
         long result = db.insert(TABLE_EXPENSES, null, values);
@@ -131,6 +135,7 @@ public class ExpenseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY)),
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAID_BY)),
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SPLIT_BY)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SPLIT_DETAILS)), // Get split details
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTES))
                     );
                     expenses.add(expense);
