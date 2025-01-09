@@ -18,6 +18,8 @@ import com.example.expensesplitting.Database.GroupHelper;
 import com.example.expensesplitting.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddGroupActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class AddGroupActivity extends AppCompatActivity {
     private String selectedCategory;
     private Uri selectedImageUri;
     private GroupHelper dbHelper;
+
+    private final List<Button> categoryButtons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +46,17 @@ public class AddGroupActivity extends AppCompatActivity {
         dbHelper = new GroupHelper(this);
 
         backButton.setOnClickListener(v -> finish());
-
         coverImageView.setOnClickListener(v -> openImagePicker());
 
+        // Add category buttons to list
+        categoryButtons.add(findViewById(R.id.categoryTrip));
+        categoryButtons.add(findViewById(R.id.categoryFamily));
+        categoryButtons.add(findViewById(R.id.categoryCouple));
+        categoryButtons.add(findViewById(R.id.categoryEvent));
+        categoryButtons.add(findViewById(R.id.categoryProject));
+        categoryButtons.add(findViewById(R.id.categoryOther));
+
+        // Set up category button listeners
         setUpCategoryButtons();
 
         Button continueButton = findViewById(R.id.continueButton);
@@ -86,17 +98,25 @@ public class AddGroupActivity extends AppCompatActivity {
     );
 
     private void setUpCategoryButtons() {
-        findViewById(R.id.categoryTrip).setOnClickListener(v -> handleCategorySelection("Trip"));
-        findViewById(R.id.categoryFamily).setOnClickListener(v -> handleCategorySelection("Family"));
-        findViewById(R.id.categoryCouple).setOnClickListener(v -> handleCategorySelection("Couple"));
-        findViewById(R.id.categoryEvent).setOnClickListener(v -> handleCategorySelection("Event"));
-        findViewById(R.id.categoryProject).setOnClickListener(v -> handleCategorySelection("Project"));
-        findViewById(R.id.categoryOther).setOnClickListener(v -> handleCategorySelection("Other"));
+        for (Button button : categoryButtons) {
+            button.setOnClickListener(v -> {
+                selectedCategory = button.getText().toString(); // Set selected category
+                setSelectedButton(button); // Highlight selected button
+                Toast.makeText(this, "Selected Category: " + selectedCategory, Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
-    private void handleCategorySelection(String category) {
-        selectedCategory = category;
-        Toast.makeText(this, "Selected Category: " + category, Toast.LENGTH_SHORT).show();
+    private void setSelectedButton(Button selectedButton) {
+        for (Button button : categoryButtons) {
+            if (button == selectedButton) {
+                button.setBackgroundTintList(getResources().getColorStateList(R.color.yellow)); // Highlight selected button
+                button.setTextColor(getResources().getColor(android.R.color.black));
+            } else {
+                button.setBackgroundTintList(getResources().getColorStateList(R.color.white)); // Reset others to white
+                button.setTextColor(getResources().getColor(android.R.color.black));
+            }
+        }
     }
 
     private void saveGroup() {

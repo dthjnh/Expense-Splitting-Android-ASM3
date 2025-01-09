@@ -17,6 +17,8 @@ import com.example.expensesplitting.Database.GroupHelper;
 import com.example.expensesplitting.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditGroupActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class EditGroupActivity extends AppCompatActivity {
     private Uri selectedImageUri;
     private GroupHelper dbHelper;
     private long groupId;
+
+    private final List<Button> categoryButtons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,14 @@ public class EditGroupActivity extends AppCompatActivity {
 
         dbHelper = new GroupHelper(this);
 
+        // Add category buttons to list
+        categoryButtons.add(findViewById(R.id.categoryTrip));
+        categoryButtons.add(findViewById(R.id.categoryFamily));
+        categoryButtons.add(findViewById(R.id.categoryCouple));
+        categoryButtons.add(findViewById(R.id.categoryEvent));
+        categoryButtons.add(findViewById(R.id.categoryProject));
+        categoryButtons.add(findViewById(R.id.categoryOther));
+
         // Get group ID from Intent
         groupId = getIntent().getLongExtra("GROUP_ID", -1);
 
@@ -51,6 +63,7 @@ public class EditGroupActivity extends AppCompatActivity {
 
         coverImageView.setOnClickListener(v -> openImagePicker());
 
+        // Set up category button listeners
         setUpCategoryButtons();
 
         Button continueButton = findViewById(R.id.continueButton);
@@ -81,17 +94,25 @@ public class EditGroupActivity extends AppCompatActivity {
     }
 
     private void setUpCategoryButtons() {
-        findViewById(R.id.categoryTrip).setOnClickListener(v -> handleCategorySelection("Trip"));
-        findViewById(R.id.categoryFamily).setOnClickListener(v -> handleCategorySelection("Family"));
-        findViewById(R.id.categoryCouple).setOnClickListener(v -> handleCategorySelection("Couple"));
-        findViewById(R.id.categoryEvent).setOnClickListener(v -> handleCategorySelection("Event"));
-        findViewById(R.id.categoryProject).setOnClickListener(v -> handleCategorySelection("Project"));
-        findViewById(R.id.categoryOther).setOnClickListener(v -> handleCategorySelection("Other"));
+        for (Button button : categoryButtons) {
+            button.setOnClickListener(v -> {
+                selectedCategory = button.getText().toString(); // Set selected category
+                setSelectedButton(button); // Highlight selected button
+                Toast.makeText(this, "Selected Category: " + selectedCategory, Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
-    private void handleCategorySelection(String category) {
-        selectedCategory = category;
-        Toast.makeText(this, "Selected Category: " + category, Toast.LENGTH_SHORT).show();
+    private void setSelectedButton(Button selectedButton) {
+        for (Button button : categoryButtons) {
+            if (button == selectedButton) {
+                button.setBackgroundTintList(getResources().getColorStateList(R.color.yellow)); // Highlight selected button
+                button.setTextColor(getResources().getColor(android.R.color.black));
+            } else {
+                button.setBackgroundTintList(getResources().getColorStateList(R.color.white)); // Reset others to white
+                button.setTextColor(getResources().getColor(android.R.color.black));
+            }
+        }
     }
 
     private void loadGroupDetails() {
@@ -112,10 +133,23 @@ public class EditGroupActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
                 }
             }
+
+            // Pre-select the category button based on loaded data
+            preSelectCategoryButton();
+
             cursor.close();
         } else {
             Toast.makeText(this, "Failed to load group details", Toast.LENGTH_SHORT).show();
             finish();
+        }
+    }
+
+    private void preSelectCategoryButton() {
+        for (Button button : categoryButtons) {
+            if (button.getText().toString().equalsIgnoreCase(selectedCategory)) {
+                setSelectedButton(button);
+                break;
+            }
         }
     }
 

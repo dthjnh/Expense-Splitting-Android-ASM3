@@ -29,6 +29,8 @@ public class GroupDetailsActivity extends AppCompatActivity {
     private GroupHelper groupHelper;
     private ImageView groupImage;
 
+    private TextView expensesTab, balancesTab, totalsTab, groupTab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +45,16 @@ public class GroupDetailsActivity extends AppCompatActivity {
         Log.d("GroupDetailsActivity", "Group Name: " + groupName);
         Log.d("GroupDetailsActivity", "Group Image URI: " + groupImageUri);
 
-        // Set group name in toolbar
+        // Initialize Views
         TextView groupNameText = findViewById(R.id.groupName);
         groupNameText.setText(groupName);
 
-        // Initialize GroupHelper
-        groupHelper = new GroupHelper(this);
-
-        // Set group image
         groupImage = findViewById(R.id.groupImage);
         if (groupImageUri != null) {
             groupImage.setImageURI(Uri.parse(groupImageUri));
         }
 
-        // Allow user to change the group image
-        groupImage.setOnClickListener(v -> pickImage());
+        groupHelper = new GroupHelper(this);
 
         // Back button functionality
         ImageView backButton = findViewById(R.id.backButton);
@@ -67,14 +64,57 @@ public class GroupDetailsActivity extends AppCompatActivity {
         ImageView moreOptions = findViewById(R.id.moreOptions);
         moreOptions.setOnClickListener(v -> showMoreOptionsDialog());
 
-        // Default fragment: Group Info
-        loadFragment(GroupInfoFragment.newInstance(groupId));
+        // Initialize tabs
+        expensesTab = findViewById(R.id.expensesTab);
+        balancesTab = findViewById(R.id.balancesTab);
+        totalsTab = findViewById(R.id.totalsTab);
+        groupTab = findViewById(R.id.groupTab);
 
-        // Handle tab clicks
-        findViewById(R.id.expensesTab).setOnClickListener(v -> loadFragment(ExpensesFragment.newInstance(groupId)));
-        findViewById(R.id.balancesTab).setOnClickListener(v -> loadFragment(BalancesFragment.newInstance(groupId)));
-        findViewById(R.id.totalsTab).setOnClickListener(v -> loadFragment(TotalsFragment.newInstance(groupId)));
-        findViewById(R.id.groupTab).setOnClickListener(v -> loadFragment(GroupInfoFragment.newInstance(groupId)));
+        // Set default selected tab (Group Info)
+        setSelectedButton(groupTab);
+
+        // Tab click listeners
+        expensesTab.setOnClickListener(v -> {
+            setSelectedButton(expensesTab);
+            loadFragment(ExpensesFragment.newInstance(groupId));
+        });
+
+        balancesTab.setOnClickListener(v -> {
+            setSelectedButton(balancesTab);
+            loadFragment(BalancesFragment.newInstance(groupId));
+        });
+
+        totalsTab.setOnClickListener(v -> {
+            setSelectedButton(totalsTab);
+            loadFragment(TotalsFragment.newInstance(groupId));
+        });
+
+        groupTab.setOnClickListener(v -> {
+            setSelectedButton(groupTab);
+            loadFragment(GroupInfoFragment.newInstance(groupId));
+        });
+
+        // Load default fragment
+        loadFragment(GroupInfoFragment.newInstance(groupId));
+    }
+
+    private void setSelectedButton(TextView selectedButton) {
+        // Reset all tabs to default style
+        expensesTab.setBackground(getResources().getDrawable(R.drawable.tab_background));
+        expensesTab.setTextColor(getResources().getColor(android.R.color.black));
+
+        balancesTab.setBackground(getResources().getDrawable(R.drawable.tab_background));
+        balancesTab.setTextColor(getResources().getColor(android.R.color.black));
+
+        totalsTab.setBackground(getResources().getDrawable(R.drawable.tab_background));
+        totalsTab.setTextColor(getResources().getColor(android.R.color.black));
+
+        groupTab.setBackground(getResources().getDrawable(R.drawable.tab_background));
+        groupTab.setTextColor(getResources().getColor(android.R.color.black));
+
+        // Highlight the selected tab
+        selectedButton.setBackground(getResources().getDrawable(R.drawable.tab_selected_background));
+        selectedButton.setTextColor(getResources().getColor(android.R.color.black));
     }
 
     private void loadFragment(Fragment fragment) {

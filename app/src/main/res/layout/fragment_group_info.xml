@@ -151,11 +151,11 @@
             android:id="@+id/participantsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:layout_marginBottom="16dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 </ScrollView>
