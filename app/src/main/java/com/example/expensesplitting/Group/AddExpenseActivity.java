@@ -158,49 +158,52 @@ public class AddExpenseActivity extends AppCompatActivity {
 
             // Update the category text and icon
             categoryText.setText(selectedCategory);
-
-            // Dynamically set the icon based on the selected category
-            switch (selectedCategory.toLowerCase()) {
-                case "games":
-                    categoryIcon.setImageResource(R.drawable.game);
-                    break;
-                case "movies":
-                    categoryIcon.setImageResource(R.drawable.movie);
-                    break;
-                case "music":
-                    categoryIcon.setImageResource(R.drawable.music);
-                    break;
-                case "sports":
-                    categoryIcon.setImageResource(R.drawable.sport);
-                    break;
-                case "groceries":
-                    categoryIcon.setImageResource(R.drawable.groceries);
-                    break;
-                case "dining out":
-                    categoryIcon.setImageResource(R.drawable.dining);
-                    break;
-                case "liquor":
-                    categoryIcon.setImageResource(R.drawable.liquor);
-                    break;
-                case "ticket":
-                    categoryIcon.setImageResource(R.drawable.airline);
-                    break;
-                case "shopping":
-                    categoryIcon.setImageResource(R.drawable.shopping);
-                    break;
-                case "car":
-                    categoryIcon.setImageResource(R.drawable.transport);
-                    break;
-                case "hotel":
-                    categoryIcon.setImageResource(R.drawable.hotel);
-                    break;
-                default:
-                    categoryIcon.setImageResource(R.drawable.category);
-                    break;
-            }
+            setCategoryIcon(selectedCategory);
         } else if (requestCode == SPLIT_BY_REQUEST_CODE && resultCode == RESULT_OK) {
             splitMethod = data.getStringExtra("SPLIT_METHOD");
             splitByText.setText(splitMethod);
+        }
+    }
+
+    private void setCategoryIcon(String category) {
+        // Dynamically set the icon based on the selected category
+        switch (category.toLowerCase()) {
+            case "games":
+                categoryIcon.setImageResource(R.drawable.game);
+                break;
+            case "movies":
+                categoryIcon.setImageResource(R.drawable.movie);
+                break;
+            case "music":
+                categoryIcon.setImageResource(R.drawable.music);
+                break;
+            case "sports":
+                categoryIcon.setImageResource(R.drawable.sport);
+                break;
+            case "groceries":
+                categoryIcon.setImageResource(R.drawable.groceries);
+                break;
+            case "dining out":
+                categoryIcon.setImageResource(R.drawable.dining);
+                break;
+            case "liquor":
+                categoryIcon.setImageResource(R.drawable.liquor);
+                break;
+            case "ticket":
+                categoryIcon.setImageResource(R.drawable.airline);
+                break;
+            case "shopping":
+                categoryIcon.setImageResource(R.drawable.shopping);
+                break;
+            case "car":
+                categoryIcon.setImageResource(R.drawable.transport);
+                break;
+            case "hotel":
+                categoryIcon.setImageResource(R.drawable.hotel);
+                break;
+            default:
+                categoryIcon.setImageResource(R.drawable.category);
+                break;
         }
     }
 }

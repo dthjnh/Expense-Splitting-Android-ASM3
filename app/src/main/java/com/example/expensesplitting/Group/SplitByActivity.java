@@ -1,5 +1,6 @@
 package com.example.expensesplitting.Group;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -9,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.expensesplitting.Database.SplitHelper;
 import com.example.expensesplitting.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SplitByActivity extends AppCompatActivity {
 
@@ -23,6 +27,7 @@ public class SplitByActivity extends AppCompatActivity {
     private SplitAdapter splitAdapter;
     private double totalAmount;
     private double amountLeft;
+    private SplitHelper splitHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,9 @@ public class SplitByActivity extends AppCompatActivity {
             return;
         }
 
+        // Initialize SplitHelper
+        splitHelper = new SplitHelper(participants, totalAmount);
+
         // Set the initial total amount and amount left
         amountLeft = totalAmount;
         updateAmountTexts();
@@ -66,6 +74,7 @@ public class SplitByActivity extends AppCompatActivity {
 
     private void setupButtonListeners() {
         btnEqual.setOnClickListener(v -> {
+            splitHelper.divideEqually();
             splitAdapter.setSplitType(SplitAdapter.SplitType.EQUAL);
             setSelectedButton(btnEqual, btnUnequal);
             updateAmountTexts();
@@ -83,6 +92,11 @@ public class SplitByActivity extends AppCompatActivity {
 
         btnOk.setOnClickListener(v -> {
             if (amountLeft == 0) {
+                Intent resultIntent = new Intent();
+                String splitMethod = splitAdapter.getSplitType() == SplitAdapter.SplitType.EQUAL ? "Equal" : "Unequal";
+                resultIntent.putExtra("SPLIT_METHOD", splitMethod);
+                resultIntent.putExtra("SPLIT_DETAILS", new HashMap<>(splitHelper.getSplitDetails())); // Pass split details
+                setResult(RESULT_OK, resultIntent);
                 Toast.makeText(this, "Split saved successfully!", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
@@ -92,28 +106,23 @@ public class SplitByActivity extends AppCompatActivity {
     }
 
     private void setSelectedButton(Button selectedButton, Button unselectedButton) {
-        // Set selected button background and text color
-        selectedButton.setBackgroundTintList(getResources().getColorStateList(R.color.yellow)); // Replace with your yellow color resource
+        selectedButton.setBackgroundTintList(getResources().getColorStateList(R.color.yellow));
         selectedButton.setTextColor(getResources().getColor(android.R.color.black));
 
-        // Set unselected button background and text color
-        unselectedButton.setBackgroundTintList(getResources().getColorStateList(R.color.white)); // Replace with your white color resource
+        unselectedButton.setBackgroundTintList(getResources().getColorStateList(R.color.white));
         unselectedButton.setTextColor(getResources().getColor(android.R.color.black));
     }
 
     private void updateAmountTexts() {
-        // Update total and remaining amounts
         double allocatedAmount = 0;
         for (Participant participant : participants) {
             allocatedAmount += participant.getAmount();
         }
         amountLeft = totalAmount - allocatedAmount;
 
-        // Update the TextViews
         totalAmountText.setText(String.format("Total: $%.2f", totalAmount));
         amountLeftText.setText(String.format("Amount Left: $%.2f", amountLeft));
 
-        // Show red text if the amount left is negative
         if (amountLeft < 0) {
             amountLeftText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         } else {

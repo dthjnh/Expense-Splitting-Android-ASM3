@@ -14,7 +14,7 @@ import com.example.expensesplitting.R;
 
 import java.util.List;
 
-public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SplitAdapter extends RecyclerView.Adapter<SplitAdapter.SplitViewHolder> {
 
     public interface OnAmountChangedListener {
         void onAmountChanged();
@@ -42,78 +42,69 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (splitType == SplitType.EQUAL) {
-            return R.layout.item_split_equal;
-        } else {
-            return R.layout.item_split_unequal;
-        }
+    public SplitType getSplitType() {
+        return splitType;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+    public SplitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(viewType, parent, false);
         return new SplitViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SplitViewHolder holder, int position) {
         Participant participant = participants.get(position);
-        SplitViewHolder viewHolder = (SplitViewHolder) holder;
 
-        viewHolder.name.setText(participant.getName());
+        holder.name.setText(participant.getName());
 
         if (splitType == SplitType.EQUAL) {
-            // Handle Equal Split
-            if (viewHolder.checkBox != null && viewHolder.amount != null) {
-                viewHolder.checkBox.setVisibility(View.VISIBLE);
-                viewHolder.amount.setVisibility(View.VISIBLE);
-                if (viewHolder.input != null) {
-                    viewHolder.input.setVisibility(View.GONE);
-                }
+            if (holder.amount != null && holder.checkBox != null) {
+                holder.amount.setText(String.format("$%.2f", totalAmount / participants.size()));
+                holder.checkBox.setVisibility(View.VISIBLE);
+                holder.checkBox.setChecked(participant.getAmount() > 0);
 
-                viewHolder.checkBox.setChecked(participant.getAmount() > 0);
-                viewHolder.amount.setText(String.format("$%.2f", participant.getAmount()));
-
-                viewHolder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    int checkedCount = getCheckedCount();
+                holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if (isChecked) {
-                        participant.setAmount(totalAmount / checkedCount);
+                        participant.setAmount(totalAmount / participants.size());
                     } else {
                         participant.setAmount(0);
                     }
-                    recalculateEqualAmounts();
-                    notifyDataSetChanged();
                     amountChangedListener.onAmountChanged();
                 });
             }
-        } else if (splitType == SplitType.UNEQUAL) {
-            // Handle Unequal Split
-            if (viewHolder.input != null) {
-                if (viewHolder.checkBox != null) {
-                    viewHolder.checkBox.setVisibility(View.GONE);
-                }
-                if (viewHolder.amount != null) {
-                    viewHolder.amount.setVisibility(View.GONE);
-                }
-                viewHolder.input.setVisibility(View.VISIBLE);
+            if (holder.input != null) {
+                holder.input.setVisibility(View.GONE);
+            }
+        } else { // UNEQUAL
+            if (holder.input != null) {
+                holder.input.setVisibility(View.VISIBLE);
+                holder.input.setText(String.format("%.2f", participant.getAmount()));
 
-                viewHolder.input.setText(String.format("%.2f", participant.getAmount()));
-                viewHolder.input.setOnFocusChangeListener((v, hasFocus) -> {
+                holder.input.setOnFocusChangeListener((v, hasFocus) -> {
                     if (!hasFocus) {
                         try {
-                            double enteredAmount = Double.parseDouble(viewHolder.input.getText().toString());
-                            participant.setAmount(enteredAmount);
-                        } catch (NumberFormatException e) {
+                            double value = Double.parseDouble(holder.input.getText().toString());
+                            participant.setAmount(value);
+                            amountChangedListener.onAmountChanged();
+                        } catch (NumberFormatException ignored) {
                             participant.setAmount(0);
                         }
-                        amountChangedListener.onAmountChanged();
                     }
                 });
             }
+            if (holder.amount != null && holder.checkBox != null) {
+                holder.amount.setVisibility(View.GONE);
+                holder.checkBox.setVisibility(View.GONE);
+            }
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return splitType == SplitType.EQUAL ? R.layout.item_split_equal : R.layout.item_split_unequal;
     }
 
     @Override
@@ -121,44 +112,17 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return participants.size();
     }
 
-    private int getCheckedCount() {
-        int count = 0;
-        for (Participant participant : participants) {
-            if (participant.getAmount() > 0) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private void recalculateEqualAmounts() {
-        int checkedCount = getCheckedCount();
-        if (checkedCount > 0) {
-            double newAmount = totalAmount / checkedCount;
-            for (Participant participant : participants) {
-                if (participant.getAmount() > 0) {
-                    participant.setAmount(newAmount);
-                }
-            }
-        }
-    }
-
     public static class SplitViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
-        TextView amount;
+        TextView name, amount;
         EditText input;
         CheckBox checkBox;
 
         public SplitViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.participantName);
-            try {
-                checkBox = itemView.findViewById(R.id.participantCheckBox);
-                amount = itemView.findViewById(R.id.participantAmount);
-                input = itemView.findViewById(R.id.participantInput);
-            } catch (Exception ignored) {
-                // Ignore missing views based on layout type
-            }
+            amount = itemView.findViewById(R.id.participantAmount);
+            input = itemView.findViewById(R.id.participantInput);
+            checkBox = itemView.findViewById(R.id.participantCheckBox);
         }
     }
 }
