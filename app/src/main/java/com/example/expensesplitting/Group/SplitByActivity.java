@@ -2,6 +2,7 @@ package com.example.expensesplitting.Group;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensesplitting.Database.SplitHelper;
 import com.example.expensesplitting.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,8 @@ public class SplitByActivity extends AppCompatActivity {
     private double totalAmount;
     private double amountLeft;
     private SplitHelper splitHelper;
+
+    private static final String TAG = "SplitByActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,7 @@ public class SplitByActivity extends AppCompatActivity {
         totalAmount = getIntent().getDoubleExtra("TOTAL_AMOUNT", 0);
         participants = (ArrayList<Participant>) getIntent().getSerializableExtra("PARTICIPANTS");
 
-        if (participants == null) {
+        if (participants == null || participants.isEmpty()) {
             Toast.makeText(this, "No participants available", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -82,6 +86,11 @@ public class SplitByActivity extends AppCompatActivity {
         });
 
         btnUnequal.setOnClickListener(v -> {
+            Map<String, Double> amounts = new HashMap<>();
+            for (Participant participant : participants) {
+                amounts.put(participant.getName(), participant.getAmount());
+            }
+            splitHelper.divideUnequally(amounts);
             splitAdapter.setSplitType(SplitAdapter.SplitType.UNEQUAL);
             setSelectedButton(btnUnequal, btnEqual);
             updateAmountTexts();
@@ -91,18 +100,41 @@ public class SplitByActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(v -> finish());
 
         btnOk.setOnClickListener(v -> {
-            if (amountLeft == 0) {
+            if (validateAmounts()) {
                 Intent resultIntent = new Intent();
                 String splitMethod = splitAdapter.getSplitType() == SplitAdapter.SplitType.EQUAL ? "Equal" : "Unequal";
+
+                // Serialize splitDetails to JSON using Gson
+                Map<String, Double> splitDetails = splitHelper.getSplitDetails();
+                Gson gson = new Gson();
+                String splitDetailsJson = gson.toJson(splitDetails);
+
+                Log.d(TAG, "Serialized split_details JSON: " + splitDetailsJson);
+
                 resultIntent.putExtra("SPLIT_METHOD", splitMethod);
-                resultIntent.putExtra("SPLIT_DETAILS", new HashMap<>(splitHelper.getSplitDetails())); // Pass split details
+                resultIntent.putExtra("SPLIT_DETAILS", splitDetailsJson); // Pass JSON string
                 setResult(RESULT_OK, resultIntent);
+
                 Toast.makeText(this, "Split saved successfully!", Toast.LENGTH_SHORT).show();
                 finish();
-            } else {
-                Toast.makeText(this, "Please allocate the entire amount", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean validateAmounts() {
+        if (amountLeft != 0) {
+            Toast.makeText(this, "Please allocate the entire amount", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        for (Participant participant : participants) {
+            if (participant.getAmount() < 0) {
+                Toast.makeText(this, "Invalid amount for participant: " + participant.getName(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void setSelectedButton(Button selectedButton, Button unselectedButton) {

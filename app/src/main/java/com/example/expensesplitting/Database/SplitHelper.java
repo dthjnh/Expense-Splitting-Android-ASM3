@@ -1,5 +1,7 @@
 package com.example.expensesplitting.Database;
 
+import android.util.Log;
+
 import com.example.expensesplitting.Group.Participant;
 
 import java.util.HashMap;
@@ -18,9 +20,7 @@ public class SplitHelper {
         this.splitDetails = new HashMap<>();
     }
 
-    /**
-     * Divides the total amount equally among participants.
-     */
+
     public void divideEqually() {
         splitDetails.clear();
         double equalShare = totalAmount / participants.size();
@@ -30,31 +30,27 @@ public class SplitHelper {
         }
     }
 
-    /**
-     * Divides the total amount unequally (manual input for each participant).
-     *
-     * @param amounts A map containing the amounts assigned to each participant.
-     */
     public void divideUnequally(Map<String, Double> amounts) {
+        if (amounts == null || amounts.isEmpty()) {
+            Log.e("SplitHelper", "Amounts map is null or empty. Cannot perform unequal split.");
+            return;
+        }
+
         splitDetails.clear();
         for (Participant participant : participants) {
             double assignedAmount = amounts.getOrDefault(participant.getName(), 0.0);
             splitDetails.put(participant.getName(), assignedAmount);
             participant.setAmount(assignedAmount);
         }
+        Log.d("SplitHelper", "Unequal Split Details Updated: " + splitDetails);
     }
 
-    /**
-     * Calculates the balances for each participant.
-     *
-     * @return A map where the key is the participant's name and the value is the balance.
-     */
     public Map<String, Double> calculateBalances(long groupId) {
         Map<String, Double> balances = new HashMap<>();
         double perPersonShare = totalAmount / participants.size();
 
         for (Participant participant : participants) {
-            double paid = participant.getPaidAmount(); // Assume Participant class has a `getPaidAmount()` method
+            double paid = participant.getPaidAmount();
             double owes = perPersonShare - paid;
             balances.put(participant.getName(), owes);
         }
@@ -62,13 +58,7 @@ public class SplitHelper {
         return balances;
     }
 
-    /**
-     * Gets the split details (amounts for each participant).
-     *
-     * @return A map containing the split amounts for each participant.
-     */
     public Map<String, Double> getSplitDetails() {
         return splitDetails;
     }
 }
-

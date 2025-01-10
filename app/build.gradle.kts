@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.glide)
     implementation(libs.github.glide)
+    implementation(libs.gson)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

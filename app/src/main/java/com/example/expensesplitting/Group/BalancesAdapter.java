@@ -1,5 +1,6 @@
 package com.example.expensesplitting.Group;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,9 @@ public class BalancesAdapter extends RecyclerView.Adapter<BalancesAdapter.Balanc
         holder.balanceNameOwes.setText(String.format("%s owes", balance.getOwer()));
         holder.balanceAmount.setText(String.format("$%.2f", balance.getAmount()));
         holder.balanceNamePaidTo.setText(String.format("Paid to %s", balance.getPayee()));
+
+        Log.d("BalancesAdapter", "Displaying Balance - Ower: " + balance.getOwer() +
+                ", Payee: " + balance.getPayee() + ", Amount: " + balance.getAmount());
     }
 
     @Override
