@@ -53,7 +53,7 @@ public class NewPaymentBottomSheetFragment extends BottomSheetDialogFragment {
         Spinner recipientSpinner = view.findViewById(R.id.recipient_spinner);
         TextView noteText = view.findViewById(R.id.notes);
 
-        Button cancelButton = view.findViewById(R.id.cancel_button);
+        Button cancelButton = view.findViewById(R.id.continue_button);
         cancelButton.setOnClickListener(v -> dismiss());
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();

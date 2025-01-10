@@ -2,7 +2,6 @@ package com.example.expensesplitting.User.Request;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,13 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensesplitting.Model.Transaction;
-import com.example.expensesplitting.Model.User;
 import com.example.expensesplitting.R;
-import com.example.expensesplitting.User.Pay.PaymentReceiptActivity;
 import com.example.expensesplitting.User.Transaction.TransactionAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,7 +105,7 @@ public class RequestBottomSheetFragment extends BottomSheetDialogFragment {
             TextView requestUserEmail = view.findViewById(R.id.request_user_email);
             TextView noteText = view.findViewById(R.id.notes);
 
-            Button cancelButton = view.findViewById(R.id.cancel_button);
+            Button cancelButton = view.findViewById(R.id.continue_button);
             cancelButton.setOnClickListener(v -> dismiss());
 
             currentUser = FirebaseAuth.getInstance().getCurrentUser();

@@ -54,7 +54,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
 
         fetchPaymentMethods();
 
-        Button newPaymentMethodButton = findViewById(R.id.add_new_payment_method_button);
+        Button newPaymentMethodButton = findViewById(R.id.topup_continue_button);
         newPaymentMethodButton.setOnClickListener(v -> {
             Intent intent = new Intent(PaymentMethodActivity.this, NewPaymentActivity.class);
             startActivityForResult(intent, REQUEST_CODE_NEW_PAYMENT);

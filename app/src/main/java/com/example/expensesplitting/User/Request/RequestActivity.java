@@ -44,7 +44,7 @@ public class RequestActivity extends AppCompatActivity implements TransactionAda
 
         emptyStateText = findViewById(R.id.empty_state_text);
 
-        ImageView backButton = findViewById(R.id.close_add_payment_button);
+        ImageView backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(v -> finish());
 
         transactionList = new ArrayList<>();

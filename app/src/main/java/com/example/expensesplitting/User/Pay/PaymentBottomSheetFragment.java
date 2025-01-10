@@ -54,7 +54,7 @@ public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
             TextView recipientEmail = view.findViewById(R.id.request_user_email);
             TextView noteText = view.findViewById(R.id.notes);
 
-            Button cancelButton = view.findViewById(R.id.cancel_button);
+            Button cancelButton = view.findViewById(R.id.continue_button);
             cancelButton.setOnClickListener(v -> dismiss());
 
             Button payButton = view.findViewById(R.id.new_request_button);
