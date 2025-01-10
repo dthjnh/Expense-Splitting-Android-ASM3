@@ -7,10 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.expensesplitting.Model.PaymentMethod;
 import com.example.expensesplitting.Model.Wallet;
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.User.Pay.PayActivity;
 import com.example.expensesplitting.User.PaymentMethod.PaymentMethodActivity;
 import com.example.expensesplitting.User.Request.RequestActivity;
+import com.example.expensesplitting.User.Withdraw.WithdrawActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -68,7 +65,8 @@ public class TopSectionFragment extends Fragment {
         });
 
         withdrawButton.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "Withdraw", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), WithdrawActivity.class);
+            startActivity(intent);
         });
 
         historyButton.setOnClickListener(v -> {
