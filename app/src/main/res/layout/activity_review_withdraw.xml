@@ -1,0 +1,162 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+
+    <!-- Header Section -->
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Withdraw"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#000" />
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="Back" />
+
+    <!-- Amount to Withdraw -->
+    <TextView
+        android:id="@+id/amount_to_withdraw_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_text"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:text="Amount to Withdraw"
+        android:textSize="16sp"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/amount_to_withdraw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/amount_to_withdraw_label"
+        android:layout_centerHorizontal="true"
+        android:text="$2,500.00"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/withdraw_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/amount_to_withdraw"
+        android:text="Withdraw to"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/urbanist_bold"
+        android:textColor="#000" />
+
+    <!-- Withdraw to Section -->
+    <RelativeLayout
+        android:id="@+id/withdraw_to_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/amount_to_withdraw"
+        android:layout_marginTop="60dp"
+        android:background="@color/light_gray"
+        android:padding="16dp"
+        android:radius="16dp">
+
+        <ImageView
+            android:id="@+id/card_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_visa"
+            android:contentDescription="Card Logo" />
+
+        <TextView
+            android:id="@+id/card_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/card_logo"
+            android:layout_marginStart="12dp"
+            android:layout_centerVertical="true"
+            android:text="**** **** **** 5567"
+            android:textSize="16sp"
+            android:textColor="#000" />
+
+    </RelativeLayout>
+
+    <!-- Notes Section -->
+    <TextView
+        android:id="@+id/notes_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/withdraw_to_section"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:text="Add Notes"
+        android:textSize="15sp"
+        android:fontFamily="@font/urbanist_bold"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/notes_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notes_label"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Withdraw to VISA Account."
+        android:textSize="14sp"
+        android:textColor="#666" />
+
+    <!-- Cancel and Confirm Buttons -->
+    <LinearLayout
+        android:id="@+id/buttons_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginHorizontal="16dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="5dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Cancel"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
+            android:textSize="11dp"
+            android:textColor="@color/black"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/confirm_withdraw_button"
+            android:layout_width="5dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FEBB1B"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp"
+            android:text="Confirm Withdraw"
+            android:textSize="11dp"
+            android:textColor="@color/black"
+            android:elevation="4dp" />
+    </LinearLayout>
+</RelativeLayout>
