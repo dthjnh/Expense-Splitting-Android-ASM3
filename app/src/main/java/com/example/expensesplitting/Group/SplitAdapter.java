@@ -1,5 +1,7 @@
 package com.example.expensesplitting.Group;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +22,10 @@ public class SplitAdapter extends RecyclerView.Adapter<SplitAdapter.SplitViewHol
         void onAmountChanged();
     }
 
-    private List<Participant> participants;
-    private double totalAmount;
+    private final List<Participant> participants;
+    private final double totalAmount;
     private SplitType splitType;
-    private OnAmountChangedListener amountChangedListener;
+    private final OnAmountChangedListener amountChangedListener;
 
     public enum SplitType {
         EQUAL,
@@ -61,44 +63,60 @@ public class SplitAdapter extends RecyclerView.Adapter<SplitAdapter.SplitViewHol
         holder.name.setText(participant.getName());
 
         if (splitType == SplitType.EQUAL) {
-            if (holder.amount != null && holder.checkBox != null) {
-                holder.amount.setText(String.format("$%.2f", totalAmount / participants.size()));
-                holder.checkBox.setVisibility(View.VISIBLE);
-                holder.checkBox.setChecked(participant.getAmount() > 0);
-
-                holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    if (isChecked) {
-                        participant.setAmount(totalAmount / participants.size());
-                    } else {
-                        participant.setAmount(0);
-                    }
-                    amountChangedListener.onAmountChanged();
-                });
-            }
-            if (holder.input != null) {
-                holder.input.setVisibility(View.GONE);
-            }
+            setupEqualSplit(holder, participant);
         } else { // UNEQUAL
-            if (holder.input != null) {
-                holder.input.setVisibility(View.VISIBLE);
-                holder.input.setText(String.format("%.2f", participant.getAmount()));
+            setupUnequalSplit(holder, participant);
+        }
+    }
 
-                holder.input.setOnFocusChangeListener((v, hasFocus) -> {
-                    if (!hasFocus) {
-                        try {
-                            double value = Double.parseDouble(holder.input.getText().toString());
-                            participant.setAmount(value);
-                            amountChangedListener.onAmountChanged();
-                        } catch (NumberFormatException ignored) {
-                            participant.setAmount(0);
-                        }
+    private void setupEqualSplit(SplitViewHolder holder, Participant participant) {
+        if (holder.amount != null && holder.checkBox != null) {
+            double equalAmount = totalAmount / participants.size();
+            holder.amount.setText(String.format("$%.2f", equalAmount));
+            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.checkBox.setChecked(participant.getAmount() > 0);
+
+            holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                participant.setAmount(isChecked ? equalAmount : 0);
+                amountChangedListener.onAmountChanged();
+            });
+        }
+
+        if (holder.input != null) {
+            holder.input.setVisibility(View.GONE);
+        }
+    }
+
+    private void setupUnequalSplit(SplitViewHolder holder, Participant participant) {
+        if (holder.input != null) {
+            holder.input.setVisibility(View.VISIBLE);
+            holder.input.setText(String.format("%.2f", participant.getAmount()));
+
+            holder.input.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    try {
+                        double value = Double.parseDouble(s.toString());
+                        participant.setAmount(value);
+                        amountChangedListener.onAmountChanged();
+                    } catch (NumberFormatException ignored) {
+                        participant.setAmount(0); // Default to 0 if invalid input
                     }
-                });
-            }
-            if (holder.amount != null && holder.checkBox != null) {
-                holder.amount.setVisibility(View.GONE);
-                holder.checkBox.setVisibility(View.GONE);
-            }
+                }
+            });
+        }
+
+        if (holder.amount != null && holder.checkBox != null) {
+            holder.amount.setVisibility(View.GONE);
+            holder.checkBox.setVisibility(View.GONE);
         }
     }
 

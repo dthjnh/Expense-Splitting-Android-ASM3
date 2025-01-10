@@ -8,8 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.expensesplitting.Group.Expense;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ExpenseHelper extends SQLiteOpenHelper {
 
@@ -122,12 +126,22 @@ public class ExpenseHelper extends SQLiteOpenHelper {
     public ArrayList<Expense> getExpensesForGroup(long groupId) {
         ArrayList<Expense> expenses = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
+        Gson gson = new Gson(); // Gson instance to deserialize split_details
+        Type type = new TypeToken<Map<String, Double>>() {}.getType();
 
         try (Cursor cursor = db.query(TABLE_EXPENSES, null, COLUMN_GROUP_ID + "=?",
                 new String[]{String.valueOf(groupId)}, null, null, null)) {
 
             if (cursor != null) {
                 while (cursor.moveToNext()) {
+                    String splitDetailsJson = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SPLIT_DETAILS));
+                    Map<String, Double> splitDetailsMap = null;
+
+                    if (splitDetailsJson != null) {
+                        splitDetailsMap = gson.fromJson(splitDetailsJson, type); // Convert JSON String to Map
+                        Log.d("ExpenseHelper", "Split Details Map: " + splitDetailsMap);
+                    }
+
                     Expense expense = new Expense(
                             cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_GROUP_ID)),
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)),
@@ -135,7 +149,7 @@ public class ExpenseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY)),
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAID_BY)),
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SPLIT_BY)),
-                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SPLIT_DETAILS)), // Get split details
+                            splitDetailsJson, // Keep the JSON string in Expense
                             cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTES))
                     );
                     expenses.add(expense);
