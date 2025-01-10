@@ -43,8 +43,8 @@ public class NewPaymentActivity extends AppCompatActivity {
         cardNumber = findViewById(R.id.card_number);
         accountHolderName = findViewById(R.id.account_holder_name);
         cvv = findViewById(R.id.cvv);
-        saveButton = findViewById(R.id.add_new_payment_method_button);
-        closeButton = findViewById(R.id.close_add_payment_button);
+        saveButton = findViewById(R.id.topup_continue_button);
+        closeButton = findViewById(R.id.back_button);
 
         // Set input filter to enforce 12 digits
         cardNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
