@@ -1,5 +1,7 @@
 package com.example.expensesplitting.FragmentForUser;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +16,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResult;
 
 import com.example.expensesplitting.Model.Wallet;
 import com.example.expensesplitting.R;
@@ -21,6 +27,7 @@ import com.example.expensesplitting.User.Pay.PayActivity;
 import com.example.expensesplitting.User.Request.RequestActivity;
 import com.example.expensesplitting.User.TopUp.TopUpActivity;
 import com.example.expensesplitting.User.TopUp.TopUpSummaryActivity;
+import com.example.expensesplitting.User.TransactionHistory.TransactionHistoryActivity;
 import com.example.expensesplitting.User.Withdraw.WithdrawActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,11 +41,24 @@ public class TopSectionFragment extends Fragment implements TopUpSummaryActivity
     TextView balanceAmount;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private ActivityResultLauncher<Intent> payActivityResultLauncher;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_section, container, false);
+        
+        payActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            checkAndCreateWallet();
+                        }
+                    }
+                }
+        );
 
         payButton = view.findViewById(R.id.pay_button);
         requestButton = view.findViewById(R.id.request_button);
@@ -52,11 +72,13 @@ public class TopSectionFragment extends Fragment implements TopUpSummaryActivity
 
         payButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), PayActivity.class);
-            startActivity(intent);
+            intent.putExtra("balance", balanceAmount.getText().toString());
+            payActivityResultLauncher.launch(intent);
         });
 
         requestButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), RequestActivity.class);
+            intent.putExtra("balance", balanceAmount.getText().toString());
             startActivity(intent);
         });
 
@@ -71,10 +93,17 @@ public class TopSectionFragment extends Fragment implements TopUpSummaryActivity
         });
 
         historyButton.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "History", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), TransactionHistoryActivity.class);
+            startActivity(intent);
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkAndCreateWallet();
     }
 
     @SuppressLint("DefaultLocale")

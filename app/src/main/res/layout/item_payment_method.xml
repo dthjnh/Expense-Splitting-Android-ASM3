@@ -21,7 +21,7 @@
 
     <!-- Text Section -->
     <TextView
-        android:id="@+id/item_card_number"
+        android:id="@+id/time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -32,7 +32,7 @@
 
     <!-- Connected Text Section -->
     <TextView
-        android:id="@+id/connected_text"
+        android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/urbanist_bold"

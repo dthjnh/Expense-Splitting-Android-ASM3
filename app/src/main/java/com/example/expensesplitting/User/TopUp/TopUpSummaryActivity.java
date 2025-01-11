@@ -1,6 +1,5 @@
 package com.example.expensesplitting.User.TopUp;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -102,7 +101,7 @@ public class TopUpSummaryActivity extends AppCompatActivity {
     }
 
     private void displayPaymentMethod(PaymentMethod paymentMethod) {
-        TextView cardNumber = findViewById(R.id.item_card_number);
+        TextView cardNumber = findViewById(R.id.time);
         String maskedCardNumber = "•••• •••• •••• " + paymentMethod.getCardNumber().substring(paymentMethod.getCardNumber().length() - 4);
         cardNumber.setText(maskedCardNumber);
     }
