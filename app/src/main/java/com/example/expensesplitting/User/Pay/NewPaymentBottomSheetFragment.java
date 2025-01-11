@@ -1,5 +1,6 @@
 package com.example.expensesplitting.User.Pay;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,8 +34,17 @@ public class NewPaymentBottomSheetFragment extends BottomSheetDialogFragment {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final List<User> userList = new ArrayList<>();
     private FirebaseUser currentUser;
-
     private OnNewPaymentListener paymentAddedListener;
+    private static final String ARG_BALANCE = "balance";
+    private String balance;
+
+    public static NewPaymentBottomSheetFragment newInstance(String balance) {
+        NewPaymentBottomSheetFragment fragment = new NewPaymentBottomSheetFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_BALANCE, balance);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public interface OnNewPaymentListener {
         void onNewPayment(Transaction transaction, String transactionId);
@@ -44,6 +54,7 @@ public class NewPaymentBottomSheetFragment extends BottomSheetDialogFragment {
         this.paymentAddedListener = listener;
     }
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,7 +63,9 @@ public class NewPaymentBottomSheetFragment extends BottomSheetDialogFragment {
         EditText amountText = view.findViewById(R.id.amount_text);
         Spinner recipientSpinner = view.findViewById(R.id.recipient_spinner);
         TextView noteText = view.findViewById(R.id.notes);
-
+        TextView availableBalance = view.findViewById(R.id.available_balance);
+        balance = getArguments().getString(ARG_BALANCE);
+        availableBalance.setText("Your available balance: " + balance);
         Button cancelButton = view.findViewById(R.id.continue_button);
         cancelButton.setOnClickListener(v -> dismiss());
 

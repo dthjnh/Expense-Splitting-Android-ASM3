@@ -17,12 +17,18 @@ import androidx.annotation.Nullable;
 import com.example.expensesplitting.Model.Transaction;
 import com.example.expensesplitting.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
 
     private static final String ARG_TRANSACTION = "transaction";
     private Transaction transaction;
     private String transactionId;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     public static PaymentBottomSheetFragment newInstance(Transaction transaction) {
         PaymentBottomSheetFragment fragment = new PaymentBottomSheetFragment();
@@ -43,6 +49,7 @@ public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,11 +66,39 @@ public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
 
             Button payButton = view.findViewById(R.id.new_request_button);
             payButton.setOnClickListener(v -> {
-                Intent intent = new Intent(getContext(), PaymentReceiptActivity.class);
-                intent.putExtra("transaction", transaction);
-                intent.putExtra("transactionId", transactionId);
-                startActivity(intent);
-                dismiss();
+                assert currentUser != null;
+                db.collection("wallets")
+                        .whereEqualTo("userId", currentUser.getUid())
+                        .get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                                double currentBalance = document.getDouble("balance");
+                                double newBalance = currentBalance - transaction.getAmount();
+
+                                // Update the balance in the database
+                                db.collection("wallets").document(document.getId())
+                                        .update("balance", newBalance)
+                                        .addOnSuccessListener(aVoid -> {
+                                            // Balance updated successfully, proceed with the payment
+                                            Intent intent = new Intent(getContext(), PaymentReceiptActivity.class);
+                                            intent.putExtra("transaction", transaction);
+                                            intent.putExtra("transactionId", transactionId);
+                                            startActivity(intent);
+                                            dismiss();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(getContext(), "Failed to update balance", Toast.LENGTH_SHORT).show();
+                                            Log.e("PaymentBottomSheetFragment", "Failed to update balance: ", e);
+                                        });
+                            } else {
+                                Toast.makeText(getContext(), "Wallet not found", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            // Handle the error
+                            Toast.makeText(getContext(), "Failed to retrieve wallet", Toast.LENGTH_SHORT).show();
+                        });
             });
 
             double amount = transaction.getAmount();
@@ -81,6 +116,12 @@ public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
             recipientName.setEnabled(false);
             recipientEmail.setEnabled(false);
             noteText.setEnabled(false);
+
+            if (transaction.getStatus().equals("paid")) {
+                payButton.setEnabled(false);
+                payButton.setText("Paid");
+                payButton.setBackgroundColor(getResources().getColor(R.color.light_gray));
+            }
         } else {
             Toast.makeText(getContext(), "Transaction is null", Toast.LENGTH_SHORT).show();
             dismiss();
