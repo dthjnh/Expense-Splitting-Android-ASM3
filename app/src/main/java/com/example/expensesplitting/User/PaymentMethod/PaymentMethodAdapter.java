@@ -16,13 +16,18 @@ import java.util.List;
 
 public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder> {
     private final List<PaymentMethod> paymentMethods;
-    private final OnPaymentMethodClickListener listener;
+    private final OnItemClickListener listener;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
-    public interface OnPaymentMethodClickListener {
-        void onDeletePaymentMethod(PaymentMethod paymentMethod);
+    public interface OnItemClickListener {
+        void onItemClick(PaymentMethod paymentMethod);
     }
 
-    public PaymentMethodAdapter(List<PaymentMethod> paymentMethods, OnPaymentMethodClickListener listener) {
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public PaymentMethodAdapter(List<PaymentMethod> paymentMethods, OnItemClickListener listener) {
         this.paymentMethods = paymentMethods;
         this.listener = listener;
     }
@@ -37,12 +42,22 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
     @Override
     public void onBindViewHolder(@NonNull PaymentMethodViewHolder holder, int position) {
         PaymentMethod paymentMethod = paymentMethods.get(position);
-        holder.cardNumber.setText(formatCardNumber(paymentMethod.getCardNumber()));
-        holder.setPaymentIcon(paymentMethod.getCardNumber());
+        holder.bind(paymentMethod, listener);
 
-        holder.itemView.setOnLongClickListener(v -> {
-            listener.onDeletePaymentMethod(paymentMethod);
-            return true;
+        if (position == selectedPosition) {
+            holder.connectedText.setVisibility(View.GONE);
+            holder.tickMark.setVisibility(View.VISIBLE);
+            holder.itemView.setBackgroundResource(R.drawable.selected_item_border);
+        } else {
+            holder.connectedText.setVisibility(View.VISIBLE);
+            holder.tickMark.setVisibility(View.GONE);
+            holder.itemView.setBackgroundResource(R.drawable.linear_layout_border);
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            selectedPosition = holder.getAdapterPosition();
+            notifyDataSetChanged();
+            listener.onItemClick(paymentMethod);
         });
     }
 
@@ -53,30 +68,20 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
 
     static class PaymentMethodViewHolder extends RecyclerView.ViewHolder {
         TextView cardNumber;
-        ImageView paymentIcon;
+        TextView connectedText;
+        ImageView tickMark;
 
         public PaymentMethodViewHolder(@NonNull View itemView) {
             super(itemView);
             cardNumber = itemView.findViewById(R.id.item_card_number);
-            paymentIcon = itemView.findViewById(R.id.imageView2);
+            connectedText = itemView.findViewById(R.id.connected_text);
+            tickMark = itemView.findViewById(R.id.tick_mark);
         }
 
-        private void setPaymentIcon(String cardNumber) {
-            if (cardNumber.startsWith("4")) {
-                paymentIcon.setImageResource(R.drawable.ic_visa);
-            } else if (cardNumber.startsWith("5")) {
-                paymentIcon.setImageResource(R.drawable.ic_mastercard);
-            } else {
-                paymentIcon.setImageResource(R.drawable.ic_default_card);
-            }
-        }
-    }
-
-    private String formatCardNumber(String cardNumber) {
-        if (cardNumber.length() > 4) {
-            return "**** **** **** " + cardNumber.substring(cardNumber.length() - 4);
-        } else {
-            return cardNumber;
+        public void bind(final PaymentMethod paymentMethod, final OnItemClickListener listener) {
+            String maskedCardNumber = "•••• •••• •••• " + paymentMethod.getCardNumber().substring(paymentMethod.getCardNumber().length() - 4);
+            cardNumber.setText(maskedCardNumber);
+            itemView.setOnClickListener(v -> listener.onItemClick(paymentMethod));
         }
     }
 }

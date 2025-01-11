@@ -18,8 +18,9 @@ import androidx.fragment.app.Fragment;
 import com.example.expensesplitting.Model.Wallet;
 import com.example.expensesplitting.R;
 import com.example.expensesplitting.User.Pay.PayActivity;
-import com.example.expensesplitting.User.PaymentMethod.PaymentMethodActivity;
 import com.example.expensesplitting.User.Request.RequestActivity;
+import com.example.expensesplitting.User.TopUp.TopUpActivity;
+import com.example.expensesplitting.User.TopUp.TopUpSummaryActivity;
 import com.example.expensesplitting.User.Withdraw.WithdrawActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class TopSectionFragment extends Fragment {
+public class TopSectionFragment extends Fragment implements TopUpSummaryActivity.WalletBalanceUpdateListener {
     ImageButton payButton, requestButton, topUpButton, withdrawButton, historyButton;
     TextView balanceAmount;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -60,7 +61,7 @@ public class TopSectionFragment extends Fragment {
         });
 
         topUpButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), PaymentMethodActivity.class);
+            Intent intent = new Intent(getActivity(), TopUpActivity.class);
             startActivity(intent);
         });
 
@@ -77,6 +78,12 @@ public class TopSectionFragment extends Fragment {
     }
 
     @SuppressLint("DefaultLocale")
+    @Override
+    public void onWalletBalanceUpdated(double newBalance) {
+        balanceAmount.setText(String.format("$%.2f", newBalance));
+    }
+
+    @SuppressLint("DefaultLocale")
     private void checkAndCreateWallet() {
         assert currentUser != null;
         db.collection("wallets")
@@ -90,9 +97,8 @@ public class TopSectionFragment extends Fragment {
                             // User already has a wallet, set the balance amount
                             Wallet wallet = task.getResult().getDocuments().get(0).toObject(Wallet.class);
                             if (wallet != null) {
-                                balanceAmount.setText(String.format("%,.2f$", wallet.getBalance()));
+                                balanceAmount.setText(String.format("$%.2f", wallet.getBalance()));
                             }
-                            Toast.makeText(getActivity(), "Wallet initialized successfully", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(getActivity(), "Error checking wallet: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
@@ -100,12 +106,13 @@ public class TopSectionFragment extends Fragment {
                 });
     }
 
+    @SuppressLint("DefaultLocale")
     private void createWallet() {
         Wallet newWallet = new Wallet(currentUser.getUid(), 0.0, new ArrayList<>());
         db.collection("wallets")
                 .add(newWallet)
                 .addOnSuccessListener(documentReference -> {
-                    balanceAmount.setText(String.format("%,.2f$", newWallet.getBalance()));
+                    balanceAmount.setText(String.format("$%.2f", newWallet.getBalance()));
                     Toast.makeText(getActivity(), "Wallet created successfully", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {

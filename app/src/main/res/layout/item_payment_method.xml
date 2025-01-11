@@ -7,11 +7,9 @@
     android:background="@drawable/linear_layout_border"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="15dp">
 
     <!-- Circular Image Section -->
-
-    <!-- Text Section -->
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="60dp"
@@ -21,6 +19,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_visa" />
 
+    <!-- Text Section -->
     <TextView
         android:id="@+id/item_card_number"
         android:layout_width="0dp"
@@ -33,10 +32,20 @@
 
     <!-- Connected Text Section -->
     <TextView
+        android:id="@+id/connected_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/urbanist_bold"
         android:text="Connected"
         android:textColor="#757575"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <!-- Tick Mark -->
+    <ImageView
+        android:id="@+id/tick_mark"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_tick"
+        android:visibility="gone" />
 </LinearLayout>

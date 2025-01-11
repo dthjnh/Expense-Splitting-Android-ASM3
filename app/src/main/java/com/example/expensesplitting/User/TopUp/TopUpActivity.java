@@ -49,7 +49,6 @@ public class TopUpActivity extends AppCompatActivity {
 
         String topUpAmount = amount.getText().toString();
 
-
         fetchWalletBalance();
 
         backButton.setOnClickListener(view -> {
