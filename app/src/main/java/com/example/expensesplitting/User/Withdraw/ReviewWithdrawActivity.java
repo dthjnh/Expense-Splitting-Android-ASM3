@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensesplitting.Model.Wallet;
 import com.example.expensesplitting.R;
-import com.example.expensesplitting.UserActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -69,9 +68,8 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
 
         // Handle confirm button click
         confirmWithdrawButton.setOnClickListener(v -> {
-            String withdrawAmountStr = getIntent().getStringExtra("AMOUNT"); // Get the withdrawal amount
-            if (withdrawAmountStr != null) {
-                double withdrawAmount = Double.parseDouble(withdrawAmountStr);
+            if (amount != null) {
+                double withdrawAmount = Double.parseDouble(amount);
 
                 // Assuming Firebase Firestore is used
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -96,9 +94,12 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
                                             .document(walletId)
                                             .update("balance", newBalance)
                                             .addOnSuccessListener(aVoid -> {
-                                                // Success: Redirect to UserActivity
-                                                Intent intent = new Intent(ReviewWithdrawActivity.this, UserActivity.class);
-                                                intent.putExtra("SUCCESS_MESSAGE", "Withdrawal Successful!");
+                                                // Success: Redirect to WithdrawReceiptActivity
+                                                Intent intent = new Intent(ReviewWithdrawActivity.this, WithdrawReceiptActivity.class);
+                                                intent.putExtra("AMOUNT", amount);
+                                                intent.putExtra("CARD_NUMBER", cardNumberText);
+                                                intent.putExtra("CARD_TYPE", cardType);
+                                                intent.putExtra("NOTES", notes != null ? notes : "No additional notes.");
                                                 startActivity(intent);
                                                 finish();
                                             })

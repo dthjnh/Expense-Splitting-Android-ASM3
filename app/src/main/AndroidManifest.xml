@@ -18,6 +18,9 @@
         android:theme="@style/Theme.ExpenseSplitting"
         tools:targetApi="31">
         <activity
+            android:name=".User.Withdraw.WithdrawReceiptActivity"
+            android:exported="false" />
+        <activity
             android:name=".User.Withdraw.ReviewWithdrawActivity"
             android:exported="false" />
         <activity android:name=".User.Withdraw.SelectPaymentMethod2" />
