@@ -43,7 +43,7 @@ public class NewPaymentActivity extends AppCompatActivity {
         cardNumber = findViewById(R.id.card_number);
         accountHolderName = findViewById(R.id.account_holder_name);
         cvv = findViewById(R.id.cvv);
-        saveButton = findViewById(R.id.topup_continue_button);
+        saveButton = findViewById(R.id.topup_cancel_button);
         closeButton = findViewById(R.id.back_button);
 
         // Set input filter to enforce 12 digits
@@ -108,13 +108,25 @@ public class NewPaymentActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(v -> {
             addPaymentMethod();
-            Intent intent = new Intent(NewPaymentActivity.this, PaymentMethodActivity.class);
+            Intent intent;
+            String previousActivity = getIntent().getStringExtra("previousActivity");
+            if ("SelectPaymentMethodActivity".equals(previousActivity)) {
+                intent = new Intent(NewPaymentActivity.this, com.example.expensesplitting.User.TopUp.SelectPaymentMethodActivity.class);
+            } else {
+                intent = new Intent(NewPaymentActivity.this, com.example.expensesplitting.User.PaymentMethod.PaymentMethodActivity.class);
+            }
             setResult(RESULT_OK, intent);
             finish();
         });
 
         closeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(NewPaymentActivity.this, PaymentMethodActivity.class);
+            Intent intent;
+            String previousActivity = getIntent().getStringExtra("previousActivity");
+            if ("SelectPaymentMethodActivity".equals(previousActivity)) {
+                intent = new Intent(NewPaymentActivity.this, com.example.expensesplitting.User.TopUp.SelectPaymentMethodActivity.class);
+            } else {
+                intent = new Intent(NewPaymentActivity.this, com.example.expensesplitting.User.PaymentMethod.PaymentMethodActivity.class);
+            }
             startActivity(intent);
             finish();
         });

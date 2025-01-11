@@ -132,11 +132,19 @@
         <activity android:name=".AdminReplyChatActivity" />
         <activity android:name=".Login.SignUp" />
         <activity android:name=".Login.ForgotPassword" />
+
         <activity android:name=".User.Pay.PayActivity" />
         <activity android:name=".User.Pay.PaymentReceiptActivity" />
         <activity android:name=".User.Request.RequestActivity" />
+
         <activity android:name=".User.PaymentMethod.NewPaymentActivity" />
-        <activity android:name=".User.PaymentMethod.PaymentMethodActivity" /> <!-- Meta-data -->
+        <activity android:name=".User.PaymentMethod.PaymentMethodActivity" />
+
+        <activity android:name=".User.TopUp.TopUpActivity" />
+        <activity android:name=".User.TopUp.SelectPaymentMethodActivity" />
+        <activity android:name=".User.TopUp.TopUpSummaryActivity" />
+        <activity android:name=".User.TopUp.TopUpReceiptActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

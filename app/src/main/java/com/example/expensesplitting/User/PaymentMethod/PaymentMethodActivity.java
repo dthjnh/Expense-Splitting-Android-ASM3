@@ -47,14 +47,12 @@ public class PaymentMethodActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        adapter = new PaymentMethodAdapter(paymentMethods, paymentMethod -> {
-            showDeleteConfirmationDialog(paymentMethod);
-        });
+        adapter = new PaymentMethodAdapter(paymentMethods, this::showDeleteConfirmationDialog);
         recyclerView.setAdapter(adapter);
 
         fetchPaymentMethods();
 
-        Button newPaymentMethodButton = findViewById(R.id.topup_continue_button);
+        Button newPaymentMethodButton = findViewById(R.id.topup_cancel_button);
         newPaymentMethodButton.setOnClickListener(v -> {
             Intent intent = new Intent(PaymentMethodActivity.this, NewPaymentActivity.class);
             startActivityForResult(intent, REQUEST_CODE_NEW_PAYMENT);

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Toolbar Section -->
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:padding="16dp">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_arrow_left" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/urbanist_bold"
+            android:text="Top Up"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!-- Main Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Amount to Top Up -->
+            <TextView
+                android:id="@+id/amount_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Amount to Top Up"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/amount_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/urbanist_bold"
+                android:padding="16dp"
+                android:text="$1,000.00"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Top Up Method -->
+            <TextView
+                android:id="@+id/top_up_method_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Top Up Method"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <include
+                android:id="@+id/card_item"
+                layout="@layout/item_payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp" />
+
+
+            <!-- Add Notes -->
+            <TextView
+                android:id="@+id/add_notes_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Add Notes"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/add_notes_input"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/urbanist"
+                android:gravity="start|top"
+                android:hint="Enter notes here"
+                android:inputType="textMultiLine"
+                android:padding="16dp"
+                android:textColor="#000000"
+                android:textColorHint="#B0B0B0"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Floating Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="25dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/topup_cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/urbanist_bold"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/topup_continue_button2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FEBB1B"
+            android:fontFamily="@font/urbanist_bold"
+            android:text="Confirm Top Up"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="100dp"
+            app:strokeColor="#FEBB1B"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.expensesplitting.User.Withdraw;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
     private Button cancelButton, confirmWithdrawButton;
     private ImageView backButton, cardIcon;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,8 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
 
         // Set values to views
         amountToWithdraw.setText("$" + amount);
-        cardNumber.setText("**** **** **** " + cardNumberText.substring(cardNumberText.length() - 4));
+        assert cardNumberText != null;
+        cardNumber.setText("•••• •••• •••• " + cardNumberText.substring(cardNumberText.length() - 4));
         notesText.setText(notes != null ? notes : "No notes provided.");
 
         // Set card icon based on card type
