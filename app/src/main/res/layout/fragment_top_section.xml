@@ -38,15 +38,6 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- Notification Icon -->
-        <ImageView
-            android:id="@+id/notificationIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="Notification Icon"
-            android:src="@drawable/ic_notification" />
     </RelativeLayout>
 
     <!-- Balance Section -->
