@@ -1,5 +1,6 @@
 package com.example.expensesplitting.User.Request;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.example.expensesplitting.Database.ContactDatabaseHelper;
 import com.example.expensesplitting.Model.Transaction;
 import com.example.expensesplitting.Model.User;
 import com.example.expensesplitting.R;
+import com.example.expensesplitting.User.Pay.NewPaymentBottomSheetFragment;
 import com.example.expensesplitting.User.Pay.UserAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,8 +36,17 @@ public class NewRequestBottomSheetFragment extends BottomSheetDialogFragment {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final List<User> userList = new ArrayList<>();
     private FirebaseUser currentUser;
-
     private OnNewRequestListener requestAddedListener;
+    private static final String ARG_BALANCE = "balance";
+    private String balanceAmount;
+
+    public static NewRequestBottomSheetFragment newInstance(String balance) {
+        NewRequestBottomSheetFragment fragment = new NewRequestBottomSheetFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_BALANCE, balance);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public interface OnNewRequestListener {
         void onNewRequest(Transaction transaction, String transactionId);
@@ -45,6 +56,7 @@ public class NewRequestBottomSheetFragment extends BottomSheetDialogFragment {
         this.requestAddedListener = listener;
     }
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +65,10 @@ public class NewRequestBottomSheetFragment extends BottomSheetDialogFragment {
         EditText amountText = view.findViewById(R.id.amount_text);
         Spinner recipientSpinner = view.findViewById(R.id.recipient_spinner);
         TextView noteText = view.findViewById(R.id.notes);
+
+        TextView availableBalanceText = view.findViewById(R.id.available_balance);
+        balanceAmount = getArguments().getString(ARG_BALANCE);
+        availableBalanceText.setText("Your available balance: " + balanceAmount);
 
         Button cancelButton = view.findViewById(R.id.continue_button);
         cancelButton.setOnClickListener(v -> dismiss());

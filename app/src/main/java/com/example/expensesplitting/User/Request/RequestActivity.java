@@ -57,7 +57,8 @@ public class RequestActivity extends AppCompatActivity implements TransactionAda
 
         addRequest = findViewById(R.id.add_request_button);
         addRequest.setOnClickListener(v -> {
-            NewRequestBottomSheetFragment bottomSheetFragment = new NewRequestBottomSheetFragment();
+            String balance = getIntent().getStringExtra("balance");
+            NewRequestBottomSheetFragment bottomSheetFragment = NewRequestBottomSheetFragment.newInstance(balance);
             bottomSheetFragment.setRequestAddedListener(this);
             bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
         });

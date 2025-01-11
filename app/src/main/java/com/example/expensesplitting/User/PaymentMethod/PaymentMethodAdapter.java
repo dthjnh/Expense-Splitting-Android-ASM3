@@ -73,8 +73,8 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
 
         public PaymentMethodViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardNumber = itemView.findViewById(R.id.item_card_number);
-            connectedText = itemView.findViewById(R.id.connected_text);
+            cardNumber = itemView.findViewById(R.id.time);
+            connectedText = itemView.findViewById(R.id.amount);
             tickMark = itemView.findViewById(R.id.tick_mark);
         }
 

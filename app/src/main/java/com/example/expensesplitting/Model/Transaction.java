@@ -16,6 +16,7 @@ public class Transaction implements Serializable {
     private Date timestamp;
     private String note;
     private String status;
+    private String group;
 
     public Transaction(String documentId, String type, String username, String userEmail ,String recipient, String recipientEmail, double amount, Date timestamp, String note, String status) {
         this.documentId = documentId;
@@ -116,5 +117,13 @@ public class Transaction implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

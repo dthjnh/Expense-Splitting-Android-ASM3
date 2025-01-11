@@ -59,10 +59,17 @@ public class PayActivity extends AppCompatActivity implements TransactionAdapter
 
         addPayButton = findViewById(R.id.add_request_button);
         addPayButton.setOnClickListener(v -> {
-            NewPaymentBottomSheetFragment bottomSheetFragment = new NewPaymentBottomSheetFragment();
+            String balance = getIntent().getStringExtra("balance");
+            NewPaymentBottomSheetFragment bottomSheetFragment = NewPaymentBottomSheetFragment.newInstance(balance);
             bottomSheetFragment.setPaymentAddedListener(this);
             bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchTransactions();
     }
 
     private void fetchTransactions() {

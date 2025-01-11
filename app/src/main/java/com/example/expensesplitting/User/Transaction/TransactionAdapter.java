@@ -22,6 +22,7 @@ import com.example.expensesplitting.User.Request.RequestBottomSheetFragment;
 import com.example.expensesplitting.User.Request.RequestSuccessBottomFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -87,10 +88,38 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         holder.payButton.setOnClickListener(v -> {
             if (transaction.getType().equals("pay")) {
-                Intent intent = new Intent(context, PaymentReceiptActivity.class);
-                intent.putExtra("transaction", transaction);
-                intent.putExtra("transactionId", transaction.getDocumentId());
-                context.startActivity(intent);
+                assert currentUser != null;
+                db.collection("wallets")
+                        .whereEqualTo("userId", currentUser.getUid())
+                        .get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                                double currentBalance = document.getDouble("balance");
+                                double newBalance = currentBalance - transaction.getAmount();
+
+                                // Update the balance in the database
+                                db.collection("wallets").document(document.getId())
+                                        .update("balance", newBalance)
+                                        .addOnSuccessListener(aVoid -> {
+                                            // Balance updated successfully, proceed with the payment
+                                            Intent intent = new Intent(context, PaymentReceiptActivity.class);
+                                            intent.putExtra("transaction", transaction);
+                                            intent.putExtra("transactionId", transaction.getDocumentId());
+                                            context.startActivity(intent);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(context, "Failed to update balance", Toast.LENGTH_SHORT).show();
+                                            Log.e("TransactionAdapter", "Failed to update balance: ", e);
+                                        });
+                            } else {
+                                Toast.makeText(context, "Wallet not found", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            // Handle the error
+                            Toast.makeText(context, "Failed to retrieve wallet", Toast.LENGTH_SHORT).show();
+                        });
             } else if (transaction.getType().equals("request")) {
                 // Retrieve the request transaction details
                 Date currentDate = new Date();
@@ -149,7 +178,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
-            usernameTextView = itemView.findViewById(R.id.item_card_number);
+            usernameTextView = itemView.findViewById(R.id.time);
             recipientTextView = itemView.findViewById(R.id.recipientTextView);
             actionTextView = itemView.findViewById(R.id.actionTextView);
             amountTextView = itemView.findViewById(R.id.amountTextView);
