@@ -11,7 +11,7 @@
 
     <!-- Circular Image Section -->
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/payment_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="10dp"

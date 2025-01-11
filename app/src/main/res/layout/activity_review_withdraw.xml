@@ -22,9 +22,10 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp"
         android:src="@drawable/ic_arrow_back"
         android:contentDescription="Back" />
+
+
 
     <!-- Amount to Withdraw -->
     <TextView
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title_text"
         android:layout_marginTop="24dp"
-        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/urbanist_bold"
         android:text="Amount to Withdraw"
         android:textSize="16sp"
         android:textColor="#000" />
@@ -43,7 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/amount_to_withdraw_label"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_background"
         android:text="$2,500.00"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -57,7 +59,7 @@
         android:text="Withdraw to"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:fontFamily="@font/urbanist_bold"
         android:textColor="#000" />
 
@@ -68,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/amount_to_withdraw"
         android:layout_marginTop="60dp"
-        android:background="@color/light_gray"
+        android:background="@drawable/edittext_background"
         android:padding="16dp"
         android:radius="16dp">
 
@@ -102,22 +104,26 @@
         android:layout_marginTop="40dp"
         android:layout_marginLeft="10dp"
         android:text="Add Notes"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:fontFamily="@font/urbanist_bold"
         android:textColor="#000" />
 
-    <TextView
-        android:id="@+id/notes_text"
+    <EditText
+        android:id="@+id/add_notes_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_background"
+        android:fontFamily="@font/urbanist"
+        android:gravity="start|top"
         android:layout_below="@id/notes_label"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Withdraw to VISA Account."
-        android:textSize="14sp"
-        android:textColor="#666" />
+        android:hint="Enter notes here"
+        android:inputType="textMultiLine"
+        android:padding="16dp"
+        android:textColor="#000000"
+        android:textColorHint="#B0B0B0"
+        android:textSize="16sp" />
 
     <!-- Cancel and Confirm Buttons -->
     <LinearLayout

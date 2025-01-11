@@ -43,6 +43,7 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
     public void onBindViewHolder(@NonNull PaymentMethodViewHolder holder, int position) {
         PaymentMethod paymentMethod = paymentMethods.get(position);
         holder.bind(paymentMethod, listener);
+        holder.setPaymentIcon(paymentMethod.getCardNumber());
 
         if (position == selectedPosition) {
             holder.connectedText.setVisibility(View.GONE);
@@ -70,12 +71,24 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
         TextView cardNumber;
         TextView connectedText;
         ImageView tickMark;
+        ImageView paymentIcon;
 
         public PaymentMethodViewHolder(@NonNull View itemView) {
             super(itemView);
             cardNumber = itemView.findViewById(R.id.item_card_number);
             connectedText = itemView.findViewById(R.id.connected_text);
             tickMark = itemView.findViewById(R.id.tick_mark);
+            paymentIcon = itemView.findViewById(R.id.payment_icon);
+        }
+
+        private void setPaymentIcon(String cardNumber) {
+            if (cardNumber.startsWith("4")) {
+                paymentIcon.setImageResource(R.drawable.ic_visa);
+            } else if (cardNumber.startsWith("5")) {
+                paymentIcon.setImageResource(R.drawable.ic_mastercard);
+            } else {
+                paymentIcon.setImageResource(R.drawable.ic_default_card);
+            }
         }
 
         public void bind(final PaymentMethod paymentMethod, final OnItemClickListener listener) {

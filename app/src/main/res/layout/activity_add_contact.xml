@@ -1,23 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:padding="16dp">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Contact"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginBottom="24dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back"
+            android:padding="4dp" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Contact"
+            android:layout_marginLeft="70dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <!-- Account Holder Name -->
     <TextView
@@ -27,16 +43,18 @@
         android:text="Account Holder Name"
         android:textColor="#000000"
         android:textSize="16sp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="30dp"/>
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter account holder name"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:background="@drawable/rounded_search_background" />
+        android:hint="Brooklyn Simmons"
+        android:background="@drawable/rounded_search_background"
+        android:padding="16dp"
+        android:textColor="#000000"
+        android:textSize="16sp" />
 
     <!-- Email -->
     <TextView
@@ -46,35 +64,53 @@
         android:text="Email"
         android:textColor="#000000"
         android:textSize="16sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="8dp" />
 
-    <EditText
-        android:id="@+id/editTextEmail"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter email address"
-        android:inputType="textEmailAddress"
-        android:padding="10dp"
-        android:background="@drawable/rounded_search_background" />
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_search_background"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_email"
+            android:contentDescription="Email Icon"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="brooklyn.simmons@gmail.com"
+            android:background="@android:color/transparent"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
     <!-- Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:gravity="center">
 
         <!-- Cancel Button -->
         <Button
             android:id="@+id/buttonCancel"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:text="Cancel"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/white"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF"
+            android:textStyle="bold"
             app:cornerRadius="100dp"
             app:strokeColor="#FEBB1B"
             app:strokeWidth="1dp"
@@ -84,14 +120,15 @@
         <Button
             android:id="@+id/buttonSearch"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:text="Search Contact"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/yellow"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:backgroundTint="#FEBB1B"
             app:cornerRadius="100dp"
             app:strokeColor="#FEBB1B"
-            app:strokeWidth="1dp"/>
+            app:strokeWidth="1dp" />
     </LinearLayout>
 
 </LinearLayout>

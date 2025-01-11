@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ReviewWithdrawActivity extends AppCompatActivity {
 
-    private TextView amountToWithdraw, cardNumber, notesText;
+    private TextView amountToWithdraw, cardNumber;
+    private EditText notesInput;
     private Button cancelButton, confirmWithdrawButton;
     private ImageView backButton, cardIcon;
 
@@ -30,7 +32,7 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
         // Initialize views
         amountToWithdraw = findViewById(R.id.amount_to_withdraw);
         cardNumber = findViewById(R.id.card_number);
-        notesText = findViewById(R.id.notes_text);
+        notesInput = findViewById(R.id.add_notes_input);
         cancelButton = findViewById(R.id.cancel_button);
         confirmWithdrawButton = findViewById(R.id.confirm_withdraw_button);
         backButton = findViewById(R.id.back_button);
@@ -40,13 +42,11 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
         String amount = getIntent().getStringExtra("AMOUNT");
         String cardNumberText = getIntent().getStringExtra("CARD_NUMBER");
         String cardType = getIntent().getStringExtra("CARD_TYPE");
-        String notes = getIntent().getStringExtra("NOTES");
 
         // Set values to views
         amountToWithdraw.setText("$" + amount);
         assert cardNumberText != null;
         cardNumber.setText("•••• •••• •••• " + cardNumberText.substring(cardNumberText.length() - 4));
-        notesText.setText(notes != null ? notes : "No notes provided.");
 
         // Set card icon based on card type
         if (cardType != null) {
@@ -73,6 +73,7 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
         confirmWithdrawButton.setOnClickListener(v -> {
             if (amount != null) {
                 double withdrawAmount = Double.parseDouble(amount);
+                String notes = notesInput.getText().toString().trim();
 
                 // Assuming Firebase Firestore is used
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -102,7 +103,7 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
                                                 intent.putExtra("AMOUNT", amount);
                                                 intent.putExtra("CARD_NUMBER", cardNumberText);
                                                 intent.putExtra("CARD_TYPE", cardType);
-                                                intent.putExtra("NOTES", notes != null ? notes : "No additional notes.");
+                                                intent.putExtra("NOTES", notes.isEmpty() ? "No additional notes." : notes);
                                                 startActivity(intent);
                                                 finish();
                                             })

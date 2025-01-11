@@ -23,7 +23,7 @@ public class AddContactActivity extends AppCompatActivity {
     private ContactDatabaseHelper databaseHelper;
     private FirebaseFirestore firestore;
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
