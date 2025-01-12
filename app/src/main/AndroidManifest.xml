@@ -147,6 +147,10 @@
 
         <activity android:name=".User.TransactionHistory.TransactionHistoryActivity" />
         <activity android:name=".User.TransactionHistory.TransactionHistoryDetailActivity" />
+
+        <activity android:name=".User.Activity.TransactionActivity" />
+
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
