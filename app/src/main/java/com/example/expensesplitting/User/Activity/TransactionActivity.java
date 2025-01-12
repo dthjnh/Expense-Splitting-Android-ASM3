@@ -1,25 +1,20 @@
-package com.example.expensesplitting.FragmentForUser;
+package com.example.expensesplitting.User.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensesplitting.Model.Transaction;
 import com.example.expensesplitting.R;
-import com.example.expensesplitting.User.Activity.TransactionActivity;
 import com.example.expensesplitting.User.Transaction.TransactionAdapter;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,39 +26,41 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ActivityFragment extends Fragment implements TransactionAdapter.OnItemClickListener {
+public class TransactionActivity extends AppCompatActivity implements TransactionAdapter.OnItemClickListener {
+    private static final int REQUEST_CODE_PAYMENT_RECEIPT = 1;
     RecyclerView recyclerView;
     TransactionAdapter adapter;
-    List<Transaction> activityList;
+    List<Transaction> transactionList;
+    ImageView addTransactionButton;
     ImageView emptyStateText;
-    LinearLayout viewAll;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activity, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_activity);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        emptyStateText = view.findViewById(R.id.imageView);
+        emptyStateText = findViewById(R.id.empty_state_text);
 
-        viewAll = view.findViewById(R.id.viewAllContainer);
-        viewAll.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), TransactionActivity.class);
-            startActivity(intent);
-        });
+        ImageView backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> finish());
 
-        activityList = new ArrayList<>();
+        transactionList = new ArrayList<>();
 
         fetchTransactions();
 
-        adapter = new TransactionAdapter(getContext(), activityList, this);
+        adapter = new TransactionAdapter(this, transactionList, this);
         recyclerView.setAdapter(adapter);
+    }
 
-        return view;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchTransactions();
     }
 
     private void fetchTransactions() {
@@ -73,7 +70,7 @@ public class ActivityFragment extends Fragment implements TransactionAdapter.OnI
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        activityList.clear();
+                        transactionList.clear();
                         for (DocumentSnapshot document : task.getResult()) {
                             String documentId = document.getId();
                             String type = document.getString("type");
@@ -87,20 +84,21 @@ public class ActivityFragment extends Fragment implements TransactionAdapter.OnI
                             Date date = timestamp != null ? timestamp.toDate() : null;
                             String status = document.getString("status");
 
-                            Transaction activity = new Transaction(documentId, type, username, userEmailAddress, recipient, recipientEmail, amount, date, note, status);
-                            activityList.add(activity);
+                            Transaction transaction = new Transaction(documentId, type, username, userEmailAddress, recipient, recipientEmail, amount, date, note, status);
+                            transactionList.add(transaction);
                         }
                         adapter.notifyDataSetChanged();
                         updateEmptyState();
                     } else {
-                        Toast.makeText(getContext(), "Error fetching activities", Toast.LENGTH_SHORT).show();
-                        Log.e("ActivityFragment", "Error fetching activities", task.getException());
+                        Toast.makeText(this, "Error fetching transactions", Toast.LENGTH_SHORT).show();
+                        Log.e("TransactionActivity", "Error fetching transactions", task.getException());
+                        finish();
                     }
                 });
     }
 
     private void updateEmptyState() {
-        if (activityList.isEmpty()) {
+        if (transactionList.isEmpty()) {
             emptyStateText.setVisibility(View.VISIBLE);
         } else {
             emptyStateText.setVisibility(View.GONE);
@@ -108,7 +106,21 @@ public class ActivityFragment extends Fragment implements TransactionAdapter.OnI
     }
 
     @Override
-    public void onItemClick(Transaction activity) {
-        // Handle item click
+    public void onItemClick(Transaction transaction) {
+//        TransactionBottomSheetFragment fragment = TransactionBottomSheetFragment.newInstance(transaction);
+//        fragment.show(getSupportFragmentManager(), fragment.getTag());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PAYMENT_RECEIPT && resultCode == RESULT_OK) {
+            fetchTransactions();
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }
