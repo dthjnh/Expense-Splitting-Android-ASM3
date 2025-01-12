@@ -125,7 +125,7 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
         transactionData.put("cardNumber", "•••• •••• •••• " + cardNumber.substring(cardNumber.length() - 4));
         transactionData.put("cardType", cardType);
         transactionData.put("userEmail", userEmail);
-        transactionData.put("timestamp", getCurrentTimestamp());
+        transactionData.put("timestamp", new Date());
         transactionData.put("status", "withdraw");
         transactionData.put("type", "withdraw");
         transactionData.put("notes", notes.isEmpty() ? "No additional notes." : notes);
@@ -140,8 +140,4 @@ public class ReviewWithdrawActivity extends AppCompatActivity {
                 });
     }
 
-    private String getCurrentTimestamp() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy · HH:mm:ss", Locale.getDefault());
-        return sdf.format(new Date());
-    }
 }
