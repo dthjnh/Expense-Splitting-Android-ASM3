@@ -146,6 +146,7 @@
         <activity android:name=".User.TopUp.TopUpReceiptActivity" />
 
         <activity android:name=".User.TransactionHistory.TransactionHistoryActivity" />
+        <activity android:name=".User.TransactionHistory.TransactionHistoryDetailActivity" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

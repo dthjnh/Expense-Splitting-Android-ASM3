@@ -52,7 +52,7 @@ public class SelectablePaymentMethodAdapter extends RecyclerView.Adapter<Selecta
         ViewHolder(View itemView) {
             super(itemView);
             cardNumber = itemView.findViewById(R.id.card_number);
-            paymentIcon = itemView.findViewById(R.id.imageView2);
+            paymentIcon = itemView.findViewById(R.id.imageView);
             selectedIndicator = itemView.findViewById(R.id.selected_indicator);
         }
 

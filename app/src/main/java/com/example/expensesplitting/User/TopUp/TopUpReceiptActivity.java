@@ -3,7 +3,6 @@ package com.example.expensesplitting.User.TopUp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +31,7 @@ public class TopUpReceiptActivity extends AppCompatActivity {
 
             TextView amountTextView = findViewById(R.id.amount_text_view);
             TextView recipientTextView = findViewById(R.id.recipient);
-            TextView requestUserEmailTextView = findViewById(R.id.request_user_email);
+            TextView requestUserEmailTextView = findViewById(R.id.recipient_detail);
             TextView amountBillTextView = findViewById(R.id.amount_bill);
             TextView recipientBillTextView = findViewById(R.id.recipient_bill);
             TextView recipientEmailBillTextView = findViewById(R.id.recipient_email_bill);

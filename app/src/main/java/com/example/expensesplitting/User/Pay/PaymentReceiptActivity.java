@@ -33,7 +33,7 @@ public class PaymentReceiptActivity extends AppCompatActivity {
 
         TextView amountText = findViewById(R.id.amount_text_view);
         TextView recipient = findViewById(R.id.recipient);
-        TextView recipientEmail = findViewById(R.id.request_user_email);
+        TextView recipientEmail = findViewById(R.id.recipient_detail);
         TextView amountBill = findViewById(R.id.amount_bill);
         TextView recipientNameBill = findViewById(R.id.recipient_bill);
         TextView recipientEmailBill = findViewById(R.id.recipient_email_bill);

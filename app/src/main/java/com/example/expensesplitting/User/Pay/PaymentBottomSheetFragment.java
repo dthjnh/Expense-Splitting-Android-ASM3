@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 
 import com.example.expensesplitting.Model.Transaction;
 import com.example.expensesplitting.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,7 +60,7 @@ public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
         if (transaction != null) {
             TextView amountText = view.findViewById(R.id.amount_text);
             TextView recipientName = view.findViewById(R.id.request_username);
-            TextView recipientEmail = view.findViewById(R.id.request_user_email);
+            TextView recipientEmail = view.findViewById(R.id.recipient_detail);
             TextView noteText = view.findViewById(R.id.notes);
 
             Button cancelButton = view.findViewById(R.id.continue_button);
@@ -67,37 +69,40 @@ public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
             Button payButton = view.findViewById(R.id.new_request_button);
             payButton.setOnClickListener(v -> {
                 assert currentUser != null;
-                db.collection("wallets")
-                        .whereEqualTo("userId", currentUser.getUid())
-                        .get()
-                        .addOnSuccessListener(queryDocumentSnapshots -> {
-                            if (!queryDocumentSnapshots.isEmpty()) {
-                                DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
-                                double currentBalance = document.getDouble("balance");
-                                double newBalance = currentBalance - transaction.getAmount();
-
-                                // Update the balance in the database
-                                db.collection("wallets").document(document.getId())
-                                        .update("balance", newBalance)
-                                        .addOnSuccessListener(aVoid -> {
-                                            // Balance updated successfully, proceed with the payment
-                                            Intent intent = new Intent(getContext(), PaymentReceiptActivity.class);
-                                            intent.putExtra("transaction", transaction);
-                                            intent.putExtra("transactionId", transactionId);
-                                            startActivity(intent);
-                                            dismiss();
+                updateWalletBalance(currentUser.getUid(), transaction.getRecipientEmail(), transaction.getAmount(),
+                        new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                db.collection("transactions").document(transactionId)
+                                        .update("status", "paid")
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid1) {
+                                                Toast.makeText(getContext(), "Payment successful", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getContext(), PaymentReceiptActivity.class);
+                                                intent.putExtra("transaction", transaction);
+                                                intent.putExtra("transactionId", transactionId);
+                                                startActivity(intent);
+                                                dismiss();
+                                            }
                                         })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(getContext(), "Failed to update balance", Toast.LENGTH_SHORT).show();
-                                            Log.e("PaymentBottomSheetFragment", "Failed to update balance: ", e);
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getContext(), "Failed to update recipient's balance", Toast.LENGTH_SHORT).show();
+                                                Log.e("PaymentBottomSheetFragment", "Failed to update recipient's balance: ", e);
+                                                dismiss();
+                                            }
                                         });
-                            } else {
-                                Toast.makeText(getContext(), "Wallet not found", Toast.LENGTH_SHORT).show();
                             }
-                        })
-                        .addOnFailureListener(e -> {
-                            // Handle the error
-                            Toast.makeText(getContext(), "Failed to retrieve wallet", Toast.LENGTH_SHORT).show();
+                        },
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Failed to update payer's balance", Toast.LENGTH_SHORT).show();
+                                Log.e("PaymentBottomSheetFragment", "Failed to update payer's balance: ", e);
+                                dismiss();
+                            }
                         });
             });
 
@@ -128,5 +133,61 @@ public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
         }
 
         return view;
+    }
+
+    private void updateWalletBalance(String payerId, String recipientEmail, double amount, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        // Update payer's balance
+        db.collection("wallets")
+                .whereEqualTo("userId", payerId)
+                .get()
+                .addOnSuccessListener(payerQueryDocumentSnapshots -> {
+                    if (!payerQueryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot payerDocument = payerQueryDocumentSnapshots.getDocuments().get(0);
+                        double payerCurrentBalance = payerDocument.getDouble("balance");
+                        double payerNewBalance = payerCurrentBalance - amount;
+
+                        db.collection("wallets").document(payerDocument.getId())
+                                .update("balance", payerNewBalance)
+                                .addOnSuccessListener(aVoid -> {
+                                    // Fetch recipient's user ID using email
+                                    db.collection("users")
+                                            .whereEqualTo("EmailAddress", recipientEmail)
+                                            .get()
+                                            .addOnSuccessListener(userQueryDocumentSnapshots -> {
+                                                if (!userQueryDocumentSnapshots.isEmpty()) {
+                                                    DocumentSnapshot userDocument = userQueryDocumentSnapshots.getDocuments().get(0);
+                                                    String recipientId = userDocument.getId();
+
+                                                    // Update recipient's balance
+                                                    db.collection("wallets")
+                                                            .whereEqualTo("userId", recipientId)
+                                                            .get()
+                                                            .addOnSuccessListener(recipientQueryDocumentSnapshots -> {
+                                                                if (!recipientQueryDocumentSnapshots.isEmpty()) {
+                                                                    DocumentSnapshot recipientDocument = recipientQueryDocumentSnapshots.getDocuments().get(0);
+                                                                    double recipientCurrentBalance = recipientDocument.getDouble("balance");
+                                                                    double recipientNewBalance = recipientCurrentBalance + amount;
+
+                                                                    db.collection("wallets").document(recipientDocument.getId())
+                                                                            .update("balance", recipientNewBalance)
+                                                                            .addOnSuccessListener(onSuccessListener)
+                                                                            .addOnFailureListener(onFailureListener);
+                                                                } else {
+                                                                    onFailureListener.onFailure(new Exception("Recipient's wallet not found"));
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(onFailureListener);
+                                                } else {
+                                                    onFailureListener.onFailure(new Exception("Recipient not found"));
+                                                }
+                                            })
+                                            .addOnFailureListener(onFailureListener);
+                                })
+                                .addOnFailureListener(onFailureListener);
+                    } else {
+                        onFailureListener.onFailure(new Exception("Payer's wallet not found"));
+                    }
+                })
+                .addOnFailureListener(onFailureListener);
     }
 }

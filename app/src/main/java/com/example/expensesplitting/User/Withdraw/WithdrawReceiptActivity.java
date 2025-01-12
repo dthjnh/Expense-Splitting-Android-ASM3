@@ -37,7 +37,7 @@ public class WithdrawReceiptActivity extends AppCompatActivity {
         receiptDate = findViewById(R.id.receipt_date);
         receiptTransactionId = findViewById(R.id.receipt_transaction_id);
         receiptNotes = findViewById(R.id.receipt_notes);
-        downloadReceiptButton = findViewById(R.id.download_receipt_button);
+        downloadReceiptButton = findViewById(R.id.view_receipt_button);
         shareReceiptButton = findViewById(R.id.share_receipt_button);
         closeButton = findViewById(R.id.close_button);
 
