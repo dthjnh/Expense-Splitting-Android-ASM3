@@ -46,7 +46,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         Log.d("UserAdapter", "User: " + user.getFirstName());
         if (user != null) {
             TextView recipientName = convertView.findViewById(R.id.request_username);
-            TextView recipientEmail = convertView.findViewById(R.id.request_user_email);
+            TextView recipientEmail = convertView.findViewById(R.id.recipient_detail);
 
             recipientName.setText(user.getFirstName() + " " + user.getLastName());
             recipientEmail.setText(user.getEmailAddress());

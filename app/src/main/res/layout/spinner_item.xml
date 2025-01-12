@@ -32,7 +32,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/request_user_email"
+            android:id="@+id/recipient_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist_medium"

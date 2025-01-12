@@ -102,7 +102,7 @@ public class RequestBottomSheetFragment extends BottomSheetDialogFragment {
         if (transaction != null) {
             TextView amountText = view.findViewById(R.id.amount_text);
             TextView requestUsername = view.findViewById(R.id.request_username);
-            TextView requestUserEmail = view.findViewById(R.id.request_user_email);
+            TextView requestUserEmail = view.findViewById(R.id.recipient_detail);
             TextView noteText = view.findViewById(R.id.notes);
 
             Button cancelButton = view.findViewById(R.id.continue_button);
@@ -125,7 +125,7 @@ public class RequestBottomSheetFragment extends BottomSheetDialogFragment {
 
                 // Create new payment transaction
                 Transaction newPaymentTransaction = new Transaction(
-                        null,
+                        transactionId,
                         "pay",
                         transaction.getUsername(),
                         transaction.getUserEmail(),
