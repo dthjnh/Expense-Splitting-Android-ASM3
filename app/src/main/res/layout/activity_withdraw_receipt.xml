@@ -247,6 +247,7 @@
             android:backgroundTint="#FEBB1B"
             android:text="Share Receipt"
             app:cornerRadius="100dp"
+            android:textStyle="bold"
             app:strokeColor="#FEBB1B"
             app:strokeWidth="1dp"
             android:textAllCaps="false"

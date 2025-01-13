@@ -139,30 +139,35 @@
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="5dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="12dp"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp"
             android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/urbanist_bold"
             android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:cornerRadius="100dp"
             app:strokeColor="#FEBB1B"
-            app:strokeWidth="1dp"
-            android:textSize="11dp"
-            android:textColor="@color/black"
-            android:elevation="4dp" />
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/confirm_withdraw_button"
             android:layout_width="5dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="12dp"
             android:layout_weight="1"
-            android:backgroundTint="#FEBB1B"
+            android:backgroundTint="@color/yellow"
+            android:fontFamily="@font/urbanist_bold"
+            android:text="Confirm Withdraw"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:cornerRadius="100dp"
             app:strokeColor="#FEBB1B"
-            app:strokeWidth="1dp"
-            android:text="Confirm Withdraw"
-            android:textSize="11dp"
-            android:textColor="@color/black"
-            android:elevation="4dp" />
+            app:strokeWidth="1dp" />
     </LinearLayout>
 </RelativeLayout>

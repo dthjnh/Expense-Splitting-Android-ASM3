@@ -102,8 +102,17 @@ public class TopUpSummaryActivity extends AppCompatActivity {
 
     private void displayPaymentMethod(PaymentMethod paymentMethod) {
         TextView cardNumber = findViewById(R.id.time);
+        ImageView paymentIcon = findViewById(R.id.payment_icon);
         String maskedCardNumber = "•••• •••• •••• " + paymentMethod.getCardNumber().substring(paymentMethod.getCardNumber().length() - 4);
         cardNumber.setText(maskedCardNumber);
+
+        if (paymentMethod.getCardNumber().startsWith("4")) {
+            paymentIcon.setImageResource(R.drawable.ic_visa);
+        } else if (paymentMethod.getCardNumber().startsWith("5")) {
+            paymentIcon.setImageResource(R.drawable.ic_mastercard);
+        } else {
+            paymentIcon.setImageResource(R.drawable.ic_default_card);
+        }
     }
 
     private void updateWalletBalance(String topUpAmount) {
