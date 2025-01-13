@@ -5,7 +5,6 @@ Team Information
 	•	Duong Duc Thinh - s3979652
 	•	Khuu Thien Quang - s3979034
 	•	Nguyen Minh Quan - s3975128
- 
 	2.	Work Distribution:
 	•	Quang: Responsible for implementing all transaction-related functionalities:
 		Pay, Request, Top Up, Withdraw and History.
