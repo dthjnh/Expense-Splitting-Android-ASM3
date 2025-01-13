@@ -5,6 +5,7 @@ Team Information
 	•	Duong Duc Thinh - s3979652
 	•	Khuu Thien Quang - s3979034
 	•	Nguyen Minh Quan - s3975128
+ 
 	2.	Work Distribution:
 	•	Quang: Responsible for implementing all transaction-related functionalities:
 		Pay, Request, Top Up, Withdraw and History.
@@ -15,6 +16,7 @@ Team Information
 		Updating the UI for user authentication and contact management.
 	•	Quan: Focused on group-related features:
 	  Implementing group activities such as group expense splitting, group management, and group transaction history.
+   
 Functionalities
 	•	Core Functionalities:
 	1.	Transaction Management:
